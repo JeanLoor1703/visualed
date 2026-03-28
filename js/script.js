@@ -66,3 +66,22 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   observer.observe(counterObj);
 });
+
+/* === Animacion de estrellas (Testimonios) === */
+document.addEventListener("DOMContentLoaded", () => {
+  const tCards = document.querySelectorAll('.t-card');
+  if (tCards.length === 0) return;
+
+  const starObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-stars');
+        obs.unobserve(entry.target); // Solo animar la primera vez
+      }
+    });
+  }, { threshold: 0.3 }); // Activar cuando el 30% de la card es visible
+
+  tCards.forEach(card => {
+    starObserver.observe(card);
+  });
+});
