@@ -85,3 +85,20 @@ document.addEventListener("DOMContentLoaded", () => {
     starObserver.observe(card);
   });
 });
+
+/* === Animaciones Fade-up (IntersectionObserver) === */
+document.addEventListener("DOMContentLoaded", () => {
+  const fadeElements = document.querySelectorAll('.fade-up');
+  if (fadeElements.length === 0) return;
+
+  const fadeObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        obs.unobserve(entry.target); // Animamos solo una vez
+      }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+  fadeElements.forEach(el => fadeObserver.observe(el));
+});

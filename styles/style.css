@@ -405,6 +405,8 @@ h1.hero-title .accent {
     0 20px 60px rgba(0, 0, 0, .18);
   background: linear-gradient(145deg, #03071e, #023e8a, #0077b6);
   transition: transform .35s, box-shadow .35s;
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 .m-card:hover {
@@ -596,6 +598,8 @@ h1.hero-title .accent {
   overflow: hidden;
   padding: 16px 28px;
   flex-shrink: 0;
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 .brand-card:hover {
@@ -1382,9 +1386,15 @@ h1.hero-title .accent {
 
 /* ── SCROLL ANIMATIONS ── */
 .fade-up {
-  opacity: 1 !important;
-  transform: none !important;
-  transition: none !important;
+  opacity: 0;
+  transform: translateY(30px) translateZ(0);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, opacity;
+}
+
+.fade-up.in-view {
+  opacity: 1;
+  transform: translateY(0) translateZ(0);
 }
 
 .d1 {
