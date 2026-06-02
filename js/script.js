@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const end = 10000;
     const duration = 2000;
     const easeOutQuad = t => t * (2 - t);
-    
+
     let startTime = null;
     const step = (timestamp) => {
       if (!startTime) startTime = timestamp;
@@ -101,4 +101,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
   fadeElements.forEach(el => fadeObserver.observe(el));
+});
+
+/* === Golden Ticket Floating Offer === */
+document.addEventListener("DOMContentLoaded", () => {
+  const ticket = document.getElementById("goldenTicket");
+  const closeBtn = document.getElementById("closeTicket");
+
+  if (!ticket || !closeBtn) return;
+
+  // Show the ticket after 2 seconds (2000ms)
+  setTimeout(() => {
+    ticket.classList.add("active");
+  }, 2000);
+
+  // Close the ticket on button click
+  closeBtn.addEventListener("click", () => {
+    ticket.classList.remove("active");
+  });
 });
