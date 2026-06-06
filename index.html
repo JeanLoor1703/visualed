@@ -6,9 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VisuaLed Publicidad Digital</title>
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn-uicons.flaticon.com; font-src 'self' https://fonts.gstatic.com https://cdn-uicons.flaticon.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com;">
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn-uicons.flaticon.com; font-src 'self' https://fonts.gstatic.com https://cdn-uicons.flaticon.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com;">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      corePlugins: {
+        preflight: false,
+      }
+    }
+  </script>
 
   <meta name="description"
     content="Agencia de publicidad digital líder en Ecuador. Especialistas en vallas y pantallas LED publicitarias de alto impacto en el punto estratégico más importante del Cantón. Proyectamos tu marca a nivel nacional.">
@@ -121,11 +129,11 @@
         <div class="logo-svg-wrap">
           <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 110 110">
             <!-- Pixel dots upper-right -->
-            <rect x="62" y="4" width="17" height="17" rx="4.5" fill="#00b4d8" />
-            <rect x="82" y="4" width="12" height="12" rx="3.5" fill="#00b4d8" />
-            <rect x="62" y="24" width="12" height="12" rx="3.5" fill="#00b4d8" />
+            <rect x="70" y="12" width="17" height="17" rx="4.5" fill="#00b4d8" />
+            <rect x="90" y="12" width="12" height="12" rx="3.5" fill="#00b4d8" />
+            <rect x="70" y="32" width="12" height="12" rx="3.5" fill="#00b4d8" />
             <!-- Main rounded square outline -->
-            <rect x="4" y="15" width="70" height="70" rx="16" fill="none" stroke="#00b4d8" stroke-width="10" />
+            <rect x="12" y="23" width="70" height="70" rx="16" fill="none" stroke="#00b4d8" stroke-width="10" />
           </svg>
         </div>
         <div class="logo-text-wrap">
@@ -222,7 +230,7 @@
         <!-- Floating card top-left -->
         <div class="fc fc1">
           <div class="fc-tag">📊 Impacto mensual</div>
-          <div class="fc-val"><em>+12K</em> impresiones</div>
+          <div class="fc-val"><em>+<span id="impacto-mensual-counter">0</span>K</em> impresiones</div>
           <div class="fc-bars">
             <div class="fc-bar-item" style="height:14px;background:rgba(0,150,199,.15)"></div>
             <div class="fc-bar-item" style="height:20px;background:rgba(0,150,199,.25)"></div>
@@ -299,15 +307,15 @@
         <div class="metrics-floating-card fc fc2">
           <div class="metrics-group">
             <div class="metric-item">
-              <span class="metric-number">+15K</span>
+              <span class="metric-number" id="vistas-diarias-counter">+0</span>
               <span class="metric-label">Vistas diarias</span>
             </div>
             <div class="metric-item">
-              <span class="metric-number">24/7</span>
+              <span class="metric-number"><span id="visibilidad-counter">0</span>/7</span>
               <span class="metric-label">Visibilidad total</span>
             </div>
             <div class="metric-item">
-              <span class="metric-number">3</span>
+              <span class="metric-number" id="provincias-counter">0</span>
               <span class="metric-label">Provincias conectadas</span>
             </div>
           </div>
@@ -412,19 +420,19 @@
           </p>
           <div class="stats-quad">
             <div class="stat-tile fade-up d2">
-              <div class="st-num">+15<em>K</em></div>
+              <div class="st-num">+<span id="loc-vistas-counter">0</span><em>K</em></div>
               <div class="st-lbl">Vistas diarias garantizadas</div>
             </div>
             <div class="stat-tile fade-up d3">
-              <div class="st-num">24<em>/7</em></div>
+              <div class="st-num"><span id="loc-visibilidad-counter">0</span><em>/7</em></div>
               <div class="st-lbl">Visibilidad continua</div>
             </div>
             <div class="stat-tile fade-up d3">
-              <div class="st-num"><em>3</em></div>
+              <div class="st-num"><em><span id="loc-provincias-counter">0</span></em></div>
               <div class="st-lbl">Provincias conectadas</div>
             </div>
             <div class="stat-tile fade-up d4">
-              <div class="st-num">#<em>1</em></div>
+              <div class="st-num">#<em><span id="loc-trafico-counter">0</span></em></div>
               <div class="st-lbl">Mayor tráfico del cantón</div>
             </div>
           </div>
@@ -476,172 +484,303 @@
     </div>
   </section>
 
-  <!-- SERVICES -->
-  <section id="servicios" class="sec">
-    <div class="sec-inner">
-      <div class="srv-hdr">
-        <div class="tag-pill fade-up" style="display:inline-flex;margin-bottom:1rem;">⚡ Nuestros Servicios</div>
-        <h2 class="sec-title fade-up d1">Todo lo que necesitas<br>para dominar el mercado</h2>
+  <!-- SECCIÓN 1 Y 2: PLANES DE PAUTAJE INTERACTIVOS (CON ENCABEZADO Y GANCHO INTEGRADO) -->
+  <section id="planes" class="sec py-16 bg-[#f0fbff]">
+    <div class="sec-inner max-w-6xl mx-auto px-4">
+
+      <!-- Encabezado de la Sección Unificado -->
+      <div class="text-center mb-16 max-w-4xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-[#03071e] mb-4">
+          Elige el espacio ideal para tu negocio
+        </h2>
+        <p class="text-base md:text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
+          Anunciar tu marca en el punto de mayor tráfico te cuesta menos de $5 al día. Eso es menos de lo que gastas en
+          un café con bolón en la mañana. Deja de gastar en lo que nadie mira y posiciónate en el redondel principal de
+          El Empalme.
+        </p>
       </div>
-      <div class="srv-grid">
-        <div class="srv-card fade-up">
-          <div class="srv-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-              stroke="#0ea5e9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="4" />
-              <line x1="12" y1="2" x2="12" y2="4" />
-              <line x1="12" y1="20" x2="12" y2="22" />
-              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-              <line x1="2" y1="12" x2="4" y2="12" />
-              <line x1="20" y1="12" x2="22" y2="12" />
-              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-            </svg>
+
+      <!-- Grid de 3 tarjetas -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+
+        <!-- Tarjeta 1: PLAN STANDARD -->
+        <div
+          class="plan-card bg-white rounded-2xl p-8 shadow-md border border-slate-100 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col relative group">
+          <div>
+            <!-- Icono megáfono centrado -->
+            <div class="text-center mb-6">
+              <div
+                class="plan-icon-container w-12 h-12 bg-[#e8f8fc] rounded-full mx-auto flex justify-center items-center transition-transform duration-300 group-hover:scale-110">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#00b4d8]" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+                </svg>
+              </div>
+            </div>
+            <div class="text-center">
+              <h3 class="text-lg font-bold text-[#03071e] mb-1">PLAN STANDARD</h3>
+              <div class="text-xs font-semibold text-slate-500 mb-4 uppercase tracking-wider">2,000 Reproducciones</div>
+
+              <!-- Precio Destacado -->
+              <div class="text-2xl font-bold text-slate-900 mb-6">
+                Desde <span class="text-[#12d362] font-bold">$250</span>/mes
+              </div>
+            </div>
+
+            <ul class="space-y-4 mb-8 list-none p-0 text-left">
+              <li class="flex items-start gap-2.5 text-slate-700">
+                <span class="text-[#12d362] font-black text-lg">✓</span>
+                <span>Presencia diaria en pantalla LED</span>
+              </li>
+              <li class="flex items-start gap-2.5 text-slate-700">
+                <span class="text-[#12d362] font-black text-lg">✓</span>
+                <span>Ideal para emprendedores locales</span>
+              </li>
+              <li class="flex items-start gap-2.5 text-slate-700">
+                <span class="text-[#12d362] font-black text-lg">✓</span>
+                <span>Exposición constante 24/7</span>
+              </li>
+            </ul>
           </div>
-          <h3 class="srv-name">Alto Impacto Visual</h3>
-          <ul class="srv-list">
-            <li><span class="chk">✓</span><strong>Resolución Ultra HD:</strong> Colores intensos que captan la atención
-              al instante.</li>
-            <li><span class="chk">✓</span><strong>Brillo Automático:</strong> Visibilidad impactante garantizada el día
-              y la noche.</li>
-            <li><span class="chk">✓</span><strong>Ubicación Premium:</strong> Tu anuncio en el nodo vial con mayor flujo
-              comercial del Cantón.</li>
-          </ul>
+          <a href="https://wa.me/593989489429?text=Hola%20VisuaLed,%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Plan%20Standard%20de%202,000%20reproducciones."
+            target="_blank"
+            class="btn-shimmer w-full max-w-[92%] mx-auto mt-auto flex items-center justify-center gap-1.5 h-12 bg-[#12d362] hover:bg-[#0eb653] text-white text-xs sm:text-sm md:text-[10px] lg:text-xs xl:text-sm font-bold rounded-xl shadow-md transition-all duration-300 hover:scale-105 border-0 cursor-pointer no-underline px-2 sm:px-4 leading-none whitespace-nowrap">
+            <svg class="w-5 h-5 fill-current flex-shrink-0" viewBox="0 0 24 24">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            <span>Cotizar Plan Standard</span>
+          </a>
         </div>
-        <div class="srv-card fade-up d1">
-          <div class="srv-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-              stroke="#0ea5e9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="3" width="20" height="14" rx="2" />
-              <line x1="8" y1="21" x2="16" y2="21" />
-              <line x1="12" y1="17" x2="12" y2="21" />
-              <polygon points="10 8 15 11 10 14 10 8" fill="#0ea5e9" stroke="none" />
-            </svg>
+
+        <!-- Tarjeta 2: PLAN AVANZADO (Destacada) -->
+        <div
+          class="plan-card bg-white rounded-2xl p-8 shadow-xl border border-cyan-400 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 flex flex-col relative group">
+          <!-- Tag superior minimalista integrado -->
+          <span
+            class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-cyan-500 text-white text-[10px] font-bold uppercase tracking-widest px-4 py-1 rounded-full shadow-sm">Recomendado</span>
+          <div>
+            <!-- Icono monitor centrado -->
+            <div class="text-center mb-6 mt-2">
+              <div
+                class="plan-icon-container w-12 h-12 bg-[#e8f8fc] rounded-full mx-auto flex justify-center items-center transition-transform duration-300 group-hover:scale-110">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#00b4d8]" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+            </div>
+            <div class="text-center">
+              <h3 class="text-lg font-bold text-[#03071e] mb-1">PLAN AVANZADO</h3>
+              <div class="text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">6,000 Reproducciones</div>
+
+              <!-- Precio Destacado -->
+              <div class="text-2xl font-bold text-slate-900 mb-1">
+                Desde <span class="text-[#12d362] font-bold">$200</span>/mes
+              </div>
+
+              <!-- Subtexto del precio compactado -->
+              <div class="mb-6">
+                <span
+                  class="text-[10px] md:text-xs text-blue-600 font-semibold bg-blue-50 px-2 py-0.5 rounded-full inline-block">Mínimo
+                  3 meses</span>
+              </div>
+            </div>
+
+            <ul class="space-y-4 mb-8 list-none p-0 text-left">
+              <li class="flex items-start gap-2.5 text-slate-700">
+                <span class="text-[#12d362] font-black text-lg">✓</span>
+                <span>Alta frecuencia de aparición</span>
+              </li>
+              <li class="flex items-start gap-2.5 text-slate-700">
+                <span class="text-[#12d362] font-black text-lg">✓</span>
+                <span>Ubicación premium en horas pico</span>
+              </li>
+              <li class="flex items-start gap-2.5 text-slate-700">
+                <span class="text-[#12d362] font-black text-lg">✓</span>
+                <span>Mayor recordación de marca en el cantón</span>
+              </li>
+            </ul>
           </div>
-          <h3 class="srv-name">Formato Dinámico</h3>
-          <ul class="srv-list">
-            <li><span class="chk">✓</span><strong>Spots de 20 Segundos:</strong> Tiempo ideal para enganchar y
-              posicionar tu marca.</li>
-            <li><span class="chk">✓</span><strong>Rotación Inteligente:</strong> Tu anuncio se repite estratégicamente
-              en los horarios de mayor tráfico.</li>
-            <li><span class="chk">✓</span><strong>Alta Recordación:</strong> Formato diseñado para empresas que buscan
-              resultados reales.</li>
-          </ul>
+          <a href="https://wa.me/593989489429?text=Hola%20VisuaLed,%20deseo%20adquirir%20el%20Plan%20Avanzado%20Recomendado%20de%206,000%20reproducciones."
+            target="_blank"
+            class="btn-shimmer w-full max-w-[92%] mx-auto mt-auto flex items-center justify-center gap-1.5 h-12 bg-[#12d362] hover:bg-[#0eb653] text-white text-xs sm:text-sm md:text-[10px] lg:text-xs xl:text-sm font-bold rounded-xl shadow-md transition-all duration-300 hover:scale-105 border-0 cursor-pointer no-underline px-2 sm:px-4 leading-none whitespace-nowrap">
+            <svg class="w-5 h-5 fill-current flex-shrink-0" viewBox="0 0 24 24">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            <span>Adquirir Recomendado 🚀</span>
+          </a>
         </div>
-        <div class="srv-card fade-up d2">
-          <div class="srv-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-              stroke="#0ea5e9" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 3 L13.5 8.5 L19 10 L13.5 11.5 L12 17 L10.5 11.5 L5 10 L10.5 8.5 Z" />
-              <path d="M5 3 L5.75 5.5 L8 6.5 L5.75 7.5 L5 10" />
-              <path d="M19 14 L19.75 16.5 L22 17.5 L19.75 18.5 L19 21" />
-            </svg>
+
+        <!-- Tarjeta 3: PLAN PREMIUM -->
+        <div
+          class="plan-card bg-white rounded-2xl p-8 shadow-md border border-slate-100 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col relative group">
+          <div>
+            <!-- Icono estrella centrado -->
+            <div class="text-center mb-6">
+              <div
+                class="plan-icon-container w-12 h-12 bg-[#e8f8fc] rounded-full mx-auto flex justify-center items-center transition-transform duration-300 group-hover:scale-110">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#00b4d8]" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.907c.961 0 1.36 1.243.577 1.835l-3.97 2.887a1 1 0 00-.364 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.971-2.887a1 1 0 00-1.175 0l-3.97 2.887c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.364-1.118l-3.97-2.887c-.783-.576-.38-1.835.577-1.835h4.907a1 1 0 00.95-.69l1.519-4.674z" />
+                </svg>
+              </div>
+            </div>
+            <div class="text-center">
+              <h3 class="text-lg font-bold text-[#03071e] mb-1">PLAN PREMIUM</h3>
+              <div class="text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">12,000 Reproducciones
+              </div>
+
+              <!-- Precio Destacado -->
+              <div class="text-2xl font-bold text-slate-900 mb-1">
+                Desde <span class="text-[#12d362] font-bold">$150</span>/mes
+              </div>
+
+              <!-- Subtexto del precio compactado -->
+              <div class="mb-6">
+                <span
+                  class="text-[10px] md:text-xs text-blue-600 font-semibold bg-blue-50 px-2 py-0.5 rounded-full inline-block">Mínimo
+                  6 meses</span>
+              </div>
+            </div>
+
+            <ul class="space-y-4 mb-8 list-none p-0 text-left">
+              <li class="flex items-start gap-2.5 text-slate-700">
+                <span class="text-[#12d362] font-black text-lg">✓</span>
+                <span>Máxima exposición diaria continua</span>
+              </li>
+              <li class="flex items-start gap-2.5 text-slate-700">
+                <span class="text-[#12d362] font-black text-lg">✓</span>
+                <span>Alta repetición e impacto masivo</span>
+              </li>
+              <li class="flex items-start gap-2.5 text-slate-700">
+                <span class="text-[#12d362] font-black text-lg">✓</span>
+                <span>Ventaja total frente a tu competencia</span>
+              </li>
+            </ul>
           </div>
-          <h3 class="srv-name">Soporte Creativo</h3>
-          <ul class="srv-list">
-            <li><span class="chk">✓</span><strong>Diseño Profesional Incluido:</strong> Creamos tu anuncio desde cero
-              sin costos extra.</li>
-            <li><span class="chk">✓</span><strong>Animaciones Atractivas:</strong> Motion graphics para que tu marca
-              destaque de la competencia.</li>
-            <li><span class="chk">✓</span><strong>Asesoría Comercial:</strong> Optimización de tu mensaje para crear
-              anuncios que realmente venden.</li>
-          </ul>
+          <a href="https://wa.me/593989489429?text=Hola%20VisuaLed,%20deseo%20adquirir%20el%20Plan%20Premium%20para%20dominar%20mi%20zona%20con%2012,000%20reproducciones."
+            target="_blank"
+            class="btn-shimmer w-full max-w-[92%] mx-auto mt-auto flex items-center justify-center gap-1.5 h-12 bg-[#12d362] hover:bg-[#0eb653] text-white text-xs sm:text-sm md:text-[10px] lg:text-xs xl:text-sm font-bold rounded-xl shadow-md transition-all duration-300 hover:scale-105 border-0 cursor-pointer no-underline px-2 sm:px-4 leading-none whitespace-nowrap">
+            <svg class="w-5 h-5 fill-current flex-shrink-0" viewBox="0 0 24 24">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            <span>Adquirir Plan Premium</span>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PLANES / PRECIOS (NUEVO REDISEÑO) -->
-  <section id="planes" class="sec plans-modern">
-    <div class="sec-inner">
-      <div class="planes-hdr-modern">
-        <h2 class="sec-title-glow fade-up d1">Haz que tu negocio se vea todos los días<br>en pantallas LED de alto
-          tráfico</h2>
-        <p class="planes-sub-modern fade-up d2">Miles de personas pasan frente a nuestras pantallas.<br>¿Están viendo tu
-          negocio o el de tu competencia?</p>
+  <!-- SECCIÓN 3: NUESTROS SERVICIOS -->
+  <section id="servicios" class="sec py-16 bg-[#f0fbff]">
+    <div class="sec-inner max-w-6xl mx-auto px-4">
+      <!-- Encabezado de la Sección -->
+      <div class="text-center mb-12">
+        <span
+          class="inline-flex items-center gap-1.5 bg-[#e8f8fc] text-[#0077b6] text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider mb-3">
+          ⚡ NUESTROS SERVICIOS
+        </span>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-[#03071e] leading-tight">
+          Todo lo que necesitas para dominar el mercado
+        </h2>
       </div>
 
-      <div class="modern-cards-grid">
-        <!-- PLAN STANDARD -->
-        <div class="m-card-plan fade-up d1">
-          <div class="mc-icon">
-            <svg viewBox="0 0 24 24" class="anim-speaker">
-              <path d="M11 5L6 9H2v6h4l5 4V5z" fill="none" />
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" class="speaker-wave-1" fill="none" stroke-linecap="round" />
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" class="speaker-wave-2" fill="none" stroke-linecap="round" />
-            </svg>
-          </div>
-          <div class="mc-repros">2000 reproducciones</div>
-          <h3 class="mc-title">PLAN STANDARD</h3>
-          <p class="mc-sub">Empieza a aparecer frente a tus clientes</p>
-          <ul class="mc-list">
-            <li><span class="chk">✓</span>Presencia diaria en pantalla LED</li>
-            <li><span class="chk">✓</span>Ideal para negocios que recién inician</li>
-            <li><span class="chk">✓</span>Exposición constante</li>
+      <!-- Grid de 3 columnas -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+
+        <!-- Columna 1: Alto Impacto Visual -->
+        <div
+          class="bg-white rounded-2xl p-8 shadow-md border border-slate-100/50 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col relative group">
+          <h3 class="text-lg font-bold text-[#03071e] mb-5 border-b border-slate-100 pb-3 flex items-center gap-3">
+            <span
+              class="w-9 h-9 rounded-lg bg-[#e8f8fc] flex items-center justify-center text-[#00b4d8] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path
+                  d="M19 10.5l1.2-2.7 2.7-1.2-2.7-1.2-1.2-2.7-1.2 2.7-2.7 1.2 2.7 1.2zm-10 1L11.5 6l2.5 5.5L19.5 14l-5.5 2.5L11.5 22 9 16.5 3.5 14zm0-9l.8 1.8 1.8.8-1.8.8-.8 1.8-.8-1.8-1.8-.8 1.8-.8z" />
+              </svg>
+            </span>
+            <span>Alto Impacto Visual</span>
+          </h3>
+          <ul class="space-y-4 list-none p-0 m-0 text-left">
+            <li class="flex items-start gap-2.5 text-slate-700">
+              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+              <span>Resolución Ultra HD y colores nítidos a gran distancia.</span>
+            </li>
+            <li class="flex items-start gap-2.5 text-slate-700">
+              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+              <span>Brillo adaptativo automático las 24 horas del día.</span>
+            </li>
+            <li class="flex items-start gap-2.5 text-slate-700">
+              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+              <span>Ubicación estratégica en el redondel de mayor tráfico del cantón.</span>
+            </li>
           </ul>
-          <div class="mc-highlight">Alta visibilidad local</div>
-          <a href="https://wa.me/593989489429?text=Hola,%20quiero%20empezar%20a%20aparecer" class="btn-wa-modern"
-            target="_blank">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-            </svg>
-            Quiero empezar a aparecer
-          </a>
         </div>
 
-        <!-- PLAN AVANZADO -->
-        <div class="m-card-plan fade-up d2 pop-in">
-          <div class="mc-icon">
-            <svg viewBox="0 0 24 24" class="anim-screen">
-              <rect x="2" y="3" width="20" height="14" rx="2" fill="none" />
-              <path d="M8 21h8M12 17v4" fill="none" stroke-linecap="round" />
-              <path d="M6 8h4M6 12h8" class="screen-shine" fill="none" stroke-linecap="round" />
-            </svg>
-          </div>
-          <div class="mc-repros">6000 reproducciones</div>
-          <h3 class="mc-title">PLAN AVANZADO</h3>
-          <p class="mc-sub">Haz que te recuerden todos los días</p>
-          <ul class="mc-list">
-            <li><span class="chk">✓</span>Mayor frecuencia de aparición</li>
-            <li><span class="chk">✓</span>Mejor recordación de marca</li>
-            <li><span class="chk">✓</span>Presencia en horarios clave</li>
+        <!-- Columna 2: Formato Dinámico -->
+        <div
+          class="bg-white rounded-2xl p-8 shadow-md border border-slate-100/50 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col relative group">
+          <h3 class="text-lg font-bold text-[#03071e] mb-5 border-b border-slate-100 pb-3 flex items-center gap-3">
+            <span
+              class="w-9 h-9 rounded-lg bg-[#e8f8fc] flex items-center justify-center text-[#00b4d8] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path
+                  d="M18 4l2 3h-3l-2-3h-2l2 3h-3l-2-3H8l2 3H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4zm2 14H4V9h16v9z" />
+              </svg>
+            </span>
+            <span>Formato Dinámico</span>
+          </h3>
+          <ul class="space-y-4 list-none p-0 m-0 text-left">
+            <li class="flex items-start gap-2.5 text-slate-700">
+              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+              <span>Spots de 20 segundos calibrados para máxima retención.</span>
+            </li>
+            <li class="flex items-start gap-2.5 text-slate-700">
+              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+              <span>Rotación inteligente de anuncios en horarios premium.</span>
+            </li>
+            <li class="flex items-start gap-2.5 text-slate-700">
+              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+              <span>Alta recordación de marca mediante movimiento continuo.</span>
+            </li>
           </ul>
-          <div class="mc-highlight">Mayor impacto y alcance</div>
-          <a href="https://wa.me/593989489429?text=Hola,%20quiero%20m%C3%A1s%20clientes" class="btn-wa-modern"
-            target="_blank">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-            </svg>
-            Quiero más clientes
-          </a>
         </div>
 
-        <!-- PLAN PREMIUM -->
-        <div class="m-card-plan mc-premium fade-up d3">
-          <div class="mc-icon">
-            <i class="fi fi-ts-user-crown anim-premium-icon"></i>
-          </div>
-          <div class="mc-repros">12000 reproducciones</div>
-          <h3 class="mc-title">PLAN PREMIUM</h3>
-          <p class="mc-sub">Tu marca domina la zona</p>
-          <ul class="mc-list">
-            <li><span class="chk">✓</span>Máxima exposición diaria</li>
-            <li><span class="chk">✓</span>Alta repetición</li>
-            <li><span class="chk">✓</span>Ventaja frente a competencia</li>
+        <!-- Columna 3: Soporte Creativo -->
+        <div
+          class="bg-white rounded-2xl p-8 shadow-md border border-slate-100/50 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col relative group">
+          <h3 class="text-lg font-bold text-[#03071e] mb-5 border-b border-slate-100 pb-3 flex items-center gap-3">
+            <span
+              class="w-9 h-9 rounded-lg bg-[#e8f8fc] flex items-center justify-center text-[#00b4d8] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path
+                  d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10c1.38 0 2.5-1.12 2.5-2.5 0-.61-.22-1.19-.61-1.66-.09-.11-.14-.24-.14-.38 0-.28.22-.5.5-.5h1.75c3.86 0 7-3.14 7-7 0-4.96-4.49-9-10-9zm-6.5 9c-.83 0-1.5-.67-1.5-1.5S4.67 8 5.5 8 7 8.67 7 9.5 6.33 11 5.5 11zm3-3C7.67 8 7 7.33 7 6.5S7.67 5 8.5 5 10 5.67 10 6.5 9.33 8 8.5 8zm4.5 0c-.83 0-1.5-.67-1.5-1.5S12.17 5 13 5s1.5.67 1.5 1.5S13.83 8 13 8zm4.5 3c-.83 0-1.5-.67-1.5-1.5S16.67 8 17.5 8 19 8.67 19 9.5s-.67 1.5-1.5 1.5z" />
+              </svg>
+            </span>
+            <span>Soporte Creativo</span>
+          </h3>
+          <ul class="space-y-4 list-none p-0 m-0 text-left">
+            <li class="flex items-start gap-2.5 text-slate-700">
+              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+              <span>Diseño gráfico profesional adaptado al formato LED gigante.</span>
+            </li>
+            <li class="flex items-start gap-2.5 text-slate-700">
+              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+              <span>Animación y motion graphics para destacar frente a vallas estáticas.</span>
+            </li>
+            <li class="flex items-start gap-2.5 text-slate-700">
+              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+              <span>Asesoría comercial y estructuración persuasiva de tus copys.</span>
+            </li>
           </ul>
-          <div class="mc-highlight">Máxima presencia en pantalla</div>
-          <a href="https://wa.me/593989489429?text=Hola,%20quiero%20dominar%20mi%20zona" class="btn-wa-modern"
-            target="_blank">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-            </svg>
-            Quiero dominar mi zona
-          </a>
         </div>
+
       </div>
     </div>
   </section>
@@ -975,34 +1114,177 @@
   </footer>
 
   <!-- TARJETA FLOATING: TICKET DE OFERTA -->
-  <div class="ticket-modal" id="goldenTicket">
-    <button class="ticket-close" id="closeTicket" aria-label="Cerrar oferta">×</button>
-    <div class="ticket-header">
-      <div class="ticket-brand">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 110 110" class="ticket-logo-icon">
-          <rect x="62" y="4" width="17" height="17" rx="4.5" fill="#00b4d8" />
-          <rect x="82" y="4" width="12" height="12" rx="3.5" fill="#00b4d8" />
-          <rect x="62" y="24" width="12" height="12" rx="3.5" fill="#00b4d8" />
-          <rect x="4" y="15" width="70" height="70" rx="16" fill="none" stroke="#00b4d8" stroke-width="10" />
-        </svg>
-        <span class="ticket-brand-name">Visua<em>Led</em></span>
+  <style>
+    .ticket-modal {
+      position: fixed !important;
+      bottom: 25px !important;
+      left: 25px !important;
+      width: 92% !important;
+      max-width: 650px !important;
+      background: none !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      padding: 20px 28px !important;
+      overflow: visible !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      z-index: 10000 !important;
+
+      /* Estado inicial para la animación de entrada suave (Escritorio) */
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transform: translateY(24px) scale(0.95) !important;
+      transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1), transform 700ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    .ticket-modal.active {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      transform: translateY(0) scale(1) !important;
+    }
+
+    /* Microinteracción Hover en el ticket completo */
+    .ticket-modal.active:hover {
+      transform: translateY(0) scale(1.02) !important;
+    }
+
+    /* Brillo continuo con sombra dorada dinámica */
+    @keyframes borderGlow {
+      0%, 100% {
+        filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.25)) drop-shadow(0 4px 15px rgba(0, 0, 0, 0.2));
+      }
+      50% {
+        filter: drop-shadow(0 0 20px rgba(234, 179, 8, 0.5)) drop-shadow(0 6px 20px rgba(0, 0, 0, 0.3));
+      }
+    }
+
+    .animate-border-glow {
+      animation: borderGlow 3s ease-in-out infinite !important;
+    }
+
+    /* Animación perimetral del haz de luz (shimmer perimetral) cada 3 segundos */
+    @keyframes borderLaser {
+      0% {
+        stroke-dashoffset: 1000;
+      }
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .animate-border-laser {
+      stroke-dasharray: 150 850;
+      animation: borderLaser 3s linear infinite !important;
+    }
+
+    @keyframes ticketShimmer {
+      0% {
+        left: -150%;
+      }
+      40%, 100% {
+        left: 150%;
+      }
+    }
+
+    .animate-ticket-shimmer {
+      animation: ticketShimmer 3.5s infinite ease-in-out;
+    }
+
+    @media (max-width: 640px) {
+      .ticket-modal {
+        bottom: 16px !important;
+        left: 50% !important;
+        transform: translate(-50%, 24px) scale(0.95) !important;
+        padding: 12px 20px !important;
+      }
+      .ticket-modal.active {
+        transform: translate(-50%, 0) scale(1) !important;
+      }
+      .ticket-modal.active:hover {
+        transform: translate(-50%, 0) scale(1.02) !important;
+      }
+    }
+  </style>
+  <div class="ticket-modal animate-border-glow shadow-md md:shadow-xl flex flex-col sm:flex-row items-center justify-between gap-3 md:gap-4" id="goldenTicket">
+    <!-- Fondo SVG troquelado (con muescas a la izquierda y derecha) -->
+    <svg class="absolute inset-0 w-full h-full -z-10" viewBox="0 0 600 160" preserveAspectRatio="none" fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Degradado metálico de oro pulido intenso -->
+        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ca8a04" />
+          <stop offset="25%" stop-color="#fef08a" />
+          <stop offset="50%" stop-color="#facc15" />
+          <stop offset="75%" stop-color="#eab308" />
+          <stop offset="100%" stop-color="#ca8a04" />
+        </linearGradient>
+        <!-- Borde con relieve metálico -->
+        <linearGradient id="goldBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+          <stop offset="35%" stop-color="#fef08a" />
+          <stop offset="70%" stop-color="#d4af37" />
+          <stop offset="100%" stop-color="#854d0e" />
+        </linearGradient>
+        <!-- Degradado de haz de luz brillante para el contorno -->
+        <linearGradient id="laserGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ca8a04" stop-opacity="0" />
+          <stop offset="30%" stop-color="#fef08a" stop-opacity="0.95" />
+          <stop offset="50%" stop-color="#ffffff" stop-opacity="1" />
+          <stop offset="70%" stop-color="#fef08a" stop-opacity="0.95" />
+          <stop offset="100%" stop-color="#ca8a04" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+      <!-- Trazado cerrado del ticket con curvas y muescas radiales laterales -->
+      <path
+        d="M 15 1 L 585 1 A 14 14 0 0 1 599 15 L 599 65 A 15 15 0 0 0 599 95 L 599 145 A 14 14 0 0 1 585 159 L 15 159 A 14 14 0 0 1 1 145 L 1 95 A 15 15 0 0 0 1 65 L 1 15 A 14 14 0 0 1 15 1 Z"
+        fill="url(#goldGrad)" stroke="url(#goldBorder)" stroke-width="2.5" />
+      <!-- Capa de haz de luz láser dorado animado sobre el contorno -->
+      <path
+        d="M 15 1 L 585 1 A 14 14 0 0 1 599 15 L 599 65 A 15 15 0 0 0 599 95 L 599 145 A 14 14 0 0 1 585 159 L 15 159 A 14 14 0 0 1 1 145 L 1 95 A 15 15 0 0 0 1 65 L 1 15 A 14 14 0 0 1 15 1 Z"
+        stroke="url(#laserGrad)" stroke-width="3" fill="none" pathLength="1000" class="animate-border-laser" />
+    </svg>
+
+    <!-- Destello animado continuo que cruza toda la superficie del ticket -->
+    <div class="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none -z-5">
+      <div
+        class="animate-ticket-shimmer absolute top-0 -left-[150%] w-[100%] h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12">
       </div>
-      <span class="ticket-tag">🔥 OFERTA DE LANZAMIENTO</span>
     </div>
-    <div class="ticket-body">
-      <p class="ticket-text">
-        ¡Impulsa tus ventas este mes! Activa tu pauta publicitaria con nuestra tarifa especial reducida antes de que se
-        agoten los cupos de rotación.
+
+    <!-- Botón de cierre (X) -->
+    <button
+      class="ticket-close absolute top-1.5 right-2 md:top-2 md:right-6 text-yellow-950 hover:text-red-700 w-5 h-5 flex items-center justify-center text-xs md:text-lg font-black transition-colors duration-200 focus:outline-none cursor-pointer select-none z-20"
+      id="closeTicket" aria-label="Cerrar oferta">×</button>
+
+    <!-- Contenido Izquierdo (Tag + Texto) -->
+    <div class="flex flex-col flex-1 min-w-0 pr-0 sm:pr-2 select-none relative z-10">
+      <span class="text-yellow-950 font-bold tracking-wider text-[10px] md:text-xs uppercase mb-1 flex items-center gap-1.5">
+        🎁 OFERTA ESPECIAL ESTE MES
+      </span>
+      <p class="text-slate-900 text-[11px] leading-tight md:text-sm font-medium m-0">
+        ¡Un descuento exclusivo para tu empresa! Haz clic y aprovecha la tarifa reducida ahora.
       </p>
     </div>
-    <a href="https://wa.me/593989489429?text=Hola!%20Quiero%20aprovechar%20la%20oferta%20de%20lanzamiento%20del%20Ticket%20de%20Oferta%20de%20VisuaLed."
-      class="btn-ticket-whatsapp" target="_blank">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path
-          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-      </svg>
-      Activar Tarifa Especial
-    </a>
+
+    <!-- Línea divisoria troquelada (punteada/discontinua) -->
+    <div
+      class="border-t-2 sm:border-t-0 sm:border-l-2 border-dashed border-yellow-950/25 w-full sm:w-auto h-0 sm:h-12 my-2 sm:my-0 sm:mx-4 relative z-10">
+    </div>
+
+    <!-- Sección CTA / Botón de Acción Desprendible -->
+    <div class="flex-shrink-0 w-full sm:w-auto flex items-center justify-center relative z-10">
+      <a href="https://wa.me/593989489429?text=Hola%20VisuaLed,%20quiero%20aplicar%20la%20tarifa%20reducida%20del%20cupón%20dorado%20de%20este%20mes."
+        class="w-full sm:w-auto bg-[#12d362] hover:bg-[#0eb653] text-white font-bold rounded-xl shadow-md transition-all duration-300 flex items-center justify-center gap-2 h-9 md:h-11 px-4 md:px-6 text-xs md:text-sm no-underline cursor-pointer select-none hover:scale-[1.02] ease-out duration-200"
+        target="_blank">
+        <svg class="w-3.5 h-3.5 md:w-4 md:h-4 fill-current flex-shrink-0" viewBox="0 0 24 24">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+        <span>Activar Tarifa Especial</span>
+      </a>
+    </div>
   </div>
 
   <script src="js/script.js"></script>

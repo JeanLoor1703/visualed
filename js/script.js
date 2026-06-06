@@ -67,6 +67,72 @@ document.addEventListener("DOMContentLoaded", () => {
   observer.observe(counterObj);
 });
 
+/* === Animación de Contadores Dinámicos Globales (Hero) === */
+document.addEventListener("DOMContentLoaded", () => {
+  const configs = [
+    { id: "impacto-mensual-counter", end: 12, suffix: "", prefix: "" },
+    { id: "vistas-diarias-counter", end: 15000, suffix: "", prefix: "+", isFormatted: true },
+    { id: "visibilidad-counter", end: 24, suffix: "", prefix: "" },
+    { id: "provincias-counter", end: 3, suffix: "", prefix: "" },
+    { id: "loc-vistas-counter", end: 15, suffix: "", prefix: "" },
+    { id: "loc-visibilidad-counter", end: 24, suffix: "", prefix: "" },
+    { id: "loc-provincias-counter", end: 3, suffix: "", prefix: "" },
+    { id: "loc-trafico-counter", end: 1, suffix: "", prefix: "" }
+  ];
+
+  const animateCounter = (el, end, duration, prefix, suffix, isFormatted) => {
+    const easeOutQuad = t => t * (2 - t);
+    let startTime = null;
+
+    const step = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const currentVal = Math.floor(easeOutQuad(progress) * end);
+
+      let displayText = currentVal.toString();
+      if (isFormatted) {
+        // Format with thousand separator "."
+        displayText = currentVal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
+
+      el.innerText = prefix + displayText + suffix;
+
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        // Final precise value
+        let finalVal = end.toString();
+        if (isFormatted) {
+          finalVal = end.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+        el.innerText = prefix + finalVal + suffix;
+      }
+    };
+    window.requestAnimationFrame(step);
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const config = configs.find(c => c.id === el.id);
+        if (config) {
+          // Duración de 1.8 segundos para una animación fluida
+          animateCounter(el, config.end, 1800, config.prefix, config.suffix, config.isFormatted);
+        }
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  configs.forEach(c => {
+    const el = document.getElementById(c.id);
+    if (el) {
+      observer.observe(el);
+    }
+  });
+});
+
 /* === Animacion de estrellas (Testimonios) === */
 document.addEventListener("DOMContentLoaded", () => {
   const tCards = document.querySelectorAll('.t-card');
@@ -110,10 +176,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!ticket || !closeBtn) return;
 
-  // Show the ticket after 2 seconds (2000ms)
+  // Show the ticket after 3 seconds (3000ms)
   setTimeout(() => {
     ticket.classList.add("active");
-  }, 2000);
+  }, 3000);
 
   // Close the ticket on button click
   closeBtn.addEventListener("click", () => {

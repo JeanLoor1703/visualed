@@ -292,7 +292,7 @@ h1.hero-title .accent {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  background: linear-gradient(135deg, var(--cyan-mid), var(--cyan));
+  background: #25D366;
   color: #fff;
   padding: 14px 28px;
   border-radius: 50px;
@@ -300,12 +300,13 @@ h1.hero-title .accent {
   font-weight: 800;
   font-size: .94rem;
   transition: all .3s;
-  box-shadow: 0 8px 28px rgba(0, 150, 199, .42);
+  box-shadow: 0 8px 28px rgba(37, 211, 102, .42);
 }
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 14px 38px rgba(0, 150, 199, .55);
+  box-shadow: 0 14px 38px rgba(37, 211, 102, .55);
+  background: #1ebe5d;
 }
 
 .btn-outline {
@@ -529,7 +530,7 @@ h1.hero-title .accent {
 .fc1 {
   top: -12px;
   left: -20px;
-  animation: floatY 3.5s ease-in-out infinite;
+  animation: floatYAndPulse 3.5s ease-in-out infinite;
 }
 
 .fc2 {
@@ -547,6 +548,17 @@ h1.hero-title .accent {
 
   50% {
     transform: translateY(-9px)
+  }
+}
+
+@keyframes floatYAndPulse {
+  0%, 100% {
+    transform: translateY(0);
+    box-shadow: 0 10px 40px rgba(0, 150, 199, 0.1);
+  }
+  50% {
+    transform: translateY(-9px);
+    box-shadow: 0 15px 45px rgba(0, 180, 216, 0.25);
   }
 }
 
@@ -576,10 +588,30 @@ h1.hero-title .accent {
   height: 30px;
 }
 
+@keyframes barLiveChart {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.55);
+  }
+}
+
 .fc-bar-item {
   width: 11px;
   border-radius: 3px 3px 0 0;
+  transform-origin: bottom;
+  animation: barLiveChart 2.2s ease-in-out infinite;
 }
+
+/* Staggered delay for each bar */
+.fc-bar-item:nth-child(1) { animation-delay: 0.1s; }
+.fc-bar-item:nth-child(2) { animation-delay: 0.4s; }
+.fc-bar-item:nth-child(3) { animation-delay: 0.2s; }
+.fc-bar-item:nth-child(4) { animation-delay: 0.6s; }
+.fc-bar-item:nth-child(5) { animation-delay: 0.3s; }
+.fc-bar-item:nth-child(6) { animation-delay: 0.7s; }
+.fc-bar-item:nth-child(7) { animation-delay: 0.5s; }
 
 /* ── TRUST BAR ── */
 .trust-bar {
@@ -2673,4 +2705,40 @@ a.foot-contact-item:hover {
   color: #ccc;
   line-height: 1.5;
   margin: 0;
+}
+
+/* Shimmer effect for buttons */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transition: none;
+}
+
+.btn-shimmer:hover::after {
+  left: 150%;
+  transition: left 0.7s ease-in-out;
+}
+
+/* Pulse / rotate animation for plan icons */
+.plan-icon-container {
+  transition: transform 0.3s ease;
+}
+
+.plan-card:hover .plan-icon-container {
+  transform: rotate(8deg) scale(1.05);
 }
