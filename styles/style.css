@@ -2640,6 +2640,30 @@ a.foot-contact-item:hover {
   color: #072126;
 }
 
+/* Corrección colisión X de cierre en escritorio */
+@media (min-width: 769px) {
+  .ticket-modal {
+    position: relative;
+  }
+  .promo-actions {
+    position: static !important;
+  }
+  .ticket-close,
+  .promo-close-btn,
+  .close-x {
+    position: absolute !important;
+    top: 12px !important;
+    right: 16px !important;
+  }
+  .ticket-cta,
+  .promo-whatsapp-btn,
+  .btn-green {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
 /* Ajustes responsivos para pantallas móviles */
 @media (max-width: 768px) {
   .ticket-modal {
@@ -2688,7 +2712,7 @@ a.foot-contact-item:hover {
 
   /* Copywriting dinámico inyectado */
   .ticket-modal::after {
-    content: "🎁 ACCESO EXCLUSIVO: Impulsa tus ventas hoy con nuestra tarifa de temporada." !important;
+    content: "🎁 OFERTA EXCLUSIVA ESTE MES: ¡Impulsa tus ventas hoy mismo! Asegura tu espacio en la pantalla gigante con un descuento especial de temporada." !important;
     font-size: 11px !important;
     font-weight: 700 !important;
     color: #451a03 !important;
