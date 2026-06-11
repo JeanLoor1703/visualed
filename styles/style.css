@@ -552,10 +552,13 @@ h1.hero-title .accent {
 }
 
 @keyframes floatYAndPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
     box-shadow: 0 10px 40px rgba(0, 150, 199, 0.1);
   }
+
   50% {
     transform: translateY(-9px);
     box-shadow: 0 15px 45px rgba(0, 180, 216, 0.25);
@@ -589,9 +592,12 @@ h1.hero-title .accent {
 }
 
 @keyframes barLiveChart {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scaleY(1);
   }
+
   50% {
     transform: scaleY(0.55);
   }
@@ -605,13 +611,33 @@ h1.hero-title .accent {
 }
 
 /* Staggered delay for each bar */
-.fc-bar-item:nth-child(1) { animation-delay: 0.1s; }
-.fc-bar-item:nth-child(2) { animation-delay: 0.4s; }
-.fc-bar-item:nth-child(3) { animation-delay: 0.2s; }
-.fc-bar-item:nth-child(4) { animation-delay: 0.6s; }
-.fc-bar-item:nth-child(5) { animation-delay: 0.3s; }
-.fc-bar-item:nth-child(6) { animation-delay: 0.7s; }
-.fc-bar-item:nth-child(7) { animation-delay: 0.5s; }
+.fc-bar-item:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.fc-bar-item:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.fc-bar-item:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.fc-bar-item:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+.fc-bar-item:nth-child(5) {
+  animation-delay: 0.3s;
+}
+
+.fc-bar-item:nth-child(6) {
+  animation-delay: 0.7s;
+}
+
+.fc-bar-item:nth-child(7) {
+  animation-delay: 0.5s;
+}
 
 /* ── TRUST BAR ── */
 .trust-bar {
@@ -2615,22 +2641,159 @@ a.foot-contact-item:hover {
 }
 
 /* Ajustes responsivos para pantallas móviles */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .ticket-modal {
-    left: -100%;
-    right: 15px;
-    width: auto;
-    bottom: 95px;
-    /* Evita colisión con el botón flotante de WhatsApp en móvil */
-    margin: 0 10px;
-    padding: 20px;
+    position: fixed !important;
+    bottom: 16px !important;
+    left: 50% !important;
+    width: 92% !important;
+    max-width: 600px !important;
+    padding: 8px 12px !important;
+    background: linear-gradient(135deg, #eab308 0%, #fef08a 50%, #eab308 100%) !important;
+    border: 2px solid #ca8a04 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 0 10px rgba(234, 179, 8, 0.2) !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    overflow: hidden !important;
+    z-index: 10000 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translate(-50%, 24px) scale(0.95) !important;
+    transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1), transform 700ms cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
   .ticket-modal.active {
-    left: 10px;
-    right: 10px;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translate(-50%, 0) scale(1) !important;
+  }
+
+  .ticket-modal.active:hover {
+    transform: translate(-50%, 0) scale(1.02) !important;
+  }
+
+  /* Ocultar elementos de fondo y divisores */
+  .ticket-modal>svg,
+  .ticket-modal .ticket-divider,
+  .ticket-modal .pointer-events-none,
+  .ticket-modal .ticket-content-left,
+  .ticket-modal .ticket-header,
+  .ticket-modal .ticket-body {
+    display: none !important;
+  }
+
+  /* Copywriting dinámico inyectado */
+  .ticket-modal::after {
+    content: "🎁 ACCESO EXCLUSIVO: Impulsa tus ventas hoy con nuestra tarifa de temporada." !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    color: #451a03 !important;
+    line-height: 1.25 !important;
+    display: block !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    text-align: left !important;
+    order: 1 !important;
+  }
+
+  /* Contenedor de controles flexbox */
+  .promo-actions,
+  .coupon-controls {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+    order: 2 !important;
+    position: relative !important;
+  }
+
+  /* Botón de cierre en el flujo flexbox */
+  .ticket-close,
+  .promo-close-btn,
+  .close-coupon,
+  .close-x {
+    position: static !important; /* Respeta el flujo del contenedor flexbox */
+    font-size: 24px !important;
+    padding: 4px 8px !important; /* Padding lateral cómodo */
+    color: #451a03 !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    z-index: 20 !important;
+    line-height: 1 !important;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  /* Contenedor del botón de acción */
+  .ticket-cta,
+  .btn-ticket-whatsapp,
+  .promo-whatsapp-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    max-width: 36px !important;
+    background: #25d366 !important;
+    border-radius: 8px !important;
+    padding: 0 !important;
+    margin: 0 8px 0 0 !important; /* Margen derecho de 8px para separarlo de la X */
+    border: none !important;
+    box-shadow: none !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Enlace del botón de acción */
+  .ticket-cta a {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    background: #25d366 !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    font-size: 0 !important;
+    color: transparent !important;
+  }
+
+  /* Ocultar texto interno */
+  .ticket-cta a span,
+  .btn-ticket-whatsapp span,
+  .promo-whatsapp-btn span {
+    display: none !important;
+  }
+
+  /* Icono SVG de WhatsApp */
+  .ticket-cta svg,
+  .btn-ticket-whatsapp svg,
+  .promo-whatsapp-btn svg {
+    width: 20px !important;
+    height: 20px !important;
+    fill: #ffffff !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  /* Ocultar botón flotante independiente de WhatsApp en móvil */
+  .float-wa,
+  .btn-whatsapp-fixed,
+  .whatsapp-floating,
+  #sticky-whatsapp {
+    display: none !important;
   }
 }
+
 
 /* === ESTILOS SECCIÓN PREGUNTAS FRECUENTES (FAQ) === */
 .faq-section {
@@ -2720,12 +2883,10 @@ a.foot-contact-item:hover {
   left: -100%;
   width: 50%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 100%);
   transition: none;
 }
 
