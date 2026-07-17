@@ -107,8 +107,30 @@
   }
   </script>
 
-  <!-- Estilos externos -->
-  <link rel="stylesheet" href="styles/style.css">
+  <!-- CSS crítico inline: pinta el hero en < 500ms en móvil (FCP boost) -->
+  <style>
+    :root{--cyan:#0077b6;--cyan-mid:#0096c7;--cyan-light:#00b4d8;--navy:#03071e;--slate:#64748b;--white:#ffffff}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:68px}
+    body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#f0fbff;color:#03071e;overflow-x:hidden}
+    header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.90);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,180,216,.12)}
+    nav{display:flex;align-items:center;justify-content:space-between;height:68px;max-width:1300px;margin:0 auto;padding:0 5%;gap:1rem}
+    #inicio{min-height:calc(100vh - 68px);padding:0 5%;position:relative;overflow:hidden;display:flex;align-items:center}
+    .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;width:100%;align-items:stretch;position:relative;z-index:1;padding:1rem 0 2rem}
+    h1.hero-title{font-size:clamp(2.3rem,5.5vw,4.2rem);font-weight:900;line-height:1.07;color:#03071e;margin-bottom:1.3rem;letter-spacing:-1.5px}
+    .resaltado-marca,.resaltado-localizacion{color:#0096c7}
+    .hero-sub{font-size:clamp(.9rem,1.4vw,1.04rem);color:#64748b;line-height:1.76;margin-bottom:2.2rem}
+    .hero-left{display:flex;flex-direction:column;justify-content:center;padding:2.5rem;border-radius:28px;background:rgba(255,255,255,.55)}
+    @media(max-width:768px){
+      .hero-grid{grid-template-columns:1fr;gap:1.5rem;padding:.75rem 0 1.5rem}
+      .hero-right-wrap{display:none}
+      h1.hero-title{font-size:clamp(1.8rem,7vw,2.4rem);letter-spacing:-.8px}
+      .hero-left{padding:1.5rem 1rem;border-radius:20px}
+    }
+  </style>
+  <!-- Estilos completos: carga no bloqueante (defer via preload+onload) -->
+  <link rel="preload" href="styles/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="styles/style.css"></noscript>
   <!-- 3. Flaticon: carga no bloqueante con preload + onload -->
   <link rel="preload" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css"></noscript>
@@ -334,7 +356,7 @@
                ===================================================== -->
           <div class="m-card m-sm2" id="slider-bebidas">
 
-            <!-- [IMAGEN 1] Bebidas — slot 1 -->
+            <!-- [IMAGEN 1] Bebidas — slot 1 (fetchpriority high: LCP en móvil) -->
             <img class="slider-img active"
               src="imagenes/pantallavisualedpublicidad.jpg"
               srcset="imagenes/pantallavisualedpublicidad.jpg 560w,
@@ -343,7 +365,7 @@
               sizes="(max-width: 768px) 560px, (max-width: 1200px) 800px, 2752px"
               width="2752" height="1536"
               alt="Anunciar negocio en Ecuador - VisuaLed ec"
-              loading="lazy">
+              fetchpriority="high">
 
             <!-- [IMAGEN 2] Bebidas — slot 2 -->
             <img class="slider-img"

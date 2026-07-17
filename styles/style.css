@@ -2975,3 +2975,74 @@ a.foot-contact-item:hover {
 .foot-logo-sub {
   color: #48cae4;
 }
+
+/* ============================================================
+   PARCHE MÓVIL: TAMAÑO MÍNIMO DE OBJETIVO TÁCTIL (48×48px)
+   Requisito WCAG 2.5.5 / Lighthouse Accessibility 100/100
+   Aplica a todos los elementos interactivos en pantallas táctiles
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* Botones y enlaces genéricos — tamaño mínimo táctil */
+  a,
+  button,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"],
+  input[type="reset"],
+  label[for],
+  select {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  /* Botones de acción del Hero */
+  .btn-primary,
+  .btn-outline {
+    min-height: 48px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+  }
+
+  /* Botón WhatsApp de la barra de navegación */
+  .btn-chat {
+    min-height: 48px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  /* Botones de planes (Tailwind btn-shimmer) */
+  .btn-shimmer {
+    min-height: 48px !important;
+  }
+
+  /* Hamburguesa del menú móvil */
+  .hamburger {
+    min-height: 48px;
+    min-width: 48px;
+    justify-content: center;
+  }
+
+  /* Enlace del botón WhatsApp flotante de tickets */
+  .btn-ticket-whatsapp {
+    min-height: 48px !important;
+    padding: 12px 20px !important;
+  }
+
+  /* Nav links del menú desplegable móvil */
+  .nav-links a {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  /* Botones de contacto del footer */
+  .foot-contact-item {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
