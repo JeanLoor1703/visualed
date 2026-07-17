@@ -112,7 +112,7 @@
     :root{--cyan:#0077b6;--cyan-mid:#0096c7;--cyan-light:#00b4d8;--navy:#03071e;--slate:#64748b;--white:#ffffff}
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     html{scroll-behavior:smooth;scroll-padding-top:68px}
-    body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#f0fbff;color:#03071e;overflow-x:hidden}
+    body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#f0fbff;color:#03071e;overflow-x:hidden;transition:opacity .3s ease-in-out}
     header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.90);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,180,216,.12)}
     nav{display:flex;align-items:center;justify-content:space-between;height:68px;max-width:1300px;margin:0 auto;padding:0 5%;gap:1rem}
     #inicio{min-height:calc(100vh - 68px);padding:0 5%;position:relative;overflow:hidden;display:flex;align-items:center}
@@ -127,7 +127,12 @@
       h1.hero-title{font-size:clamp(1.8rem,7vw,2.4rem);letter-spacing:-.8px}
       .hero-left{padding:1.5rem 1rem;border-radius:20px}
     }
+    /* Anti-FOUC: oculta el body hasta que window.onload active fouc-visible */
+    body.fouc-hidden{opacity:0}
+    body.fouc-visible{opacity:1}
   </style>
+  <!-- noscript: restablece visibilidad inmediata si JS está deshabilitado -->
+  <noscript><style>body{opacity:1!important}</style></noscript>
   <!-- Estilos completos: carga no bloqueante (defer via preload+onload) -->
   <link rel="preload" href="styles/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="styles/style.css"></noscript>
@@ -144,7 +149,9 @@
 </head>
 
 
-<body>
+
+<body class="fouc-hidden">
+
 
   <!-- ============================================================
      index.html  — STRUCTURE

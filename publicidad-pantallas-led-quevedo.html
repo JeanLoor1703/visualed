@@ -99,6 +99,14 @@
   }
   </script>
 
+  <!-- Anti-FOUC: oculta el body con opacidad 0 hasta que JS encienda fouc-visible -->
+  <style>
+    body{transition:opacity .3s ease-in-out}
+    body.fouc-hidden{opacity:0}
+    body.fouc-visible{opacity:1}
+  </style>
+  <!-- noscript: restablece visibilidad inmediata si JS estÃ¡ deshabilitado -->
+  <noscript><style>body{opacity:1!important}</style></noscript>
   <!-- Estilos completos: carga no bloqueante (defer via preload+onload) -->
   <link rel="preload" href="styles/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="styles/style.css"></noscript>
@@ -553,7 +561,7 @@
 </head>
 
 
-<body>
+<body class="fouc-hidden">
 
   <!-- HEADER -->
   <header>
