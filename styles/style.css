@@ -2647,9 +2647,11 @@ a.foot-contact-item:hover {
   .ticket-modal {
     position: relative;
   }
+
   .promo-actions {
     position: static !important;
   }
+
   .ticket-close,
   .promo-close-btn,
   .close-x {
@@ -2657,6 +2659,7 @@ a.foot-contact-item:hover {
     top: 12px !important;
     right: 16px !important;
   }
+
   .ticket-cta,
   .promo-whatsapp-btn,
   .btn-green {
@@ -2742,9 +2745,11 @@ a.foot-contact-item:hover {
   .promo-close-btn,
   .close-coupon,
   .close-x {
-    position: static !important; /* Respeta el flujo del contenedor flexbox */
+    position: static !important;
+    /* Respeta el flujo del contenedor flexbox */
     font-size: 24px !important;
-    padding: 4px 8px !important; /* Padding lateral cómodo */
+    padding: 4px 8px !important;
+    /* Padding lateral cómodo */
     color: #451a03 !important;
     background: none !important;
     border: none !important;
@@ -2769,7 +2774,8 @@ a.foot-contact-item:hover {
     background: #25d366 !important;
     border-radius: 8px !important;
     padding: 0 !important;
-    margin: 0 8px 0 0 !important; /* Margen derecho de 8px para separarlo de la X */
+    margin: 0 8px 0 0 !important;
+    /* Margen derecho de 8px para separarlo de la X */
     border: none !important;
     box-shadow: none !important;
     flex-shrink: 0 !important;
