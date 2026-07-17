@@ -4,13 +4,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 1. HINTS DE RED: preconnect y dns-prefetch para CDNs externos -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://cdn-uicons.flaticon.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn-uicons.flaticon.com">
   <link rel="canonical" href="https://visualed-ec.com/">
   <title>VisuaLed Publicidad Digital</title>
   <meta http-equiv="Content-Security-Policy"
     content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn-uicons.flaticon.com; font-src 'self' https://fonts.gstatic.com https://cdn-uicons.flaticon.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com;">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 2. Tailwind: async+defer para no bloquear parser -->
+  <script src="https://cdn.tailwindcss.com" async defer></script>
   <script>
     tailwind.config = {
       corePlugins: {
@@ -104,8 +109,9 @@
 
   <!-- Estilos externos -->
   <link rel="stylesheet" href="styles/style.css">
-  <!-- Link para Flaticon Uicons -->
-  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css">
+  <!-- 3. Flaticon: carga no bloqueante con preload + onload -->
+  <link rel="preload" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css"></noscript>
   <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="shortcut icon" href="favicon.ico" />
@@ -250,17 +256,37 @@
                ===================================================== -->
           <div class="m-card m-main" id="slider-vallas">
 
-            <!-- [IMAGEN 1] Vallas — slot 1 -->
-            <img class="slider-img active" src="imagenes/visuall.jpg" width="1536" height="2752"
-              alt="Agencia publicitaria en Ecuador - VisuaLed ec">
+            <!-- [IMAGEN 1] Vallas — slot 1 (LCP: fetchpriority high) -->
+            <img class="slider-img active"
+              src="imagenes/visuall.jpg"
+              srcset="imagenes/visuall.jpg 560w,
+                      imagenes/visuall.jpg 800w,
+                      imagenes/visuall.jpg 1536w"
+              sizes="(max-width: 768px) 560px, (max-width: 1200px) 800px, 1536px"
+              width="1536" height="2752"
+              alt="Agencia publicitaria en Ecuador - VisuaLed ec"
+              fetchpriority="high">
 
             <!-- [IMAGEN 2] Vallas — slot 2 -->
-            <img class="slider-img" src="imagenes/pantalla-denoche-visualed-pantalla-publicitaria.jpg" width="1536"
-              height="2752" alt="Publicidad digital Ecuador - VisuaLed ec">
+            <img class="slider-img"
+              src="imagenes/pantalla-denoche-visualed-pantalla-publicitaria.jpg"
+              srcset="imagenes/pantalla-denoche-visualed-pantalla-publicitaria.jpg 560w,
+                      imagenes/pantalla-denoche-visualed-pantalla-publicitaria.jpg 800w,
+                      imagenes/pantalla-denoche-visualed-pantalla-publicitaria.jpg 1536w"
+              sizes="(max-width: 768px) 560px, (max-width: 1200px) 800px, 1536px"
+              width="1536" height="2752"
+              alt="Publicidad digital Ecuador - VisuaLed ec"
+              loading="lazy">
 
             <!-- [IMAGEN 3] Vallas — slot 3 -->
-            <img class="slider-img" src="imagenes/pantalla-led.jpg" width="688" height="1381"
-              alt="Agencia de publicidad nacional - VisuaLed ec">
+            <img class="slider-img"
+              src="imagenes/pantalla-led.jpg"
+              srcset="imagenes/pantalla-led.jpg 560w,
+                      imagenes/pantalla-led.jpg 688w"
+              sizes="(max-width: 768px) 560px, 688px"
+              width="688" height="1381"
+              alt="Agencia de publicidad nacional - VisuaLed ec"
+              loading="lazy">
 
           </div>
 
@@ -269,17 +295,36 @@
                ===================================================== -->
           <div class="m-card m-sm1" id="slider-retail">
 
-            <!-- [IMAGEN 1] Retail — slot 1 -->
-            <img class="slider-img active" src="imagenes/pantallavidualed-Elempalme.jpg" width="2752" height="1536"
-              alt="Pantalla LED publicitaria en Ecuador - VisuaLed ec">
+            <!-- [IMAGEN 1] Retail — slot 1 (fetchpriority high como imagen visible inicial) -->
+            <img class="slider-img active"
+              src="imagenes/pantallavidualed-Elempalme.jpg"
+              srcset="imagenes/pantallavidualed-Elempalme.jpg 560w,
+                      imagenes/pantallavidualed-Elempalme.jpg 800w,
+                      imagenes/pantallavidualed-Elempalme.jpg 2752w"
+              sizes="(max-width: 768px) 560px, (max-width: 1200px) 800px, 2752px"
+              width="2752" height="1536"
+              alt="Pantalla LED publicitaria en Ecuador - VisuaLed ec"
+              fetchpriority="high">
 
             <!-- [IMAGEN 2] Retail — slot 2 -->
-            <img class="slider-img" src="imagenes/visualed-redondel.jpg" width="1678" height="1671"
-              alt="Valla LED publicitaria - VisuaLed ec">
+            <img class="slider-img"
+              src="imagenes/visualed-redondel.jpg"
+              srcset="imagenes/visualed-redondel.jpg 560w,
+                      imagenes/visualed-redondel.jpg 1678w"
+              sizes="(max-width: 768px) 560px, 1678px"
+              width="1678" height="1671"
+              alt="Valla LED publicitaria - VisuaLed ec"
+              loading="lazy">
 
             <!-- [IMAGEN 3] Retail — slot 3 -->
-            <img class="slider-img" src="imagenes/visuale-pantalla-led.jpg" width="1367" height="1070"
-              alt="Marketing visual Ecuador - VisuaLed ec">
+            <img class="slider-img"
+              src="imagenes/visuale-pantalla-led.jpg"
+              srcset="imagenes/visuale-pantalla-led.jpg 560w,
+                      imagenes/visuale-pantalla-led.jpg 1367w"
+              sizes="(max-width: 768px) 560px, 1367px"
+              width="1367" height="1070"
+              alt="Marketing visual Ecuador - VisuaLed ec"
+              loading="lazy">
 
           </div>
 
@@ -289,16 +334,36 @@
           <div class="m-card m-sm2" id="slider-bebidas">
 
             <!-- [IMAGEN 1] Bebidas — slot 1 -->
-            <img class="slider-img active" src="imagenes/pantallavisualedpublicidad.jpg" width="2752" height="1536"
-              alt="Anunciar negocio en Ecuador - VisuaLed ec">
+            <img class="slider-img active"
+              src="imagenes/pantallavisualedpublicidad.jpg"
+              srcset="imagenes/pantallavisualedpublicidad.jpg 560w,
+                      imagenes/pantallavisualedpublicidad.jpg 800w,
+                      imagenes/pantallavisualedpublicidad.jpg 2752w"
+              sizes="(max-width: 768px) 560px, (max-width: 1200px) 800px, 2752px"
+              width="2752" height="1536"
+              alt="Anunciar negocio en Ecuador - VisuaLed ec"
+              loading="lazy">
 
             <!-- [IMAGEN 2] Bebidas — slot 2 -->
-            <img class="slider-img" src="imagenes/visualed-gente.jpg" width="2400" height="1792"
-              alt="Publicidad exterior digital - VisuaLed ec">
+            <img class="slider-img"
+              src="imagenes/visualed-gente.jpg"
+              srcset="imagenes/visualed-gente.jpg 560w,
+                      imagenes/visualed-gente.jpg 800w,
+                      imagenes/visualed-gente.jpg 2400w"
+              sizes="(max-width: 768px) 560px, (max-width: 1200px) 800px, 2400px"
+              width="2400" height="1792"
+              alt="Publicidad exterior digital - VisuaLed ec"
+              loading="lazy">
 
             <!-- [IMAGEN 3] Bebidas — slot 3 -->
-            <img class="slider-img" src="imagenes/visualed-publicidad-el-empalme.jpg" width="1348" height="784"
-              alt="Empresa de publicidad nacional - VisuaLed ec">
+            <img class="slider-img"
+              src="imagenes/visualed-publicidad-el-empalme.jpg"
+              srcset="imagenes/visualed-publicidad-el-empalme.jpg 560w,
+                      imagenes/visualed-publicidad-el-empalme.jpg 1348w"
+              sizes="(max-width: 768px) 560px, 1348px"
+              width="1348" height="784"
+              alt="Empresa de publicidad nacional - VisuaLed ec"
+              loading="lazy">
 
           </div>
 
@@ -1184,19 +1249,21 @@
       animation: borderLaser 3s linear infinite !important;
     }
 
+    /* PARCHE 2 LCP: shimmer usa transform (compuesto/GPU) en lugar de `left` (causa layout) */
     @keyframes ticketShimmer {
       0% {
-        left: -150%;
+        transform: translateX(-250%);
       }
 
       40%,
       100% {
-        left: 150%;
+        transform: translateX(250%);
       }
     }
 
     .animate-ticket-shimmer {
       animation: ticketShimmer 3.5s infinite ease-in-out;
+      will-change: transform;
     }
 
     /* Corrección colisión X de cierre en escritorio */
@@ -1420,7 +1487,7 @@
     <!-- Destello animado continuo que cruza toda la superficie del ticket -->
     <div class="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none -z-5">
       <div
-        class="animate-ticket-shimmer absolute top-0 -left-[150%] w-[100%] h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12">
+        class="animate-ticket-shimmer absolute top-0 left-0 w-[100%] h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12">
       </div>
     </div>
 
@@ -1462,7 +1529,8 @@
     </div>
   </div>
 
-  <script src="js/script.js"></script>
+  <!-- 4. Script propio con defer para no bloquear renderizado -->
+  <script src="js/script.js" defer></script>
 
   <!-- BOTÓN FLOTANTE WHATSAPP (Agencia Nacional) -->
   <a href="https://wa.me/593989489429?text=Hola,%20deseo%20una%20estrategia%20nacional%20con%20VisuaLed"

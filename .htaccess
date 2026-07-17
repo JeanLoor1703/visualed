@@ -1,0 +1,58 @@
+﻿# ============================================================
+# PARCHE 3: Cache-Control para assets estaticos
+# Objetivo: Elevar cache de imagenes de 10 min a 30 dias
+# ============================================================
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Imagenes: 30 dias (2592000 segundos)
+  ExpiresByType image/jpeg      "access plus 30 days"
+  ExpiresByType image/jpg       "access plus 30 days"
+  ExpiresByType image/png       "access plus 30 days"
+  ExpiresByType image/gif       "access plus 30 days"
+  ExpiresByType image/webp      "access plus 30 days"
+  ExpiresByType image/svg+xml   "access plus 30 days"
+  ExpiresByType image/x-icon    "access plus 30 days"
+  ExpiresByType image/ico       "access plus 30 days"
+
+  # CSS y JS: 7 dias (con versioning por nombre de archivo)
+  ExpiresByType text/css        "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType text/javascript "access plus 7 days"
+
+  # Fuentes
+  ExpiresByType font/woff2      "access plus 1 year"
+  ExpiresByType font/woff       "access plus 1 year"
+  ExpiresByType application/font-woff2 "access plus 1 year"
+
+  # HTML: sin cache (siempre fresco)
+  ExpiresByType text/html       "access plus 0 seconds"
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Imagenes: Cache-Control explicito de 30 dias
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico)$">
+    Header set Cache-Control "public, max-age=2592000, immutable"
+  </FilesMatch>
+
+  # CSS y JS: 7 dias
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+
+  # HTML: no-cache para contenido siempre actualizado
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ============================================================
+# COMPRESION GZIP para CSS, JS, HTML, SVG
+# ============================================================
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>

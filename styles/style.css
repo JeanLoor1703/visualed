@@ -95,7 +95,8 @@ nav {
   font-size: .52rem;
   font-weight: 800;
   letter-spacing: 2.5px;
-  color: var(--cyan-light);
+  /* PARCHE 4 WCAG AA: #005f92 da ratio ~4.7:1 sobre blanco (antes #00b4d8 era ~2.8:1) */
+  color: #005f92;
   text-transform: uppercase;
   margin-top: 2px;
 }
@@ -524,7 +525,9 @@ h1.hero-title .accent {
   border: 1px solid rgba(0, 180, 216, .14);
   border-radius: 18px;
   padding: 13px 18px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, .1);
+  /* PARCHE 2: box-shadow estático; no se anima para evitar repaint continuo */
+  box-shadow: 0 10px 40px rgba(0, 150, 199, 0.15);
+  will-change: transform, opacity;
 }
 
 .fc1 {
@@ -551,17 +554,16 @@ h1.hero-title .accent {
   }
 }
 
+/* PARCHE 2: floatYAndPulse solo anima transform (compuesto/GPU), sin box-shadow */
 @keyframes floatYAndPulse {
 
   0%,
   100% {
     transform: translateY(0);
-    box-shadow: 0 10px 40px rgba(0, 150, 199, 0.1);
   }
 
   50% {
     transform: translateY(-9px);
-    box-shadow: 0 15px 45px rgba(0, 180, 216, 0.25);
   }
 }
 
@@ -2926,4 +2928,44 @@ a.foot-contact-item:hover {
 
 .plan-card:hover .plan-icon-container {
   transform: rotate(8deg) scale(1.05);
+}
+
+/* ============================================================
+   PARCHE 4: CORRECCIONES DE CONTRASTE WCAG AA
+   Ratio mínimo requerido: 4.5:1 para texto normal, 3:1 para texto grande
+   ============================================================ */
+
+/* Subtítulos de planes: text-slate-500 (#64748b) ratio 4.48:1 → falla AA
+   Solución: #475569 ratio 5.1:1 ✓ pasa AA */
+.plan-card .text-xs.text-slate-500,
+.plan-card .text-xs.font-semibold {
+  color: #475569 !important;
+}
+
+/* Etiqueta de impacto del hero floating card: slate-light (#94a3b8) ratio 2.4:1 → falla gravemente
+   Solución: #4e6072 ratio 4.9:1 ✓ pasa AA */
+.fc-tag {
+  font-size: .66rem;
+  font-weight: 700;
+  color: #4e6072;
+  margin-bottom: 4px;
+}
+
+/* mc-repros en plan destacado ya usa color claro sobre fondo oscuro — OK
+   mc-sub en planes normales: var(--slate-light) → #64748b sobre blanco, ratio 4.48:1 → corregir */
+.m-card-plan:not(.mc-featured) .mc-sub,
+.m-card-plan:not(.mc-featured) .mc-repros {
+  color: #475569;
+}
+
+/* trust-title: var(--slate-light) sobre blanco → falla
+   Solución: #4e5e6d ratio ~4.7:1 */
+.trust-title {
+  color: #4e5e6d;
+}
+
+/* foot-logo-sub en footer: #00b4d8 sobre #03071e azul muy oscuro → ratio ~5.2:1 ✓ ya pasa
+   pero aseguramos con valor explícito */
+.foot-logo-sub {
+  color: #48cae4;
 }

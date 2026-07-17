@@ -5,13 +5,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 1. HINTS DE RED: preconnect y dns-prefetch para CDNs externos -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://cdn-uicons.flaticon.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn-uicons.flaticon.com">
   <link rel="canonical" href="https://visualed-ec.com/publicidad-exterior-ecuador.html">
   <title>Publicidad Digital en Ecuador y Pantallas LED | VisuaLed</title>
   <meta http-equiv="Content-Security-Policy"
     content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn-uicons.flaticon.com; font-src 'self' https://fonts.gstatic.com https://cdn-uicons.flaticon.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com;">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 2. Tailwind: async+defer para no bloquear parser -->
+  <script src="https://cdn.tailwindcss.com" async defer></script>
   <script>
     tailwind.config = {
       corePlugins: {
@@ -105,8 +110,9 @@
 
   <!-- Estilos externos -->
   <link rel="stylesheet" href="styles/style.css">
-  <!-- Link para Flaticon Uicons -->
-  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css">
+  <!-- 3. Flaticon: carga no bloqueante con preload + onload -->
+  <link rel="preload" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css"></noscript>
   <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="shortcut icon" href="favicon.ico" />
