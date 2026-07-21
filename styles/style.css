@@ -3046,3 +3046,33 @@ a.foot-contact-item:hover {
     gap: 10px;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   ACCESIBILIDAD — Contraste WCAG AA para el verde de marca #12d362
+   Estrategia: elevar tamaño a "texto grande" (≥18.67px bold) para
+   cumplir el umbral de contraste 3:1 en lugar de 4.5:1.
+   Ref: WCAG 2.1 criterion 1.4.3 (Large Text exception)
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Precios en tarjetas de planes — texto de precio verde */
+.plan-card [class*="text-[#12d362]"],
+[class*="plan-card"] [class*="text-[#12d362]"] {
+  font-size: 1.25rem !important;   /* 20px — supera el mínimo de 18.67px para bold */
+  font-weight: 900 !important;
+  line-height: 1.2;
+}
+
+/* Checks ✓ en listas de beneficios — ya son font-black text-lg (18px) */
+/* Asegura que en todos los contextos pasen como texto grande */
+li .text-\[\#12d362\],
+li [class*="text-[#12d362]"] {
+  font-size: 1.25rem !important;   /* 20px bold = texto grande WCAG */
+  font-weight: 900 !important;
+}
+
+/* Precios destacados en el span de valor numérico */
+.text-2xl [class*="text-[#12d362]"],
+.text-xl [class*="text-[#12d362]"] {
+  font-size: 1.5rem !important;    /* 24px bold — contraste 3:1 cumplido */
+  font-weight: 900 !important;
+}

@@ -99,17 +99,10 @@
   }
   </script>
 
-  <!-- Anti-FOUC: oculta el body con opacidad 0 hasta que JS encienda fouc-visible -->
-  <style>
-    body{transition:opacity .3s ease-in-out}
-    body.fouc-hidden{opacity:0}
-    body.fouc-visible{opacity:1}
-  </style>
-  <!-- noscript: restablece visibilidad inmediata si JS estÃ¡ deshabilitado -->
-  <noscript><style>body{opacity:1!important}</style></noscript>
+
   <!-- Estilos completos: carga no bloqueante (defer via preload+onload) -->
-  <link rel="preload" href="styles/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="styles/style.css"></noscript>
+  <!-- Estilos completos: carga bloqueante para evitar FOUC -->
+  <link rel="stylesheet" href="styles/style.css">
   <!-- 3. Flaticon: carga no bloqueante con preload + onload -->
   <link rel="preload" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css"></noscript>
@@ -561,7 +554,7 @@
 </head>
 
 
-<body class="fouc-hidden">
+<body>
 
   <!-- HEADER -->
   <header>
@@ -680,7 +673,7 @@
         <div class="mosaic-grid">
           <div class="m-card m-main" id="slider-vallas">
             <img class="slider-img active" src="imagenes/pantallavidualed-Elempalme.jpg" width="2752" height="1536"
-              alt="Pantalla LED de alto impacto - VisuaLed Quevedo">
+              alt="Pantalla LED de alto impacto - VisuaLed Quevedo" fetchpriority="high">
             <img class="slider-img" src="imagenes/visuall.jpg" width="1536" height="2752"
               alt="Publicidad gigante en carretera a Quevedo - VisuaLed">
             <img class="slider-img" src="imagenes/pantalla-led.jpg" width="688" height="1381"

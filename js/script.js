@@ -187,13 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/* === Anti-FOUC: desvanecimiento suave al completar carga ===
-   El body arranca con opacity:0 (declarado en el <style> inline del <head>).
-   window.onload dispara DESPUÉS de que todos los recursos (CSS diferido,
-   imágenes, scripts) estén listos, garantizando que Tailwind y style.css
-   ya están aplicados antes de mostrar el contenido.
-   ============================================================ */
-window.onload = function () {
-  document.body.classList.remove('fouc-hidden');
-  document.body.classList.add('fouc-visible');
-};
+/* === Anti-FOUC removido: body ahora siempre visible (LCP fix) ===
+   La clase fouc-hidden fue eliminada del body en todos los HTML
+   para evitar el error NO_LCP en Lighthouse Mobile (Moto G Power 4G).
+   ================================================================ */
