@@ -100,11 +100,8 @@
   </script>
 
 
-  <!-- Estilos completos: carga bloqueante para evitar FOUC -->
-  <link rel="stylesheet" href="styles/style.css">
-  <!-- 3. Flaticon: carga no bloqueante con preload + onload -->
-  <link rel="preload" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css"></noscript>
+  <!-- Estilos: minificado para menor tiempo de bloqueo -->
+  <link rel="stylesheet" href="styles/style.min.css">
   <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="shortcut icon" href="favicon.ico" />

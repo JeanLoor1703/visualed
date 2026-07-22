@@ -122,11 +122,8 @@
     #inicio{min-height:560px}
     @media(max-width:768px){#inicio{min-height:420px}}
   </style>
-  <!-- Estilos completos: carga bloqueante para evitar FOUC -->
-  <link rel="stylesheet" href="styles/style.css">
-  <!-- 3. Flaticon: carga no bloqueante con preload + onload -->
-  <link rel="preload" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css"></noscript>
+  <!-- Estilos: minificado para menor tiempo de bloqueo -->
+  <link rel="stylesheet" href="styles/style.min.css">
   <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="shortcut icon" href="favicon.ico" />
@@ -417,7 +414,10 @@
 
         <!-- [MARCA 1] Sana Sana -->
         <div class="brand-card">
-          <img src="imagenes/sana.png" alt="Sana Sana" width="891" height="500" loading="lazy">
+          <picture>
+            <source srcset="imagenes/sana.webp" type="image/webp">
+            <img src="imagenes/sana.png" alt="Sana Sana" width="891" height="500" loading="lazy">
+          </picture>
         </div>
 
         <!-- [MARCA 2] Pingüino -->
@@ -427,22 +427,34 @@
 
         <!-- [MARCA 3] Alonzo -->
         <div class="brand-card">
-          <img src="imagenes/importadora-alonzo (1).png" alt="Alonzo" width="225" height="225" loading="lazy">
+          <picture>
+            <source srcset="imagenes/importadora-alonzo (1).webp" type="image/webp">
+            <img src="imagenes/importadora-alonzo (1).png" alt="Alonzo" width="225" height="225" loading="lazy">
+          </picture>
         </div>
 
         <!-- [MARCA 4] Cerveza Club -->
         <div class="brand-card">
-          <img src="imagenes/cerveza-club (1).png" alt="Cerveza Club" width="730" height="295" loading="lazy">
+          <picture>
+            <source srcset="imagenes/cerveza-club (1).webp" type="image/webp">
+            <img src="imagenes/cerveza-club (1).png" alt="Cerveza Club" width="730" height="295" loading="lazy">
+          </picture>
         </div>
 
         <!-- [MARCA 5] Kloe Estethic -->
         <div class="brand-card">
-          <img src="imagenes/khol.png" alt="Kloe Estethic" width="1080" height="602" loading="lazy">
+          <picture>
+            <source srcset="imagenes/khol.webp" type="image/webp">
+            <img src="imagenes/khol.png" alt="Kloe Estethic" width="1080" height="602" loading="lazy">
+          </picture>
         </div>
 
         <!-- [MARCA 6] Megamaxi -->
         <div class="brand-card">
-          <img src="imagenes/megamaxi-publicidad-digital.png" alt="Megamaxi" width="533" height="161" loading="lazy">
+          <picture>
+            <source srcset="imagenes/megamaxi-publicidad-digital.webp" type="image/webp">
+            <img src="imagenes/megamaxi-publicidad-digital.png" alt="Megamaxi" width="533" height="161" loading="lazy">
+          </picture>
         </div>
 
         <!-- [MARCA 7] Natura -->
@@ -457,22 +469,37 @@
 
         <!-- DUPLICADO para el loop infinito -->
         <div class="brand-card">
-          <img src="imagenes/sana.png" alt="Sana Sana" width="891" height="500" loading="lazy">
+          <picture>
+            <source srcset="imagenes/sana.webp" type="image/webp">
+            <img src="imagenes/sana.png" alt="Sana Sana" width="891" height="500" loading="lazy">
+          </picture>
         </div>
         <div class="brand-card">
           <img src="imagenes/pinguino-pantalla-publicitaria.png" alt="Pingüino" width="320" height="320" loading="lazy">
         </div>
         <div class="brand-card">
-          <img src="imagenes/importadora-alonzo (1).png" alt="Alonzo" width="225" height="225" loading="lazy">
+          <picture>
+            <source srcset="imagenes/importadora-alonzo (1).webp" type="image/webp">
+            <img src="imagenes/importadora-alonzo (1).png" alt="Alonzo" width="225" height="225" loading="lazy">
+          </picture>
         </div>
         <div class="brand-card">
-          <img src="imagenes/cerveza-club (1).png" alt="Cerveza Club" width="730" height="295" loading="lazy">
+          <picture>
+            <source srcset="imagenes/cerveza-club (1).webp" type="image/webp">
+            <img src="imagenes/cerveza-club (1).png" alt="Cerveza Club" width="730" height="295" loading="lazy">
+          </picture>
         </div>
         <div class="brand-card">
-          <img src="imagenes/khol.png" alt="Kloe Estethic" width="1080" height="602" loading="lazy">
+          <picture>
+            <source srcset="imagenes/khol.webp" type="image/webp">
+            <img src="imagenes/khol.png" alt="Kloe Estethic" width="1080" height="602" loading="lazy">
+          </picture>
         </div>
         <div class="brand-card">
-          <img src="imagenes/megamaxi-publicidad-digital.png" alt="Megamaxi" width="533" height="161" loading="lazy">
+          <picture>
+            <source srcset="imagenes/megamaxi-publicidad-digital.webp" type="image/webp">
+            <img src="imagenes/megamaxi-publicidad-digital.png" alt="Megamaxi" width="533" height="161" loading="lazy">
+          </picture>
         </div>
         <div class="brand-card">
           <img src="imagenes/natura.gif" alt="Natura" width="800" height="500" loading="lazy">
@@ -881,9 +908,12 @@
           <div class="t-card-top">
             <div class="t-logo">
               <!-- Reemplaza el src con la ruta del logo real -->
-              <img src="imagenes/importadora-alonzo (1).png" alt="Importadora Alonzo" width="225" height="225"
-                loading="lazy"
-                style="width:100%; height:100%; object-fit:contain; border-radius:50%; padding:4px; box-sizing:border-box; background:#fff;">
+              <picture>
+                <source srcset="imagenes/importadora-alonzo (1).webp" type="image/webp">
+                <img src="imagenes/importadora-alonzo (1).png" alt="Importadora Alonzo" width="225" height="225"
+                  loading="lazy"
+                  style="width:100%; height:100%; object-fit:contain; border-radius:50%; padding:4px; box-sizing:border-box; background:#fff;">
+              </picture>
             </div>
             <div class="t-company-info">
               <div class="t-name">IMPORTADORA ALONZO</div>
@@ -918,8 +948,11 @@
         <div class="t-card fade-up d2">
           <div class="t-card-top">
             <div class="t-logo">
-              <img src="imagenes/khol.png" alt="Khole Esthetic" width="1080" height="602" loading="lazy"
-                style="width:100%; height:100%; object-fit:contain; border-radius:50%; padding:4px; box-sizing:border-box; background:#fff;">
+              <picture>
+                <source srcset="imagenes/khol.webp" type="image/webp">
+                <img src="imagenes/khol.png" alt="Khole Esthetic" width="1080" height="602" loading="lazy"
+                  style="width:100%; height:100%; object-fit:contain; border-radius:50%; padding:4px; box-sizing:border-box; background:#fff;">
+              </picture>
             </div>
             <div class="t-company-info">
               <div class="t-name">KHOLE ESTHETIC</div>
@@ -954,8 +987,11 @@
         <div class="t-card fade-up d3">
           <div class="t-card-top">
             <div class="t-logo">
-              <img src="imagenes/megamaxi-publicidad-digital.png" alt="Megamaxi" width="533" height="161" loading="lazy"
-                style="width:100%; height:100%; object-fit:contain; border-radius:50%; padding:4px; box-sizing:border-box; background:#fff;">
+              <picture>
+                <source srcset="imagenes/megamaxi-publicidad-digital.webp" type="image/webp">
+                <img src="imagenes/megamaxi-publicidad-digital.png" alt="Megamaxi" width="533" height="161" loading="lazy"
+                  style="width:100%; height:100%; object-fit:contain; border-radius:50%; padding:4px; box-sizing:border-box; background:#fff;">
+              </picture>
             </div>
             <div class="t-company-info">
               <div class="t-name">MEGAMAXI</div>
