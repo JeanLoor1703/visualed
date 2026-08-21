@@ -100,27 +100,138 @@
 
   <!-- CSS crítico inline: pinta el hero en < 500ms en móvil (FCP boost) -->
   <style>
-    :root{--cyan:#0077b6;--cyan-mid:#0096c7;--cyan-light:#00b4d8;--navy:#03071e;--slate:#64748b;--white:#ffffff}
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    html{scroll-behavior:smooth;scroll-padding-top:68px}
-    body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#f0fbff;color:#03071e;overflow-x:hidden}
-    header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.90);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,180,216,.12)}
-    nav{display:flex;align-items:center;justify-content:space-between;height:68px;max-width:1300px;margin:0 auto;padding:0 5%;gap:1rem}
-    #inicio{min-height:calc(100vh - 68px);padding:0 5%;position:relative;overflow:hidden;display:flex;align-items:center}
-    .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;width:100%;align-items:stretch;position:relative;z-index:1;padding:1rem 0 2rem}
-    h1.hero-title{font-size:clamp(2.3rem,5.5vw,4.2rem);font-weight:900;line-height:1.07;color:#03071e;margin-bottom:1.3rem;letter-spacing:-1.5px}
-    .resaltado-marca,.resaltado-localizacion{color:#0096c7}
-    .hero-sub{font-size:clamp(.9rem,1.4vw,1.04rem);color:#64748b;line-height:1.76;margin-bottom:2.2rem}
-    .hero-left{display:flex;flex-direction:column;justify-content:center;padding:2.5rem;border-radius:28px;background:rgba(255,255,255,.55)}
-    @media(max-width:768px){
-      .hero-grid{grid-template-columns:1fr;gap:1.5rem;padding:.75rem 0 1.5rem}
-      .hero-right-wrap{display:none}
-      h1.hero-title{font-size:clamp(1.8rem,7vw,2.4rem);letter-spacing:-.8px}
-      .hero-left{padding:1.5rem 1rem;border-radius:20px}
+    :root {
+      --cyan: #0077b6;
+      --cyan-mid: #0096c7;
+      --cyan-light: #00b4d8;
+      --navy: #03071e;
+      --slate: #64748b;
+      --white: #ffffff
     }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 68px
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #f0fbff;
+      color: #03071e;
+      overflow-x: hidden
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, .90);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(0, 180, 216, .12)
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 5%;
+      gap: 1rem
+    }
+
+    #inicio {
+      min-height: calc(100vh - 68px);
+      padding: 0 5%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      width: 100%;
+      align-items: stretch;
+      position: relative;
+      z-index: 1;
+      padding: 1rem 0 2rem
+    }
+
+    h1.hero-title {
+      font-size: clamp(2.3rem, 5.5vw, 4.2rem);
+      font-weight: 900;
+      line-height: 1.07;
+      color: #03071e;
+      margin-bottom: 1.3rem;
+      letter-spacing: -1.5px
+    }
+
+    .resaltado-marca,
+    .resaltado-localizacion {
+      color: #0096c7
+    }
+
+    .hero-sub {
+      font-size: clamp(.9rem, 1.4vw, 1.04rem);
+      color: #64748b;
+      line-height: 1.76;
+      margin-bottom: 2.2rem
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2.5rem;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, .55)
+    }
+
+    @media(max-width:768px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: .75rem 0 1.5rem
+      }
+
+      .hero-right-wrap {
+        display: none
+      }
+
+      h1.hero-title {
+        font-size: clamp(1.8rem, 7vw, 2.4rem);
+        letter-spacing: -.8px
+      }
+
+      .hero-left {
+        padding: 1.5rem 1rem;
+        border-radius: 20px
+      }
+    }
+
     /* Hero: dimensiones mínimas fijas para CLS=0 sin ocultar el contenido */
-    #inicio{min-height:560px}
-    @media(max-width:768px){#inicio{min-height:420px}}
+    #inicio {
+      min-height: 560px
+    }
+
+    @media(max-width:768px) {
+      #inicio {
+        min-height: 420px
+      }
+    }
   </style>
   <!-- Estilos: minificado para menor tiempo de bloqueo -->
   <link rel="stylesheet" href="styles/style.min.css">
@@ -189,935 +300,922 @@
   </header>
   <main>
 
-  <!-- HERO -->
-  <section id="inicio">
-    <div class="blob1"></div>
-    <div class="blob2"></div>
-    <div class="hero-grid">
+    <!-- HERO -->
+    <section id="inicio">
+      <div class="blob1"></div>
+      <div class="blob2"></div>
+      <div class="hero-grid">
 
-      <!-- Left copy -->
-      <div class="hero-left hero-left-section">
-        <span class="hero-tag badge-superior fade-up"><span class="dot"></span> • Tu marca en el punto más
-          estratégico</span>
+        <!-- Left copy -->
+        <div class="hero-left hero-left-section">
+          <span class="hero-tag badge-superior fade-up"><span class="dot"></span> • Tu marca en el punto más
+            estratégico</span>
 
-        <h1 class="hero-title hero-titulo fade-up d1">
-          <span class="resaltado-marca">Publicita tu marca</span> y haz que todo <span class="resaltado-localizacion">El
-            Empalme</span> sepa quién eres.
-        </h1>
+          <h1 class="hero-title hero-titulo fade-up d1">
+            <span class="resaltado-marca">Publicita tu marca</span> y haz que todo <span
+              class="resaltado-localizacion">El
+              Empalme</span> sepa quién eres.
+          </h1>
 
-        <p class="hero-sub hero-descripcion fade-up d2">
-          Posiciona tu negocio en la pantalla gigante con mayor tráfico del cantón. En VisuaLed te ofrecemos asesoría,
-          diseño creativo profesional y exposición estratégica en el redondel principal. Asegura tu lugar donde todos te
-          ven.
-        </p>
+          <p class="hero-sub hero-descripcion fade-up d2">
+            Posiciona tu negocio en la pantalla gigante con mayor tráfico del cantón. En VisuaLed te ofrecemos asesoría,
+            diseño creativo profesional y exposición estratégica en el redondel principal. Asegura tu lugar donde todos
+            te
+            ven.
+          </p>
 
-        <div class="info-bloques fade-up d3">
-          <div class="info-item">
-            <div class="info-icono-wrapper icon-visibilidad">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
+          <div class="info-bloques fade-up d3">
+            <div class="info-item">
+              <div class="info-icono-wrapper icon-visibilidad">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </div>
+              <span class="info-divisor"></span>
+              <div class="info-contenido">
+                <p class="info-texto-enfasis">Haz que todos te vean</p>
+              </div>
             </div>
-            <span class="info-divisor"></span>
-            <div class="info-contenido">
-              <p class="info-texto-enfasis">Haz que todos te vean</p>
+
+            <div class="info-item">
+              <div class="info-icono-wrapper icon-rendimiento">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                  <polyline points="17 6 23 6 23 12" />
+                </svg>
+              </div>
+              <span class="info-divisor"></span>
+              <div class="info-contenido">
+                <p class="info-texto-enfasis">Alta visibilidad. Resultados reales.</p>
+              </div>
             </div>
           </div>
 
-          <div class="info-item">
-            <div class="info-icono-wrapper icon-rendimiento">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                <polyline points="17 6 23 6 23 12" />
-              </svg>
-            </div>
-            <span class="info-divisor"></span>
-            <div class="info-contenido">
-              <p class="info-texto-enfasis">Alta visibilidad. Resultados reales.</p>
-            </div>
+          <div class="hero-ctas fade-up d4">
+            <a href="https://wa.me/593989489429" class="btn-primary btn-principal">📈 Multiplica tus clientes</a>
+            <a href="#servicios" class="btn-outline btn-secundario">Ver servicios →</a>
           </div>
         </div>
 
-        <div class="hero-ctas fade-up d4">
-          <a href="https://wa.me/593989489429" class="btn-primary btn-principal">📈 Multiplica tus clientes</a>
-          <a href="#servicios" class="btn-outline btn-secundario">Ver servicios →</a>
-        </div>
-      </div>
-
-      <!-- Right mosaic -->
-      <div class="hero-right-wrap fade-up d2">
-        <!-- Floating card top-left -->
-        <div class="fc fc1">
-          <div class="fc-tag">📊 Impacto mensual</div>
-          <div class="fc-val"><em>+<span id="impacto-mensual-counter">0</span>K</em> impresiones</div>
-          <div class="fc-bars">
-            <div class="fc-bar-item" style="height:14px;background:rgba(0,150,199,.15)"></div>
-            <div class="fc-bar-item" style="height:20px;background:rgba(0,150,199,.25)"></div>
-            <div class="fc-bar-item" style="height:16px;background:rgba(0,150,199,.2)"></div>
-            <div class="fc-bar-item" style="height:26px;background:var(--cyan-mid)"></div>
-            <div class="fc-bar-item" style="height:22px;background:rgba(0,150,199,.35)"></div>
-            <div class="fc-bar-item" style="height:30px;background:var(--cyan-mid)"></div>
-            <div class="fc-bar-item" style="height:24px;background:rgba(0,150,199,.45)"></div>
+        <!-- Right mosaic -->
+        <div class="hero-right-wrap fade-up d2">
+          <!-- Floating card top-left -->
+          <div class="fc fc1">
+            <div class="fc-tag">📊 Impacto mensual</div>
+            <div class="fc-val"><em>+<span id="impacto-mensual-counter">0</span>K</em> impresiones</div>
+            <div class="fc-bars">
+              <div class="fc-bar-item" style="height:14px;background:rgba(0,150,199,.15)"></div>
+              <div class="fc-bar-item" style="height:20px;background:rgba(0,150,199,.25)"></div>
+              <div class="fc-bar-item" style="height:16px;background:rgba(0,150,199,.2)"></div>
+              <div class="fc-bar-item" style="height:26px;background:var(--cyan-mid)"></div>
+              <div class="fc-bar-item" style="height:22px;background:rgba(0,150,199,.35)"></div>
+              <div class="fc-bar-item" style="height:30px;background:var(--cyan-mid)"></div>
+              <div class="fc-bar-item" style="height:24px;background:rgba(0,150,199,.45)"></div>
+            </div>
           </div>
-        </div>
 
-        <div class="mosaic-grid">
+          <div class="mosaic-grid">
 
-          <!-- =====================================================
+            <!-- =====================================================
                PANTALLA 1 — Vallas (rectángulo vertical, ocupa ambas filas)
                ===================================================== -->
-          <div class="m-card m-main" id="slider-vallas">
+            <div class="m-card m-main" id="slider-vallas">
 
-            <!-- [IMAGEN 1] Vallas — slot 1 (LCP: fetchpriority high) -->
-            <img class="slider-img active"
-              src="imagenes/visuall.jpg"
-              srcset="imagenes/visuall.jpg 560w,
+              <!-- [IMAGEN 1] Vallas — slot 1 (LCP: fetchpriority high) -->
+              <img class="slider-img active" src="imagenes/visuall.jpg" srcset="imagenes/visuall.jpg 560w,
                       imagenes/visuall.jpg 800w,
-                      imagenes/visuall.jpg 1536w"
-              sizes="(max-width: 768px) 560px, (max-width: 1200px) 800px, 1536px"
-              width="1536" height="2752"
-              alt="Agencia publicitaria en Ecuador - VisuaLed ec"
-              fetchpriority="high">
+                      imagenes/visuall.jpg 1536w" sizes="(max-width: 768px) 560px, (max-width: 1200px) 800px, 1536px"
+                width="1536" height="2752" alt="Agencia publicitaria en Ecuador - VisuaLed ec" fetchpriority="high">
 
-            <!-- [IMAGEN 2] Vallas — slot 2 -->
-            <img class="slider-img"
-              src="imagenes/pantalla-denoche-visualed-pantalla-publicitaria.jpg"
-              srcset="imagenes/pantalla-denoche-visualed-pantalla-publicitaria.jpg 560w,
+              <!-- [IMAGEN 2] Vallas — slot 2 -->
+              <img class="slider-img" src="imagenes/pantalla-denoche-visualed-pantalla-publicitaria.jpg" srcset="imagenes/pantalla-denoche-visualed-pantalla-publicitaria.jpg 560w,
                       imagenes/pantalla-denoche-visualed-pantalla-publicitaria.jpg 800w,
                       imagenes/pantalla-denoche-visualed-pantalla-publicitaria.jpg 1536w"
-              sizes="(max-width: 768px) 560px, (max-width: 1200px) 800px, 1536px"
-              width="1536" height="2752"
-              alt="Publicidad digital Ecuador - VisuaLed ec"
-              loading="lazy">
+                sizes="(max-width: 768px) 560px, (max-width: 1200px) 800px, 1536px" width="1536" height="2752"
+                alt="Publicidad digital Ecuador - VisuaLed ec" loading="lazy">
 
-            <!-- [IMAGEN 3] Vallas — slot 3 -->
-            <img class="slider-img"
-              src="imagenes/pantalla-led.jpg"
-              srcset="imagenes/pantalla-led.jpg 560w,
-                      imagenes/pantalla-led.jpg 688w"
-              sizes="(max-width: 768px) 560px, 688px"
-              width="688" height="1381"
-              alt="Agencia de publicidad nacional - VisuaLed ec"
-              loading="lazy">
+              <!-- [IMAGEN 3] Vallas — slot 3 -->
+              <img class="slider-img" src="imagenes/pantalla-led.jpg" srcset="imagenes/pantalla-led.jpg 560w,
+                      imagenes/pantalla-led.jpg 688w" sizes="(max-width: 768px) 560px, 688px" width="688" height="1381"
+                alt="Agencia de publicidad nacional - VisuaLed ec" loading="lazy">
 
-          </div>
+            </div>
 
-          <!-- =====================================================
+            <!-- =====================================================
                PANTALLA 2 — Retail (cuadrado superior derecho)
                ===================================================== -->
-          <div class="m-card m-sm1" id="slider-retail">
+            <div class="m-card m-sm1" id="slider-retail">
 
-            <!-- [IMAGEN 1] Retail — slot 1 (fetchpriority high como imagen visible inicial) -->
-            <img class="slider-img active"
-              src="imagenes/pantallavidualed-Elempalme.jpg"
-              srcset="imagenes/pantallavidualed-Elempalme.jpg 560w,
+              <!-- [IMAGEN 1] Retail — slot 1 (fetchpriority high como imagen visible inicial) -->
+              <img class="slider-img active" src="imagenes/pantallavidualed-Elempalme.jpg" srcset="imagenes/pantallavidualed-Elempalme.jpg 560w,
                       imagenes/pantallavidualed-Elempalme.jpg 800w,
                       imagenes/pantallavidualed-Elempalme.jpg 2752w"
-              sizes="(max-width: 768px) 560px, (max-width: 1200px) 800px, 2752px"
-              width="2752" height="1536"
-              alt="Pantalla LED publicitaria en Ecuador - VisuaLed ec"
-              fetchpriority="high">
+                sizes="(max-width: 768px) 560px, (max-width: 1200px) 800px, 2752px" width="2752" height="1536"
+                alt="Pantalla LED publicitaria en Ecuador - VisuaLed ec" fetchpriority="high">
 
-            <!-- [IMAGEN 2] Retail — slot 2 -->
-            <img class="slider-img"
-              src="imagenes/visualed-redondel.jpg"
-              srcset="imagenes/visualed-redondel.jpg 560w,
-                      imagenes/visualed-redondel.jpg 1678w"
-              sizes="(max-width: 768px) 560px, 1678px"
-              width="1678" height="1671"
-              alt="Valla LED publicitaria - VisuaLed ec"
-              loading="lazy">
+              <!-- [IMAGEN 2] Retail — slot 2 -->
+              <img class="slider-img" src="imagenes/visualed-redondel.jpg" srcset="imagenes/visualed-redondel.jpg 560w,
+                      imagenes/visualed-redondel.jpg 1678w" sizes="(max-width: 768px) 560px, 1678px" width="1678"
+                height="1671" alt="Valla LED publicitaria - VisuaLed ec" loading="lazy">
 
-            <!-- [IMAGEN 3] Retail — slot 3 -->
-            <img class="slider-img"
-              src="imagenes/visuale-pantalla-led.jpg"
-              srcset="imagenes/visuale-pantalla-led.jpg 560w,
-                      imagenes/visuale-pantalla-led.jpg 1367w"
-              sizes="(max-width: 768px) 560px, 1367px"
-              width="1367" height="1070"
-              alt="Marketing visual Ecuador - VisuaLed ec"
-              loading="lazy">
+              <!-- [IMAGEN 3] Retail — slot 3 -->
+              <img class="slider-img" src="imagenes/visuale-pantalla-led.jpg" srcset="imagenes/visuale-pantalla-led.jpg 560w,
+                      imagenes/visuale-pantalla-led.jpg 1367w" sizes="(max-width: 768px) 560px, 1367px" width="1367"
+                height="1070" alt="Marketing visual Ecuador - VisuaLed ec" loading="lazy">
 
-          </div>
+            </div>
 
-          <!-- =====================================================
+            <!-- =====================================================
                PANTALLA 3 — Bebidas (cuadrado inferior derecho)
                ===================================================== -->
-          <div class="m-card m-sm2" id="slider-bebidas">
+            <div class="m-card m-sm2" id="slider-bebidas">
 
-            <!-- [IMAGEN 1] Bebidas — slot 1 (fetchpriority high: LCP en móvil) -->
-            <img class="slider-img active"
-              src="imagenes/pantallavisualedpublicidad.jpg"
-              srcset="imagenes/pantallavisualedpublicidad.jpg 560w,
+              <!-- [IMAGEN 1] Bebidas — slot 1 (fetchpriority high: LCP en móvil) -->
+              <img class="slider-img active" src="imagenes/pantallavisualedpublicidad.jpg" srcset="imagenes/pantallavisualedpublicidad.jpg 560w,
                       imagenes/pantallavisualedpublicidad.jpg 800w,
                       imagenes/pantallavisualedpublicidad.jpg 2752w"
-              sizes="(max-width: 768px) 560px, (max-width: 1200px) 800px, 2752px"
-              width="2752" height="1536"
-              alt="Anunciar negocio en Ecuador - VisuaLed ec"
-              fetchpriority="high">
+                sizes="(max-width: 768px) 560px, (max-width: 1200px) 800px, 2752px" width="2752" height="1536"
+                alt="Anunciar negocio en Ecuador - VisuaLed ec" fetchpriority="high">
 
-            <!-- [IMAGEN 2] Bebidas — slot 2 -->
-            <img class="slider-img"
-              src="imagenes/visualed-gente.jpg"
-              srcset="imagenes/visualed-gente.jpg 560w,
+              <!-- [IMAGEN 2] Bebidas — slot 2 -->
+              <img class="slider-img" src="imagenes/visualed-gente.jpg" srcset="imagenes/visualed-gente.jpg 560w,
                       imagenes/visualed-gente.jpg 800w,
                       imagenes/visualed-gente.jpg 2400w"
-              sizes="(max-width: 768px) 560px, (max-width: 1200px) 800px, 2400px"
-              width="2400" height="1792"
-              alt="Publicidad exterior digital - VisuaLed ec"
-              loading="lazy">
+                sizes="(max-width: 768px) 560px, (max-width: 1200px) 800px, 2400px" width="2400" height="1792"
+                alt="Publicidad exterior digital - VisuaLed ec" loading="lazy">
 
-            <!-- [IMAGEN 3] Bebidas — slot 3 -->
-            <img class="slider-img"
-              src="imagenes/visualed-publicidad-el-empalme.jpg"
-              srcset="imagenes/visualed-publicidad-el-empalme.jpg 560w,
-                      imagenes/visualed-publicidad-el-empalme.jpg 1348w"
-              sizes="(max-width: 768px) 560px, 1348px"
-              width="1348" height="784"
-              alt="Empresa de publicidad nacional - VisuaLed ec"
-              loading="lazy">
+              <!-- [IMAGEN 3] Bebidas — slot 3 -->
+              <img class="slider-img" src="imagenes/visualed-publicidad-el-empalme.jpg" srcset="imagenes/visualed-publicidad-el-empalme.jpg 560w,
+                      imagenes/visualed-publicidad-el-empalme.jpg 1348w" sizes="(max-width: 768px) 560px, 1348px"
+                width="1348" height="784" alt="Empresa de publicidad nacional - VisuaLed ec" loading="lazy">
+
+            </div>
 
           </div>
 
-        </div>
-
-        <!-- Floating card bottom-right -->
-        <div class="metrics-floating-card fc fc2">
-          <div class="metrics-group">
-            <div class="metric-item">
-              <span class="metric-number" id="vistas-diarias-counter">+0</span>
-              <span class="metric-label">Vistas diarias</span>
-            </div>
-            <div class="metric-item">
-              <span class="metric-number"><span id="visibilidad-counter">0</span>/7</span>
-              <span class="metric-label">Visibilidad total</span>
-            </div>
-            <div class="metric-item">
-              <span class="metric-number" id="provincias-counter">0</span>
-              <span class="metric-label">Provincias conectadas</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- TRUST BAR -->
-  <section class="trust-bar">
-    <p class="trust-title">Empresas que confían en VisuaLed</p>
-    <div class="slider-outer">
-      <div class="slider-track">
-
-        <!-- [MARCA 1] Sana Sana -->
-        <div class="brand-card">
-          <picture>
-            <source srcset="imagenes/sana.webp" type="image/webp">
-            <img src="imagenes/sana.png" alt="Sana Sana" width="891" height="500" loading="lazy">
-          </picture>
-        </div>
-
-        <!-- [MARCA 2] Pingüino -->
-        <div class="brand-card">
-          <img src="imagenes/pinguino-pantalla-publicitaria.png" alt="Pingüino" width="320" height="320" loading="lazy">
-        </div>
-
-        <!-- [MARCA 3] Alonzo -->
-        <div class="brand-card">
-          <picture>
-            <source srcset="imagenes/importadora-alonzo (1).webp" type="image/webp">
-            <img src="imagenes/importadora-alonzo (1).png" alt="Alonzo" width="225" height="225" loading="lazy">
-          </picture>
-        </div>
-
-        <!-- [MARCA 4] Cerveza Club -->
-        <div class="brand-card">
-          <picture>
-            <source srcset="imagenes/cerveza-club (1).webp" type="image/webp">
-            <img src="imagenes/cerveza-club (1).png" alt="Cerveza Club" width="730" height="295" loading="lazy">
-          </picture>
-        </div>
-
-        <!-- [MARCA 5] Kloe Estethic -->
-        <div class="brand-card">
-          <picture>
-            <source srcset="imagenes/khol.webp" type="image/webp">
-            <img src="imagenes/khol.png" alt="Kloe Estethic" width="1080" height="602" loading="lazy">
-          </picture>
-        </div>
-
-        <!-- [MARCA 6] Megamaxi -->
-        <div class="brand-card">
-          <picture>
-            <source srcset="imagenes/megamaxi-publicidad-digital.webp" type="image/webp">
-            <img src="imagenes/megamaxi-publicidad-digital.png" alt="Megamaxi" width="533" height="161" loading="lazy">
-          </picture>
-        </div>
-
-        <!-- [MARCA 7] Natura -->
-        <div class="brand-card">
-          <img src="imagenes/natura.gif" alt="Natura" width="800" height="500" loading="lazy">
-        </div>
-
-        <!-- [MARCA 8] Pilsener -->
-        <div class="brand-card">
-          <img src="imagenes/pilsener.png" alt="Pilsener" width="320" height="320" loading="lazy">
-        </div>
-
-        <!-- DUPLICADO para el loop infinito -->
-        <div class="brand-card">
-          <picture>
-            <source srcset="imagenes/sana.webp" type="image/webp">
-            <img src="imagenes/sana.png" alt="Sana Sana" width="891" height="500" loading="lazy">
-          </picture>
-        </div>
-        <div class="brand-card">
-          <img src="imagenes/pinguino-pantalla-publicitaria.png" alt="Pingüino" width="320" height="320" loading="lazy">
-        </div>
-        <div class="brand-card">
-          <picture>
-            <source srcset="imagenes/importadora-alonzo (1).webp" type="image/webp">
-            <img src="imagenes/importadora-alonzo (1).png" alt="Alonzo" width="225" height="225" loading="lazy">
-          </picture>
-        </div>
-        <div class="brand-card">
-          <picture>
-            <source srcset="imagenes/cerveza-club (1).webp" type="image/webp">
-            <img src="imagenes/cerveza-club (1).png" alt="Cerveza Club" width="730" height="295" loading="lazy">
-          </picture>
-        </div>
-        <div class="brand-card">
-          <picture>
-            <source srcset="imagenes/khol.webp" type="image/webp">
-            <img src="imagenes/khol.png" alt="Kloe Estethic" width="1080" height="602" loading="lazy">
-          </picture>
-        </div>
-        <div class="brand-card">
-          <picture>
-            <source srcset="imagenes/megamaxi-publicidad-digital.webp" type="image/webp">
-            <img src="imagenes/megamaxi-publicidad-digital.png" alt="Megamaxi" width="533" height="161" loading="lazy">
-          </picture>
-        </div>
-        <div class="brand-card">
-          <img src="imagenes/natura.gif" alt="Natura" width="800" height="500" loading="lazy">
-        </div>
-        <div class="brand-card">
-          <img src="imagenes/Pilsenerlogo.png" alt="Pilsener" width="320" height="320" loading="lazy">
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- LOCATION -->
-  <section id="ubicacion" class="sec">
-    <div class="sec-inner">
-      <div class="loc-grid">
-        <div class="loc-text">
-          <div class="tag-pill fade-up">📍 Ubicación Estratégica</div>
-          <h2 class="sec-title fade-up d1">El Corazón Logístico<br>de 3 Provincias</h2>
-          <p class="fade-up d2">
-            El redondel de El Empalme es el nexo vial más importante del litoral ecuatoriano. Es el punto de
-            convergencia entre las vías que conectan <strong>Guayaquil, Quevedo, Manabí y la Guayas </strong>,
-            convirtiendo nuestra
-            pantalla en el corredor comercial de mayor tráfico del cantón.
-          </p>
-          <p class="fade-up d2">
-            No es simplemente una pantalla — es presencia permanente ante transportistas, familias, comerciantes y
-            tomadores de decisiones que transitan este punto las <strong>24 horas del día, 365 días al año</strong>.
-          </p>
-          <div class="stats-quad">
-            <div class="stat-tile fade-up d2">
-              <div class="st-num">+<span id="loc-vistas-counter">0</span><em>K</em></div>
-              <div class="st-lbl">Vistas diarias garantizadas</div>
-            </div>
-            <div class="stat-tile fade-up d3">
-              <div class="st-num"><span id="loc-visibilidad-counter">0</span><em>/7</em></div>
-              <div class="st-lbl">Visibilidad continua</div>
-            </div>
-            <div class="stat-tile fade-up d3">
-              <div class="st-num"><em><span id="loc-provincias-counter">0</span></em></div>
-              <div class="st-lbl">Provincias conectadas</div>
-            </div>
-            <div class="stat-tile fade-up d4">
-              <div class="st-num">#<em><span id="loc-trafico-counter">0</span></em></div>
-              <div class="st-lbl">Mayor tráfico del cantón</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Illustrated map -->
-        <div class="map-box fade-up d2">
-          <svg viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="dotGrid" width="22" height="22" patternUnits="userSpaceOnUse">
-                <circle cx="11" cy="11" r="1.3" fill="rgba(0,150,199,0.18)" />
-              </pattern>
-            </defs>
-            <rect width="400" height="460" fill="url(#dotGrid)" />
-            <ellipse cx="75" cy="90" rx="52" ry="38" fill="rgba(0,150,199,0.08)" />
-            <ellipse cx="320" cy="370" rx="42" ry="32" fill="rgba(0,180,216,0.07)" />
-            <rect x="0" y="207" width="400" height="32" fill="rgba(255,255,255,0.85)" rx="2" />
-            <line x1="0" y1="223" x2="400" y2="223" stroke="rgba(0,150,199,0.25)" stroke-width="1.5"
-              stroke-dasharray="18,14" />
-            <rect x="185" y="0" width="32" height="460" fill="rgba(255,255,255,0.85)" rx="2" />
-            <line x1="201" y1="0" x2="201" y2="460" stroke="rgba(0,150,199,0.25)" stroke-width="1.5"
-              stroke-dasharray="18,14" />
-            <line x1="0" y1="0" x2="182" y2="182" stroke="rgba(255,255,255,0.82)" stroke-width="30"
-              stroke-linecap="round" />
-            <line x1="14" y1="14" x2="182" y2="182" stroke="rgba(0,150,199,0.2)" stroke-width="1.5"
-              stroke-dasharray="16,13" />
-            <circle cx="201" cy="223" r="45" fill="rgba(0,180,216,0.18)" stroke="rgba(0,150,199,0.4)"
-              stroke-width="2.5" />
-            <circle cx="201" cy="223" r="22" fill="rgba(208,244,255,0.9)" stroke="rgba(0,150,199,0.3)"
-              stroke-width="1.5" />
-            <circle cx="201" cy="223" r="8" fill="rgba(0,150,199,0.65)" />
-            <text x="112" y="219" fill="rgba(0,119,182,0.55)" font-size="17">→</text>
-            <text x="290" y="230" fill="rgba(0,119,182,0.55)" font-size="17">→</text>
-            <text x="195" y="115" fill="rgba(0,119,182,0.55)" font-size="17">↑</text>
-            <text x="205" y="320" fill="rgba(0,119,182,0.55)" font-size="17">↓</text>
-          </svg>
-          <span class="map-lbl" style="left:8px;top:50%;transform:translateY(-50%);">← Guayaquil</span>
-          <span class="map-lbl" style="right:8px;top:50%;transform:translateY(-50%);">Quevedo →</span>
-          <span class="map-lbl" style="top:8px;left:50%;transform:translateX(-50%);">↑ Manabí</span>
-          <div class="pulse-wrap">
-            <div class="pulse-ring"></div>
-          </div>
-          <div class="pin-wrap">
-            <span class="pin-em">📍</span>
-            <span class="pin-name">VisuaLed Publicidad</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECCIÓN 1 Y 2: PLANES DE PAUTAJE INTERACTIVOS (CON ENCABEZADO Y GANCHO INTEGRADO) -->
-  <section id="planes" class="sec py-16 bg-[#f0fbff]">
-    <div class="sec-inner max-w-6xl mx-auto px-4">
-
-      <!-- Encabezado de la Sección Unificado -->
-      <div class="text-center mb-16 max-w-4xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-extrabold text-[#03071e] mb-4">
-          Elige el espacio ideal para tu negocio
-        </h2>
-        <p class="text-base md:text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
-          Anunciar tu marca en el punto de mayor tráfico te cuesta menos de $5 al día. Eso es menos de lo que gastas en
-          un café con bolón en la mañana. Deja de gastar en lo que nadie mira y posiciónate en el redondel principal de
-          El Empalme.
-        </p>
-      </div>
-
-      <!-- Grid de 3 tarjetas -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-
-        <!-- Tarjeta 1: PLAN STANDARD -->
-        <div
-          class="plan-card bg-white rounded-2xl p-8 shadow-md border border-slate-100 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col relative group">
-          <div>
-            <!-- Icono megáfono centrado -->
-            <div class="text-center mb-6">
-              <div
-                class="plan-icon-container w-12 h-12 bg-[#e8f8fc] rounded-full mx-auto flex justify-center items-center transition-transform duration-300 group-hover:scale-110">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#00b4d8]" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
-                </svg>
+          <!-- Floating card bottom-right -->
+          <div class="metrics-floating-card fc fc2">
+            <div class="metrics-group">
+              <div class="metric-item">
+                <span class="metric-number" id="vistas-diarias-counter">+0</span>
+                <span class="metric-label">Vistas diarias</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-number"><span id="visibilidad-counter">0</span>/7</span>
+                <span class="metric-label">Visibilidad total</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-number" id="provincias-counter">0</span>
+                <span class="metric-label">Provincias conectadas</span>
               </div>
             </div>
-            <div class="text-center">
-              <h3 class="text-lg font-bold text-[#03071e] mb-1">PLAN STANDARD</h3>
-              <div class="text-sm font-medium text-slate-500 mb-4 uppercase tracking-wider">2,000 Reproducciones</div>
+          </div>
+        </div>
 
-              <!-- Precio Destacado -->
-              <div class="text-2xl font-bold text-slate-900 mb-6">
-                Desde <span class="text-[#12d362] font-black">$250</span>/mes
+      </div>
+    </section>
+
+    <!-- TRUST BAR -->
+    <section class="trust-bar">
+      <p class="trust-title">Empresas que confían en VisuaLed</p>
+      <div class="slider-outer">
+        <div class="slider-track">
+
+          <!-- [MARCA 1] Sana Sana -->
+          <div class="brand-card">
+            <picture>
+              <source srcset="imagenes/sana.webp" type="image/webp">
+              <img src="imagenes/sana.png" alt="Sana Sana" width="891" height="500" loading="lazy">
+            </picture>
+          </div>
+
+          <!-- [MARCA 2] Pingüino -->
+          <div class="brand-card">
+            <img src="imagenes/pinguino-pantalla-publicitaria.png" alt="Pingüino" width="320" height="320"
+              loading="lazy">
+          </div>
+
+          <!-- [MARCA 3] Alonzo -->
+          <div class="brand-card">
+            <picture>
+              <source srcset="imagenes/importadora-alonzo (1).webp" type="image/webp">
+              <img src="imagenes/importadora-alonzo (1).png" alt="Alonzo" width="225" height="225" loading="lazy">
+            </picture>
+          </div>
+
+          <!-- [MARCA 4] Cerveza Club -->
+          <div class="brand-card">
+            <picture>
+              <source srcset="imagenes/cerveza-club (1).webp" type="image/webp">
+              <img src="imagenes/cerveza-club (1).png" alt="Cerveza Club" width="730" height="295" loading="lazy">
+            </picture>
+          </div>
+
+          <!-- [MARCA 5] Kloe Estethic -->
+          <div class="brand-card">
+            <picture>
+              <source srcset="imagenes/khol.webp" type="image/webp">
+              <img src="imagenes/khol.png" alt="Kloe Estethic" width="1080" height="602" loading="lazy">
+            </picture>
+          </div>
+
+          <!-- [MARCA 6] Megamaxi -->
+          <div class="brand-card">
+            <picture>
+              <source srcset="imagenes/megamaxi-publicidad-digital.webp" type="image/webp">
+              <img src="imagenes/megamaxi-publicidad-digital.png" alt="Megamaxi" width="533" height="161"
+                loading="lazy">
+            </picture>
+          </div>
+
+          <!-- [MARCA 7] Natura -->
+          <div class="brand-card">
+            <img src="imagenes/natura.gif" alt="Natura" width="800" height="500" loading="lazy">
+          </div>
+
+          <!-- [MARCA 8] Pilsener -->
+          <div class="brand-card">
+            <img src="imagenes/pilsener.png" alt="Pilsener" width="320" height="320" loading="lazy">
+          </div>
+
+          <!-- DUPLICADO para el loop infinito -->
+          <div class="brand-card">
+            <picture>
+              <source srcset="imagenes/sana.webp" type="image/webp">
+              <img src="imagenes/sana.png" alt="Sana Sana" width="891" height="500" loading="lazy">
+            </picture>
+          </div>
+          <div class="brand-card">
+            <img src="imagenes/pinguino-pantalla-publicitaria.png" alt="Pingüino" width="320" height="320"
+              loading="lazy">
+          </div>
+          <div class="brand-card">
+            <picture>
+              <source srcset="imagenes/importadora-alonzo (1).webp" type="image/webp">
+              <img src="imagenes/importadora-alonzo (1).png" alt="Alonzo" width="225" height="225" loading="lazy">
+            </picture>
+          </div>
+          <div class="brand-card">
+            <picture>
+              <source srcset="imagenes/cerveza-club (1).webp" type="image/webp">
+              <img src="imagenes/cerveza-club (1).png" alt="Cerveza Club" width="730" height="295" loading="lazy">
+            </picture>
+          </div>
+          <div class="brand-card">
+            <picture>
+              <source srcset="imagenes/khol.webp" type="image/webp">
+              <img src="imagenes/khol.png" alt="Kloe Estethic" width="1080" height="602" loading="lazy">
+            </picture>
+          </div>
+          <div class="brand-card">
+            <picture>
+              <source srcset="imagenes/megamaxi-publicidad-digital.webp" type="image/webp">
+              <img src="imagenes/megamaxi-publicidad-digital.png" alt="Megamaxi" width="533" height="161"
+                loading="lazy">
+            </picture>
+          </div>
+          <div class="brand-card">
+            <img src="imagenes/natura.gif" alt="Natura" width="800" height="500" loading="lazy">
+          </div>
+          <div class="brand-card">
+            <img src="imagenes/Pilsenerlogo.png" alt="Pilsener" width="320" height="320" loading="lazy">
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- LOCATION -->
+    <section id="ubicacion" class="sec">
+      <div class="sec-inner">
+        <div class="loc-grid">
+          <div class="loc-text">
+            <div class="tag-pill fade-up">📍 Ubicación Estratégica</div>
+            <h2 class="sec-title fade-up d1">El Corazón Logístico<br>de 3 Provincias</h2>
+            <p class="fade-up d2">
+              El redondel de El Empalme es el nexo vial más importante del litoral ecuatoriano. Es el punto de
+              convergencia entre las vías que conectan <strong>Guayaquil, Quevedo, Manabí y la Guayas </strong>,
+              convirtiendo nuestra
+              pantalla en el corredor comercial de mayor tráfico del cantón.
+            </p>
+            <p class="fade-up d2">
+              No es simplemente una pantalla — es presencia permanente ante transportistas, familias, comerciantes y
+              tomadores de decisiones que transitan este punto las <strong>24 horas del día, 365 días al año</strong>.
+            </p>
+            <div class="stats-quad">
+              <div class="stat-tile fade-up d2">
+                <div class="st-num">+<span id="loc-vistas-counter">0</span><em>K</em></div>
+                <div class="st-lbl">Vistas diarias garantizadas</div>
+              </div>
+              <div class="stat-tile fade-up d3">
+                <div class="st-num"><span id="loc-visibilidad-counter">0</span><em>/7</em></div>
+                <div class="st-lbl">Visibilidad continua</div>
+              </div>
+              <div class="stat-tile fade-up d3">
+                <div class="st-num"><em><span id="loc-provincias-counter">0</span></em></div>
+                <div class="st-lbl">Provincias conectadas</div>
+              </div>
+              <div class="stat-tile fade-up d4">
+                <div class="st-num">#<em><span id="loc-trafico-counter">0</span></em></div>
+                <div class="st-lbl">Mayor tráfico del cantón</div>
               </div>
             </div>
-
-            <ul class="space-y-4 mb-8 list-none p-0 text-left">
-              <li class="flex items-start gap-2.5 text-slate-700">
-                <span class="text-[#12d362] font-black text-lg">✓</span>
-                <span>Presencia diaria en pantalla LED</span>
-              </li>
-              <li class="flex items-start gap-2.5 text-slate-700">
-                <span class="text-[#12d362] font-black text-lg">✓</span>
-                <span>Ideal para emprendedores locales</span>
-              </li>
-              <li class="flex items-start gap-2.5 text-slate-700">
-                <span class="text-[#12d362] font-black text-lg">✓</span>
-                <span>Exposición constante 24/7</span>
-              </li>
-            </ul>
           </div>
-          <a href="https://wa.me/593989489429?text=Hola%20VisuaLed,%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Plan%20Standard%20de%202,000%20reproducciones."
-            target="_blank"
-            class="btn-shimmer w-full max-w-[92%] mx-auto mt-auto flex items-center justify-center gap-1.5 h-12 bg-[#12d362] hover:bg-[#0eb653] text-white text-xs sm:text-sm md:text-[10px] lg:text-xs xl:text-sm font-bold rounded-xl shadow-md transition-all duration-300 hover:scale-105 border-0 cursor-pointer no-underline px-2 sm:px-4 leading-none whitespace-nowrap">
-            <svg class="w-5 h-5 fill-current flex-shrink-0" viewBox="0 0 24 24">
-              <path
-                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+
+          <!-- Illustrated map -->
+          <div class="map-box fade-up d2">
+            <svg viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="dotGrid" width="22" height="22" patternUnits="userSpaceOnUse">
+                  <circle cx="11" cy="11" r="1.3" fill="rgba(0,150,199,0.18)" />
+                </pattern>
+              </defs>
+              <rect width="400" height="460" fill="url(#dotGrid)" />
+              <ellipse cx="75" cy="90" rx="52" ry="38" fill="rgba(0,150,199,0.08)" />
+              <ellipse cx="320" cy="370" rx="42" ry="32" fill="rgba(0,180,216,0.07)" />
+              <rect x="0" y="207" width="400" height="32" fill="rgba(255,255,255,0.85)" rx="2" />
+              <line x1="0" y1="223" x2="400" y2="223" stroke="rgba(0,150,199,0.25)" stroke-width="1.5"
+                stroke-dasharray="18,14" />
+              <rect x="185" y="0" width="32" height="460" fill="rgba(255,255,255,0.85)" rx="2" />
+              <line x1="201" y1="0" x2="201" y2="460" stroke="rgba(0,150,199,0.25)" stroke-width="1.5"
+                stroke-dasharray="18,14" />
+              <line x1="0" y1="0" x2="182" y2="182" stroke="rgba(255,255,255,0.82)" stroke-width="30"
+                stroke-linecap="round" />
+              <line x1="14" y1="14" x2="182" y2="182" stroke="rgba(0,150,199,0.2)" stroke-width="1.5"
+                stroke-dasharray="16,13" />
+              <circle cx="201" cy="223" r="45" fill="rgba(0,180,216,0.18)" stroke="rgba(0,150,199,0.4)"
+                stroke-width="2.5" />
+              <circle cx="201" cy="223" r="22" fill="rgba(208,244,255,0.9)" stroke="rgba(0,150,199,0.3)"
+                stroke-width="1.5" />
+              <circle cx="201" cy="223" r="8" fill="rgba(0,150,199,0.65)" />
+              <text x="112" y="219" fill="rgba(0,119,182,0.55)" font-size="17">→</text>
+              <text x="290" y="230" fill="rgba(0,119,182,0.55)" font-size="17">→</text>
+              <text x="195" y="115" fill="rgba(0,119,182,0.55)" font-size="17">↑</text>
+              <text x="205" y="320" fill="rgba(0,119,182,0.55)" font-size="17">↓</text>
             </svg>
-            <span>Cotizar Plan Standard</span>
-          </a>
+            <span class="map-lbl" style="left:8px;top:50%;transform:translateY(-50%);">← Guayaquil</span>
+            <span class="map-lbl" style="right:8px;top:50%;transform:translateY(-50%);">Quevedo →</span>
+            <span class="map-lbl" style="top:8px;left:50%;transform:translateX(-50%);">↑ Manabí</span>
+            <div class="pulse-wrap">
+              <div class="pulse-ring"></div>
+            </div>
+            <div class="pin-wrap">
+              <span class="pin-em">📍</span>
+              <span class="pin-name">VisuaLed Publicidad</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 1 Y 2: PLANES DE PAUTAJE INTERACTIVOS (CON ENCABEZADO Y GANCHO INTEGRADO) -->
+    <section id="planes" class="sec py-16 bg-[#f0fbff]">
+      <div class="sec-inner max-w-6xl mx-auto px-4">
+
+        <!-- Encabezado de la Sección Unificado -->
+        <div class="text-center mb-16 max-w-4xl mx-auto">
+          <h2 class="text-3xl md:text-4xl font-extrabold text-[#03071e] mb-4">
+            Elige el espacio ideal para tu negocio
+          </h2>
+          <p class="text-base md:text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
+            Anunciar tu marca en el punto de mayor tráfico te cuesta menos de $5 al día. Eso es menos de lo que gastas
+            en
+            un café con bolón en la mañana. Deja de gastar en lo que nadie mira y posiciónate en el redondel principal
+            de
+            El Empalme.
+          </p>
         </div>
 
-        <!-- Tarjeta 2: PLAN AVANZADO (Destacada) -->
-        <div
-          class="plan-card bg-white rounded-2xl p-8 shadow-xl border border-cyan-400 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 flex flex-col relative group">
-          <!-- Tag superior minimalista integrado -->
+        <!-- Grid de 3 tarjetas -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+
+          <!-- Tarjeta 1: PLAN STANDARD -->
+          <div
+            class="plan-card bg-white rounded-2xl p-8 shadow-md border border-slate-100 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col relative group">
+            <div>
+              <!-- Icono megáfono centrado -->
+              <div class="text-center mb-6">
+                <div
+                  class="plan-icon-container w-12 h-12 bg-[#e8f8fc] rounded-full mx-auto flex justify-center items-center transition-transform duration-300 group-hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#00b4d8]" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+                  </svg>
+                </div>
+              </div>
+              <div class="text-center">
+                <h3 class="text-lg font-bold text-[#03071e] mb-1">PLAN STANDARD</h3>
+                <div class="text-sm font-medium text-slate-500 mb-4 uppercase tracking-wider">2,000 Reproducciones</div>
+
+                <!-- Precio Destacado -->
+                <div class="text-2xl font-bold text-slate-900 mb-6">
+                  Desde <span class="text-[#12d362] font-black">$250</span>/mes
+                </div>
+              </div>
+
+              <ul class="space-y-4 mb-8 list-none p-0 text-left">
+                <li class="flex items-start gap-2.5 text-slate-700">
+                  <span class="text-[#12d362] font-black text-lg">✓</span>
+                  <span>Presencia diaria en pantalla LED</span>
+                </li>
+                <li class="flex items-start gap-2.5 text-slate-700">
+                  <span class="text-[#12d362] font-black text-lg">✓</span>
+                  <span>Ideal para emprendedores locales</span>
+                </li>
+                <li class="flex items-start gap-2.5 text-slate-700">
+                  <span class="text-[#12d362] font-black text-lg">✓</span>
+                  <span>Exposición constante 24/7</span>
+                </li>
+              </ul>
+            </div>
+            <a href="https://wa.me/593989489429?text=Hola%20VisuaLed,%20deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20el%20Plan%20Standard%20de%202,000%20reproducciones."
+              target="_blank"
+              class="btn-shimmer w-full max-w-[92%] mx-auto mt-auto flex items-center justify-center gap-1.5 h-12 bg-[#12d362] hover:bg-[#0eb653] text-white text-xs sm:text-sm md:text-[10px] lg:text-xs xl:text-sm font-bold rounded-xl shadow-md transition-all duration-300 hover:scale-105 border-0 cursor-pointer no-underline px-2 sm:px-4 leading-none whitespace-nowrap">
+              <svg class="w-5 h-5 fill-current flex-shrink-0" viewBox="0 0 24 24">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+              <span>Cotizar Plan Standard</span>
+            </a>
+          </div>
+
+          <!-- Tarjeta 2: PLAN AVANZADO (Destacada) -->
+          <div
+            class="plan-card bg-white rounded-2xl p-8 shadow-xl border border-cyan-400 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 flex flex-col relative group">
+            <!-- Tag superior minimalista integrado -->
+            <span
+              class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-cyan-500 text-white text-[10px] font-bold uppercase tracking-widest px-4 py-1 rounded-full shadow-sm">Recomendado</span>
+            <div>
+              <!-- Icono monitor centrado -->
+              <div class="text-center mb-6 mt-2">
+                <div
+                  class="plan-icon-container w-12 h-12 bg-[#e8f8fc] rounded-full mx-auto flex justify-center items-center transition-transform duration-300 group-hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#00b4d8]" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+              </div>
+              <div class="text-center">
+                <h3 class="text-lg font-bold text-[#03071e] mb-1">PLAN AVANZADO</h3>
+                <div class="text-sm font-medium text-slate-500 mb-2 uppercase tracking-wider">6,000 Reproducciones</div>
+
+                <!-- Precio Destacado -->
+                <div class="text-2xl font-bold text-slate-900 mb-1">
+                  Desde <span class="text-[#12d362] font-black">$200</span>/mes
+                </div>
+
+                <!-- Subtexto del precio compactado -->
+                <div class="mb-6">
+                  <span
+                    class="text-[10px] md:text-xs text-blue-600 font-semibold bg-blue-50 px-2 py-0.5 rounded-full inline-block">Mínimo
+                    3 meses</span>
+                </div>
+              </div>
+
+              <ul class="space-y-4 mb-8 list-none p-0 text-left">
+                <li class="flex items-start gap-2.5 text-slate-700">
+                  <span class="text-[#12d362] font-black text-lg">✓</span>
+                  <span>Alta frecuencia de aparición</span>
+                </li>
+                <li class="flex items-start gap-2.5 text-slate-700">
+                  <span class="text-[#12d362] font-black text-lg">✓</span>
+                  <span>Ubicación premium en horas pico</span>
+                </li>
+                <li class="flex items-start gap-2.5 text-slate-700">
+                  <span class="text-[#12d362] font-black text-lg">✓</span>
+                  <span>Mayor recordación de marca en el cantón</span>
+                </li>
+              </ul>
+            </div>
+            <a href="https://wa.me/593989489429?text=Hola%20VisuaLed,%20deseo%20adquirir%20el%20Plan%20Avanzado%20Recomendado%20de%206,000%20reproducciones."
+              target="_blank"
+              class="btn-shimmer w-full max-w-[92%] mx-auto mt-auto flex items-center justify-center gap-1.5 h-12 bg-[#12d362] hover:bg-[#0eb653] text-white text-xs sm:text-sm md:text-[10px] lg:text-xs xl:text-sm font-bold rounded-xl shadow-md transition-all duration-300 hover:scale-105 border-0 cursor-pointer no-underline px-2 sm:px-4 leading-none whitespace-nowrap">
+              <svg class="w-5 h-5 fill-current flex-shrink-0" viewBox="0 0 24 24">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+              <span>Adquirir Recomendado 🚀</span>
+            </a>
+          </div>
+
+          <!-- Tarjeta 3: PLAN PREMIUM -->
+          <div
+            class="plan-card bg-white rounded-2xl p-8 shadow-md border border-slate-100 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col relative group">
+            <div>
+              <!-- Icono estrella centrado -->
+              <div class="text-center mb-6">
+                <div
+                  class="plan-icon-container w-12 h-12 bg-[#e8f8fc] rounded-full mx-auto flex justify-center items-center transition-transform duration-300 group-hover:scale-110">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#00b4d8]" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.907c.961 0 1.36 1.243.577 1.835l-3.97 2.887a1 1 0 00-.364 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.971-2.887a1 1 0 00-1.175 0l-3.97 2.887c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.364-1.118l-3.97-2.887c-.783-.576-.38-1.835.577-1.835h4.907a1 1 0 00.95-.69l1.519-4.674z" />
+                  </svg>
+                </div>
+              </div>
+              <div class="text-center">
+                <h3 class="text-lg font-bold text-[#03071e] mb-1">PLAN PREMIUM</h3>
+                <div class="text-sm font-medium text-slate-500 mb-2 uppercase tracking-wider">12,000 Reproducciones
+                </div>
+
+                <!-- Precio Destacado -->
+                <div class="text-2xl font-bold text-slate-900 mb-1">
+                  Desde <span class="text-[#12d362] font-black">$150</span>/mes
+                </div>
+
+                <!-- Subtexto del precio compactado -->
+                <div class="mb-6">
+                  <span
+                    class="text-[10px] md:text-xs text-blue-600 font-semibold bg-blue-50 px-2 py-0.5 rounded-full inline-block">Mínimo
+                    6 meses</span>
+                </div>
+              </div>
+
+              <ul class="space-y-4 mb-8 list-none p-0 text-left">
+                <li class="flex items-start gap-2.5 text-slate-700">
+                  <span class="text-[#12d362] font-black text-lg">✓</span>
+                  <span>Máxima exposición diaria continua</span>
+                </li>
+                <li class="flex items-start gap-2.5 text-slate-700">
+                  <span class="text-[#12d362] font-black text-lg">✓</span>
+                  <span>Alta repetición e impacto masivo</span>
+                </li>
+                <li class="flex items-start gap-2.5 text-slate-700">
+                  <span class="text-[#12d362] font-black text-lg">✓</span>
+                  <span>Ventaja total frente a tu competencia</span>
+                </li>
+              </ul>
+            </div>
+            <a href="https://wa.me/593989489429?text=Hola%20VisuaLed,%20deseo%20adquirir%20el%20Plan%20Premium%20para%20dominar%20mi%20zona%20con%2012,000%20reproducciones."
+              target="_blank"
+              class="btn-shimmer w-full max-w-[92%] mx-auto mt-auto flex items-center justify-center gap-1.5 h-12 bg-[#12d362] hover:bg-[#0eb653] text-white text-xs sm:text-sm md:text-[10px] lg:text-xs xl:text-sm font-bold rounded-xl shadow-md transition-all duration-300 hover:scale-105 border-0 cursor-pointer no-underline px-2 sm:px-4 leading-none whitespace-nowrap">
+              <svg class="w-5 h-5 fill-current flex-shrink-0" viewBox="0 0 24 24">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+              <span>Adquirir Plan Premium</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: NUESTROS SERVICIOS -->
+    <section id="servicios" class="sec py-16 bg-[#f0fbff]">
+      <div class="sec-inner max-w-6xl mx-auto px-4">
+        <!-- Encabezado de la Sección -->
+        <div class="text-center mb-12">
           <span
-            class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-cyan-500 text-white text-[10px] font-bold uppercase tracking-widest px-4 py-1 rounded-full shadow-sm">Recomendado</span>
-          <div>
-            <!-- Icono monitor centrado -->
-            <div class="text-center mb-6 mt-2">
-              <div
-                class="plan-icon-container w-12 h-12 bg-[#e8f8fc] rounded-full mx-auto flex justify-center items-center transition-transform duration-300 group-hover:scale-110">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#00b4d8]" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            class="inline-flex items-center gap-1.5 bg-[#e8f8fc] text-[#0077b6] text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider mb-3">
+            ⚡ NUESTROS SERVICIOS
+          </span>
+          <h2 class="text-3xl md:text-4xl font-extrabold text-[#03071e] leading-tight">
+            Todo lo que necesitas para dominar el mercado
+          </h2>
+        </div>
+
+        <!-- Grid de 3 columnas -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+
+          <!-- Columna 1: Alto Impacto Visual -->
+          <div
+            class="bg-white rounded-2xl p-8 shadow-md border border-slate-100/50 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col relative group">
+            <h3 class="text-lg font-bold text-[#03071e] mb-5 border-b border-slate-100 pb-3 flex items-center gap-3">
+              <span
+                class="w-9 h-9 rounded-lg bg-[#e8f8fc] flex items-center justify-center text-[#00b4d8] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path
+                    d="M19 10.5l1.2-2.7 2.7-1.2-2.7-1.2-1.2-2.7-1.2 2.7-2.7 1.2 2.7 1.2zm-10 1L11.5 6l2.5 5.5L19.5 14l-5.5 2.5L11.5 22 9 16.5 3.5 14zm0-9l.8 1.8 1.8.8-1.8.8-.8 1.8-.8-1.8-1.8-.8 1.8-.8z" />
                 </svg>
-              </div>
-            </div>
-            <div class="text-center">
-              <h3 class="text-lg font-bold text-[#03071e] mb-1">PLAN AVANZADO</h3>
-              <div class="text-sm font-medium text-slate-500 mb-2 uppercase tracking-wider">6,000 Reproducciones</div>
-
-              <!-- Precio Destacado -->
-              <div class="text-2xl font-bold text-slate-900 mb-1">
-                Desde <span class="text-[#12d362] font-black">$200</span>/mes
-              </div>
-
-              <!-- Subtexto del precio compactado -->
-              <div class="mb-6">
-                <span
-                  class="text-[10px] md:text-xs text-blue-600 font-semibold bg-blue-50 px-2 py-0.5 rounded-full inline-block">Mínimo
-                  3 meses</span>
-              </div>
-            </div>
-
-            <ul class="space-y-4 mb-8 list-none p-0 text-left">
+              </span>
+              <span>Alto Impacto Visual</span>
+            </h3>
+            <ul class="space-y-4 list-none p-0 m-0 text-left">
               <li class="flex items-start gap-2.5 text-slate-700">
-                <span class="text-[#12d362] font-black text-lg">✓</span>
-                <span>Alta frecuencia de aparición</span>
+                <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+                <span>Resolución Ultra HD y colores nítidos a gran distancia.</span>
               </li>
               <li class="flex items-start gap-2.5 text-slate-700">
-                <span class="text-[#12d362] font-black text-lg">✓</span>
-                <span>Ubicación premium en horas pico</span>
+                <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+                <span>Brillo adaptativo automático las 24 horas del día.</span>
               </li>
               <li class="flex items-start gap-2.5 text-slate-700">
-                <span class="text-[#12d362] font-black text-lg">✓</span>
-                <span>Mayor recordación de marca en el cantón</span>
+                <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+                <span>Ubicación estratégica en el redondel de mayor tráfico del cantón.</span>
               </li>
             </ul>
           </div>
-          <a href="https://wa.me/593989489429?text=Hola%20VisuaLed,%20deseo%20adquirir%20el%20Plan%20Avanzado%20Recomendado%20de%206,000%20reproducciones."
-            target="_blank"
-            class="btn-shimmer w-full max-w-[92%] mx-auto mt-auto flex items-center justify-center gap-1.5 h-12 bg-[#12d362] hover:bg-[#0eb653] text-white text-xs sm:text-sm md:text-[10px] lg:text-xs xl:text-sm font-bold rounded-xl shadow-md transition-all duration-300 hover:scale-105 border-0 cursor-pointer no-underline px-2 sm:px-4 leading-none whitespace-nowrap">
-            <svg class="w-5 h-5 fill-current flex-shrink-0" viewBox="0 0 24 24">
-              <path
-                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-            </svg>
-            <span>Adquirir Recomendado 🚀</span>
-          </a>
-        </div>
 
-        <!-- Tarjeta 3: PLAN PREMIUM -->
-        <div
-          class="plan-card bg-white rounded-2xl p-8 shadow-md border border-slate-100 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col relative group">
-          <div>
-            <!-- Icono estrella centrado -->
-            <div class="text-center mb-6">
-              <div
-                class="plan-icon-container w-12 h-12 bg-[#e8f8fc] rounded-full mx-auto flex justify-center items-center transition-transform duration-300 group-hover:scale-110">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#00b4d8]" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.907c.961 0 1.36 1.243.577 1.835l-3.97 2.887a1 1 0 00-.364 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.971-2.887a1 1 0 00-1.175 0l-3.97 2.887c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.364-1.118l-3.97-2.887c-.783-.576-.38-1.835.577-1.835h4.907a1 1 0 00.95-.69l1.519-4.674z" />
+          <!-- Columna 2: Formato Dinámico -->
+          <div
+            class="bg-white rounded-2xl p-8 shadow-md border border-slate-100/50 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col relative group">
+            <h3 class="text-lg font-bold text-[#03071e] mb-5 border-b border-slate-100 pb-3 flex items-center gap-3">
+              <span
+                class="w-9 h-9 rounded-lg bg-[#e8f8fc] flex items-center justify-center text-[#00b4d8] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path
+                    d="M18 4l2 3h-3l-2-3h-2l2 3h-3l-2-3H8l2 3H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4zm2 14H4V9h16v9z" />
                 </svg>
-              </div>
-            </div>
-            <div class="text-center">
-              <h3 class="text-lg font-bold text-[#03071e] mb-1">PLAN PREMIUM</h3>
-              <div class="text-sm font-medium text-slate-500 mb-2 uppercase tracking-wider">12,000 Reproducciones
-              </div>
-
-              <!-- Precio Destacado -->
-              <div class="text-2xl font-bold text-slate-900 mb-1">
-                Desde <span class="text-[#12d362] font-black">$150</span>/mes
-              </div>
-
-              <!-- Subtexto del precio compactado -->
-              <div class="mb-6">
-                <span
-                  class="text-[10px] md:text-xs text-blue-600 font-semibold bg-blue-50 px-2 py-0.5 rounded-full inline-block">Mínimo
-                  6 meses</span>
-              </div>
-            </div>
-
-            <ul class="space-y-4 mb-8 list-none p-0 text-left">
+              </span>
+              <span>Formato Dinámico</span>
+            </h3>
+            <ul class="space-y-4 list-none p-0 m-0 text-left">
               <li class="flex items-start gap-2.5 text-slate-700">
-                <span class="text-[#12d362] font-black text-lg">✓</span>
-                <span>Máxima exposición diaria continua</span>
+                <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+                <span>Spots de 20 segundos calibrados para máxima retención.</span>
               </li>
               <li class="flex items-start gap-2.5 text-slate-700">
-                <span class="text-[#12d362] font-black text-lg">✓</span>
-                <span>Alta repetición e impacto masivo</span>
+                <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+                <span>Rotación inteligente de anuncios en horarios premium.</span>
               </li>
               <li class="flex items-start gap-2.5 text-slate-700">
-                <span class="text-[#12d362] font-black text-lg">✓</span>
-                <span>Ventaja total frente a tu competencia</span>
+                <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+                <span>Alta recordación de marca mediante movimiento continuo.</span>
               </li>
             </ul>
           </div>
-          <a href="https://wa.me/593989489429?text=Hola%20VisuaLed,%20deseo%20adquirir%20el%20Plan%20Premium%20para%20dominar%20mi%20zona%20con%2012,000%20reproducciones."
-            target="_blank"
-            class="btn-shimmer w-full max-w-[92%] mx-auto mt-auto flex items-center justify-center gap-1.5 h-12 bg-[#12d362] hover:bg-[#0eb653] text-white text-xs sm:text-sm md:text-[10px] lg:text-xs xl:text-sm font-bold rounded-xl shadow-md transition-all duration-300 hover:scale-105 border-0 cursor-pointer no-underline px-2 sm:px-4 leading-none whitespace-nowrap">
-            <svg class="w-5 h-5 fill-current flex-shrink-0" viewBox="0 0 24 24">
-              <path
-                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-            </svg>
-            <span>Adquirir Plan Premium</span>
-          </a>
+
+          <!-- Columna 3: Soporte Creativo -->
+          <div
+            class="bg-white rounded-2xl p-8 shadow-md border border-slate-100/50 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col relative group">
+            <h3 class="text-lg font-bold text-[#03071e] mb-5 border-b border-slate-100 pb-3 flex items-center gap-3">
+              <span
+                class="w-9 h-9 rounded-lg bg-[#e8f8fc] flex items-center justify-center text-[#00b4d8] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path
+                    d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10c1.38 0 2.5-1.12 2.5-2.5 0-.61-.22-1.19-.61-1.66-.09-.11-.14-.24-.14-.38 0-.28.22-.5.5-.5h1.75c3.86 0 7-3.14 7-7 0-4.96-4.49-9-10-9zm-6.5 9c-.83 0-1.5-.67-1.5-1.5S4.67 8 5.5 8 7 8.67 7 9.5 6.33 11 5.5 11zm3-3C7.67 8 7 7.33 7 6.5S7.67 5 8.5 5 10 5.67 10 6.5 9.33 8 8.5 8zm4.5 0c-.83 0-1.5-.67-1.5-1.5S12.17 5 13 5s1.5.67 1.5 1.5S13.83 8 13 8zm4.5 3c-.83 0-1.5-.67-1.5-1.5S16.67 8 17.5 8 19 8.67 19 9.5s-.67 1.5-1.5 1.5z" />
+                </svg>
+              </span>
+              <span>Soporte Creativo</span>
+            </h3>
+            <ul class="space-y-4 list-none p-0 m-0 text-left">
+              <li class="flex items-start gap-2.5 text-slate-700">
+                <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+                <span>Diseño gráfico profesional adaptado al formato LED gigante.</span>
+              </li>
+              <li class="flex items-start gap-2.5 text-slate-700">
+                <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+                <span>Animación y motion graphics para destacar frente a vallas estáticas.</span>
+              </li>
+              <li class="flex items-start gap-2.5 text-slate-700">
+                <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
+                <span>Asesoría comercial y estructuración persuasiva de tus copys.</span>
+              </li>
+            </ul>
+          </div>
+
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- SECCIÓN 3: NUESTROS SERVICIOS -->
-  <section id="servicios" class="sec py-16 bg-[#f0fbff]">
-    <div class="sec-inner max-w-6xl mx-auto px-4">
-      <!-- Encabezado de la Sección -->
-      <div class="text-center mb-12">
-        <span
-          class="inline-flex items-center gap-1.5 bg-[#e8f8fc] text-[#0077b6] text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider mb-3">
-          ⚡ NUESTROS SERVICIOS
-        </span>
-        <h2 class="text-3xl md:text-4xl font-extrabold text-[#03071e] leading-tight">
-          Todo lo que necesitas para dominar el mercado
-        </h2>
-      </div>
-
-      <!-- Grid de 3 columnas -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-
-        <!-- Columna 1: Alto Impacto Visual -->
-        <div
-          class="bg-white rounded-2xl p-8 shadow-md border border-slate-100/50 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col relative group">
-          <h3 class="text-lg font-bold text-[#03071e] mb-5 border-b border-slate-100 pb-3 flex items-center gap-3">
-            <span
-              class="w-9 h-9 rounded-lg bg-[#e8f8fc] flex items-center justify-center text-[#00b4d8] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 flex-shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path
-                  d="M19 10.5l1.2-2.7 2.7-1.2-2.7-1.2-1.2-2.7-1.2 2.7-2.7 1.2 2.7 1.2zm-10 1L11.5 6l2.5 5.5L19.5 14l-5.5 2.5L11.5 22 9 16.5 3.5 14zm0-9l.8 1.8 1.8.8-1.8.8-.8 1.8-.8-1.8-1.8-.8 1.8-.8z" />
-              </svg>
-            </span>
-            <span>Alto Impacto Visual</span>
-          </h3>
-          <ul class="space-y-4 list-none p-0 m-0 text-left">
-            <li class="flex items-start gap-2.5 text-slate-700">
-              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
-              <span>Resolución Ultra HD y colores nítidos a gran distancia.</span>
-            </li>
-            <li class="flex items-start gap-2.5 text-slate-700">
-              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
-              <span>Brillo adaptativo automático las 24 horas del día.</span>
-            </li>
-            <li class="flex items-start gap-2.5 text-slate-700">
-              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
-              <span>Ubicación estratégica en el redondel de mayor tráfico del cantón.</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Columna 2: Formato Dinámico -->
-        <div
-          class="bg-white rounded-2xl p-8 shadow-md border border-slate-100/50 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col relative group">
-          <h3 class="text-lg font-bold text-[#03071e] mb-5 border-b border-slate-100 pb-3 flex items-center gap-3">
-            <span
-              class="w-9 h-9 rounded-lg bg-[#e8f8fc] flex items-center justify-center text-[#00b4d8] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 flex-shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path
-                  d="M18 4l2 3h-3l-2-3h-2l2 3h-3l-2-3H8l2 3H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4zm2 14H4V9h16v9z" />
-              </svg>
-            </span>
-            <span>Formato Dinámico</span>
-          </h3>
-          <ul class="space-y-4 list-none p-0 m-0 text-left">
-            <li class="flex items-start gap-2.5 text-slate-700">
-              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
-              <span>Spots de 20 segundos calibrados para máxima retención.</span>
-            </li>
-            <li class="flex items-start gap-2.5 text-slate-700">
-              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
-              <span>Rotación inteligente de anuncios en horarios premium.</span>
-            </li>
-            <li class="flex items-start gap-2.5 text-slate-700">
-              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
-              <span>Alta recordación de marca mediante movimiento continuo.</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Columna 3: Soporte Creativo -->
-        <div
-          class="bg-white rounded-2xl p-8 shadow-md border border-slate-100/50 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col relative group">
-          <h3 class="text-lg font-bold text-[#03071e] mb-5 border-b border-slate-100 pb-3 flex items-center gap-3">
-            <span
-              class="w-9 h-9 rounded-lg bg-[#e8f8fc] flex items-center justify-center text-[#00b4d8] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 flex-shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path
-                  d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10c1.38 0 2.5-1.12 2.5-2.5 0-.61-.22-1.19-.61-1.66-.09-.11-.14-.24-.14-.38 0-.28.22-.5.5-.5h1.75c3.86 0 7-3.14 7-7 0-4.96-4.49-9-10-9zm-6.5 9c-.83 0-1.5-.67-1.5-1.5S4.67 8 5.5 8 7 8.67 7 9.5 6.33 11 5.5 11zm3-3C7.67 8 7 7.33 7 6.5S7.67 5 8.5 5 10 5.67 10 6.5 9.33 8 8.5 8zm4.5 0c-.83 0-1.5-.67-1.5-1.5S12.17 5 13 5s1.5.67 1.5 1.5S13.83 8 13 8zm4.5 3c-.83 0-1.5-.67-1.5-1.5S16.67 8 17.5 8 19 8.67 19 9.5s-.67 1.5-1.5 1.5z" />
-              </svg>
-            </span>
-            <span>Soporte Creativo</span>
-          </h3>
-          <ul class="space-y-4 list-none p-0 m-0 text-left">
-            <li class="flex items-start gap-2.5 text-slate-700">
-              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
-              <span>Diseño gráfico profesional adaptado al formato LED gigante.</span>
-            </li>
-            <li class="flex items-start gap-2.5 text-slate-700">
-              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
-              <span>Animación y motion graphics para destacar frente a vallas estáticas.</span>
-            </li>
-            <li class="flex items-start gap-2.5 text-slate-700">
-              <span class="text-[#12d362] font-black text-lg leading-none select-none">✓</span>
-              <span>Asesoría comercial y estructuración persuasiva de tus copys.</span>
-            </li>
-          </ul>
-        </div>
-
-      </div>
-    </div>
-  </section>
+    </section>
 
 
-  <!-- TESTIMONIALS SECTION -->
-  <section id="testimonios" class="sec testimonios-modern">
-    <div class="sec-inner">
-      <h2 class="sec-title text-center fade-up d1 testim-hdr">Negocios que ya están creciendo con nosotros</h2>
+    <!-- TESTIMONIALS SECTION -->
+    <section id="testimonios" class="sec testimonios-modern">
+      <div class="sec-inner">
+        <h2 class="sec-title text-center fade-up d1 testim-hdr">Negocios que ya están creciendo con nosotros</h2>
 
-      <div class="testim-grid">
-        <!-- Card 1 -->
-        <div class="t-card fade-up d1">
-          <div class="t-card-top">
-            <div class="t-logo">
-              <!-- Reemplaza el src con la ruta del logo real -->
-              <picture>
-                <source srcset="imagenes/importadora-alonzo (1).webp" type="image/webp">
-                <img src="imagenes/importadora-alonzo (1).png" alt="Importadora Alonzo" width="225" height="225"
-                  loading="lazy"
-                  style="width:100%; height:100%; object-fit:contain; border-radius:50%; padding:4px; box-sizing:border-box; background:#fff;">
-              </picture>
+        <div class="testim-grid">
+          <!-- Card 1 -->
+          <div class="t-card fade-up d1">
+            <div class="t-card-top">
+              <div class="t-logo">
+                <!-- Reemplaza el src con la ruta del logo real -->
+                <picture>
+                  <source srcset="imagenes/importadora-alonzo (1).webp" type="image/webp">
+                  <img src="imagenes/importadora-alonzo (1).png" alt="Importadora Alonzo" width="225" height="225"
+                    loading="lazy"
+                    style="width:100%; height:100%; object-fit:contain; border-radius:50%; padding:4px; box-sizing:border-box; background:#fff;">
+                </picture>
+              </div>
+              <div class="t-company-info">
+                <div class="t-name">IMPORTADORA ALONZO</div>
+                <div class="t-category">Comercio</div>
+              </div>
             </div>
-            <div class="t-company-info">
-              <div class="t-name">IMPORTADORA ALONZO</div>
-              <div class="t-category">Comercio</div>
+            <div class="t-content">
+              <p>“Nos dio mucha visibilidad en la zona. Varias ventas vienen de clientes que nos vieron primero en la
+                pantalla LED”
+              </p>
+            </div>
+            <div class="t-rating">
+              <svg class="star-icon" viewBox="0 0 24 24">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              <svg class="star-icon" viewBox="0 0 24 24">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              <svg class="star-icon" viewBox="0 0 24 24">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              <svg class="star-icon" viewBox="0 0 24 24">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              <svg class="star-icon" viewBox="0 0 24 24">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
             </div>
           </div>
-          <div class="t-content">
-            <p>“Nos dio mucha visibilidad en la zona. Varias ventas vienen de clientes que nos vieron primero en la
-              pantalla LED”
+
+          <!-- Card 2 -->
+          <div class="t-card fade-up d2">
+            <div class="t-card-top">
+              <div class="t-logo">
+                <picture>
+                  <source srcset="imagenes/khol.webp" type="image/webp">
+                  <img src="imagenes/khol.png" alt="Khole Esthetic" width="1080" height="602" loading="lazy"
+                    style="width:100%; height:100%; object-fit:contain; border-radius:50%; padding:4px; box-sizing:border-box; background:#fff;">
+                </picture>
+              </div>
+              <div class="t-company-info">
+                <div class="t-name">KHOLE ESTHETIC</div>
+                <div class="t-category">Belleza</div>
+              </div>
+            </div>
+            <div class="t-content">
+              <p>“Desde que empezamos a aparecer en pantalla, muchas personas nos escriben diciendo que ya nos habían
+                visto antes. Eso genera confianza”
+              </p>
+            </div>
+            <div class="t-rating">
+              <svg class="star-icon" viewBox="0 0 24 24">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              <svg class="star-icon" viewBox="0 0 24 24">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              <svg class="star-icon" viewBox="0 0 24 24">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              <svg class="star-icon" viewBox="0 0 24 24">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              <svg class="star-icon" viewBox="0 0 24 24">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="t-card fade-up d3">
+            <div class="t-card-top">
+              <div class="t-logo">
+                <picture>
+                  <source srcset="imagenes/megamaxi-publicidad-digital.webp" type="image/webp">
+                  <img src="imagenes/megamaxi-publicidad-digital.png" alt="Megamaxi" width="533" height="161"
+                    loading="lazy"
+                    style="width:100%; height:100%; object-fit:contain; border-radius:50%; padding:4px; box-sizing:border-box; background:#fff;">
+                </picture>
+              </div>
+              <div class="t-company-info">
+                <div class="t-name">MEGAMAXI</div>
+                <div class="t-category">Supermercado</div>
+              </div>
+            </div>
+            <div class="t-content">
+              <p>“La publicidad en pantalla nos permitió mantenernos presentes todos los días en la mente de nuestros
+                clientes”</p>
+            </div>
+            <div class="t-rating">
+              <svg class="star-icon" viewBox="0 0 24 24">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              <svg class="star-icon" viewBox="0 0 24 24">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              <svg class="star-icon" viewBox="0 0 24 24">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              <svg class="star-icon" viewBox="0 0 24 24">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              <svg class="star-icon" viewBox="0 0 24 24">
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- CONTACT (Celeste Warm CTA) -->
+    <section id="contacto">
+      <div class="ct-inner">
+
+        <h2 class="ct-title fade-up d1">¿Listo para que todo el cantón hable de ti?</h2>
+        <p class="ct-sub fade-up d2">Únete a las marcas líderes que ya dominan la mente del consumidor en El Empalme.
+          Actúa antes de que lo haga tu competencia.</p>
+
+        <!-- CTA WhatsApp Grande -->
+        <a href="https://wa.me/593989489429?text=Quiero%20mi%20marca%20en%20la%20pantalla!"
+          class="btn-wa-big fade-up d3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"
+            style="flex-shrink:0">
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+          </svg>
+          Quiero mi marca aquí
+        </a>
+      </div>
+    </section>
+
+    <!-- FAQS ROBUSTA -->
+    <section id="faqs" class="sec">
+      <div class="sec-inner">
+        <h2 class="sec-title fade-up d1" style="text-align: center; margin-bottom: 2rem;">Preguntas Frecuentes</h2>
+        <div class="faq-container fade-up d2"
+          style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
+          <details
+            style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
+            <summary
+              style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
+              ¿Cómo anunciar mi marca a nivel nacional con VisuaLed?
+              <span style="font-size: 1.4rem;">+</span>
+            </summary>
+            <p style="margin-top: 1rem; color: #ccc; line-height: 1.5;">Nuestras pantallas LED estratégicas permiten a
+              tu
+              marca impacto masivo. Ofrecemos diseño y rotación asegurando exposición constante.</p>
+          </details>
+          <details
+            style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
+            <summary
+              style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
+              ¿Por qué elegir publicidad exterior digital en el Cantón?
+              <span style="font-size: 1.4rem;">+</span>
+            </summary>
+            <p style="margin-top: 1rem; color: #ccc; line-height: 1.5;">El Empalme es el nodo vial con mayor flujo de
+              transporte de tres provincias, brindando la máxima visibilidad para tu negocio a nivel regional y
+              nacional.
             </p>
-          </div>
-          <div class="t-rating">
-            <svg class="star-icon" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="star-icon" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="star-icon" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="star-icon" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="star-icon" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="t-card fade-up d2">
-          <div class="t-card-top">
-            <div class="t-logo">
-              <picture>
-                <source srcset="imagenes/khol.webp" type="image/webp">
-                <img src="imagenes/khol.png" alt="Khole Esthetic" width="1080" height="602" loading="lazy"
-                  style="width:100%; height:100%; object-fit:contain; border-radius:50%; padding:4px; box-sizing:border-box; background:#fff;">
-              </picture>
-            </div>
-            <div class="t-company-info">
-              <div class="t-name">KHOLE ESTHETIC</div>
-              <div class="t-category">Belleza</div>
-            </div>
-          </div>
-          <div class="t-content">
-            <p>“Desde que empezamos a aparecer en pantalla, muchas personas nos escriben diciendo que ya nos habían
-              visto antes. Eso genera confianza”
-            </p>
-          </div>
-          <div class="t-rating">
-            <svg class="star-icon" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="star-icon" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="star-icon" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="star-icon" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="star-icon" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="t-card fade-up d3">
-          <div class="t-card-top">
-            <div class="t-logo">
-              <picture>
-                <source srcset="imagenes/megamaxi-publicidad-digital.webp" type="image/webp">
-                <img src="imagenes/megamaxi-publicidad-digital.png" alt="Megamaxi" width="533" height="161" loading="lazy"
-                  style="width:100%; height:100%; object-fit:contain; border-radius:50%; padding:4px; box-sizing:border-box; background:#fff;">
-              </picture>
-            </div>
-            <div class="t-company-info">
-              <div class="t-name">MEGAMAXI</div>
-              <div class="t-category">Supermercado</div>
-            </div>
-          </div>
-          <div class="t-content">
-            <p>“La publicidad en pantalla nos permitió mantenernos presentes todos los días en la mente de nuestros
-              clientes”</p>
-          </div>
-          <div class="t-rating">
-            <svg class="star-icon" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="star-icon" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="star-icon" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="star-icon" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-            <svg class="star-icon" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-          </div>
+          </details>
+          <details
+            style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
+            <summary
+              style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
+              ¿Qué soporte ofrece la mejor agencia de publicidad digital en Ecuador?
+              <span style="font-size: 1.4rem;">+</span>
+            </summary>
+            <p style="margin-top: 1rem; color: #ccc; line-height: 1.5;">Incluimos el diseño publicitario, animaciones de
+              alto impacto y servicio de monitoreo en pantallas de resolución Ultra HD.</p>
+          </details>
+          <details
+            style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
+            <summary
+              style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
+              ¿Cuál es la frecuencia de los anuncios en pantalla LED?
+              <span style="font-size: 1.4rem;">+</span>
+            </summary>
+            <p style="margin-top: 1rem; color: #ccc; line-height: 1.5;">La rotación está diseñada para mostrar anuncios
+              de
+              20 segundos reiterativamente las 24 horas del día.</p>
+          </details>
+          <details
+            style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
+            <summary
+              style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
+              ¿Tienen cobertura para empresas de todo el país?
+              <span style="font-size: 1.4rem;">+</span>
+            </summary>
+            <p style="margin-top: 1rem; color: #ccc; line-height: 1.5;">Sí, proyectamos marcas de origen nacional e
+              internacional en nuestra red de impacto localizada en el mejor punto comercial del país.</p>
+          </details>
+          <details
+            style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
+            <summary
+              style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
+              ¿Cómo ayuda el marketing visual al crecimiento de mi negocio?
+              <span style="font-size: 1.4rem;">+</span>
+            </summary>
+            <p style="margin-top: 1rem; color: #ccc; line-height: 1.5;">El marketing visual a través de pantallas LED
+              incrementa drásticamente la retención, confianza y estatus corporativo en los consumidores.</p>
+          </details>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-
-  <!-- CONTACT (Celeste Warm CTA) -->
-  <section id="contacto">
-    <div class="ct-inner">
-
-      <h2 class="ct-title fade-up d1">¿Listo para que todo el cantón hable de ti?</h2>
-      <p class="ct-sub fade-up d2">Únete a las marcas líderes que ya dominan la mente del consumidor en El Empalme.
-        Actúa antes de que lo haga tu competencia.</p>
-
-      <!-- CTA WhatsApp Grande -->
-      <a href="https://wa.me/593989489429?text=Quiero%20mi%20marca%20en%20la%20pantalla!" class="btn-wa-big fade-up d3">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"
-          style="flex-shrink:0">
-          <path
-            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.304-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-        </svg>
-        Quiero mi marca aquí
-      </a>
-    </div>
-  </section>
-
-  <!-- FAQS ROBUSTA -->
-  <section id="faqs" class="sec">
-    <div class="sec-inner">
-      <h2 class="sec-title fade-up d1" style="text-align: center; margin-bottom: 2rem;">Preguntas Frecuentes</h2>
-      <div class="faq-container fade-up d2"
-        style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
-        <details
-          style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
-          <summary
-            style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
-            ¿Cómo anunciar mi marca a nivel nacional con VisuaLed?
-            <span style="font-size: 1.4rem;">+</span>
-          </summary>
-          <p style="margin-top: 1rem; color: #ccc; line-height: 1.5;">Nuestras pantallas LED estratégicas permiten a tu
-            marca impacto masivo. Ofrecemos diseño y rotación asegurando exposición constante.</p>
-        </details>
-        <details
-          style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
-          <summary
-            style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
-            ¿Por qué elegir publicidad exterior digital en el Cantón?
-            <span style="font-size: 1.4rem;">+</span>
-          </summary>
-          <p style="margin-top: 1rem; color: #ccc; line-height: 1.5;">El Empalme es el nodo vial con mayor flujo de
-            transporte de tres provincias, brindando la máxima visibilidad para tu negocio a nivel regional y nacional.
-          </p>
-        </details>
-        <details
-          style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
-          <summary
-            style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
-            ¿Qué soporte ofrece la mejor agencia de publicidad digital en Ecuador?
-            <span style="font-size: 1.4rem;">+</span>
-          </summary>
-          <p style="margin-top: 1rem; color: #ccc; line-height: 1.5;">Incluimos el diseño publicitario, animaciones de
-            alto impacto y servicio de monitoreo en pantallas de resolución Ultra HD.</p>
-        </details>
-        <details
-          style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
-          <summary
-            style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
-            ¿Cuál es la frecuencia de los anuncios en pantalla LED?
-            <span style="font-size: 1.4rem;">+</span>
-          </summary>
-          <p style="margin-top: 1rem; color: #ccc; line-height: 1.5;">La rotación está diseñada para mostrar anuncios de
-            20 segundos reiterativamente las 24 horas del día.</p>
-        </details>
-        <details
-          style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
-          <summary
-            style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
-            ¿Tienen cobertura para empresas de todo el país?
-            <span style="font-size: 1.4rem;">+</span>
-          </summary>
-          <p style="margin-top: 1rem; color: #ccc; line-height: 1.5;">Sí, proyectamos marcas de origen nacional e
-            internacional en nuestra red de impacto localizada en el mejor punto comercial del país.</p>
-        </details>
-        <details
-          style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
-          <summary
-            style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
-            ¿Cómo ayuda el marketing visual al crecimiento de mi negocio?
-            <span style="font-size: 1.4rem;">+</span>
-          </summary>
-          <p style="margin-top: 1rem; color: #ccc; line-height: 1.5;">El marketing visual a través de pantallas LED
-            incrementa drásticamente la retención, confianza y estatus corporativo en los consumidores.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER (Azul Oscuro) -->
-</main>
+    <!-- FOOTER (Azul Oscuro) -->
+  </main>
 
   <footer>
     <div class="foot-grid">
@@ -1327,9 +1425,11 @@
       .ticket-modal {
         position: relative;
       }
+
       .promo-actions {
         position: static !important;
       }
+
       .ticket-close,
       .promo-close-btn,
       .close-x {
@@ -1337,6 +1437,7 @@
         top: 12px !important;
         right: 16px !important;
       }
+
       .ticket-cta,
       .promo-whatsapp-btn,
       .btn-green {
@@ -1421,9 +1522,11 @@
       .promo-close-btn,
       .close-coupon,
       .close-x {
-        position: static !important; /* Respeta el flujo del contenedor flexbox */
+        position: static !important;
+        /* Respeta el flujo del contenedor flexbox */
         font-size: 24px !important;
-        padding: 4px 8px !important; /* Padding lateral cómodo */
+        padding: 4px 8px !important;
+        /* Padding lateral cómodo */
         color: #451a03 !important;
         background: none !important;
         border: none !important;
@@ -1448,7 +1551,8 @@
         background: #25d366 !important;
         border-radius: 8px !important;
         padding: 0 !important;
-        margin: 0 8px 0 0 !important; /* Margen derecho de 8px para separarlo de la X */
+        margin: 0 8px 0 0 !important;
+        /* Margen derecho de 8px para separarlo de la X */
         border: none !important;
         box-shadow: none !important;
         flex-shrink: 0 !important;
