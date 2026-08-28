@@ -4,9 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- 1. HINTS DE RED: preconnect y dns-prefetch para CDNs externos -->
+  <!-- 1. HINTS DE RED: preconnect y dns-prefetch para CDNs externos y Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdn-uicons.flaticon.com" crossorigin>
   <link rel="dns-prefetch" href="https://cdn-uicons.flaticon.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,300..800;1,300..800&display=swap"
+    rel="stylesheet">
   <link rel="canonical" href="https://visualed-ec.com/">
   <title>VisuaLed Publicidad Digital</title>
   <meta http-equiv="Content-Security-Policy"
@@ -101,12 +106,19 @@
   <!-- CSS crítico inline: pinta el hero en < 500ms en móvil (FCP boost) -->
   <style>
     :root {
-      --cyan: #0077b6;
-      --cyan-mid: #0096c7;
+      --brand-blue: #003B78;
+      --brand-celeste: #00AEEF;
+      --brand-white: #ffffff;
+      --brand-gray-light: #F2F5F8;
+      --brand-grafito: #101820;
+      --cyan: #003B78;
+      --cyan-mid: #00AEEF;
       --cyan-light: #00b4d8;
-      --navy: #03071e;
+      --navy: #101820;
       --slate: #64748b;
-      --white: #ffffff
+      --white: #ffffff;
+      --font-heading: 'Montserrat', sans-serif;
+      --font-body: 'Poppins', system-ui, -apple-system, sans-serif;
     }
 
     *,
@@ -123,113 +135,595 @@
     }
 
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: #f0fbff;
-      color: #03071e;
+      font-family: var(--font-body);
+      background: linear-gradient(160deg,
+          #eaf9ff 0%,
+          #f0fbff 30%,
+          #f5feff 60%,
+          #eef9fc 100%);
+      background-attachment: fixed;
+      color: var(--navy);
       overflow-x: hidden
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .hero-title,
+    .hero-titulo,
+    .logo-name,
+    .logo-sub {
+      font-family: var(--font-heading);
     }
 
     header {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(255, 255, 255, .90);
+      background: rgba(255, 255, 255, .95);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      border-bottom: 1px solid rgba(0, 180, 216, .12)
+      border-bottom: 1px solid rgba(0, 174, 239, .15)
     }
 
     nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 68px;
+      height: 80px;
       max-width: 1300px;
       margin: 0 auto;
       padding: 0 5%;
       gap: 1rem
     }
 
+    .logo img,
+    .header-logo-img {
+      height: 64px;
+      max-height: 66px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+      transition: transform .25s ease
+    }
+
     #inicio {
-      min-height: calc(100vh - 68px);
+      min-height: calc(100vh - 80px);
       padding: 0 5%;
       position: relative;
       overflow: hidden;
       display: flex;
-      align-items: center
+      align-items: center;
+      background: radial-gradient(ellipse 80% 60% at 50% -10%,
+          rgba(0, 180, 216, 0.07) 0%,
+          transparent 70%),
+        radial-gradient(ellipse 60% 40% at 100% 100%,
+          rgba(0, 174, 239, 0.05) 0%,
+          transparent 65%)
     }
 
     .hero-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      gap: 2.5rem;
       width: 100%;
-      align-items: stretch;
+      align-items: center;
       position: relative;
       z-index: 1;
-      padding: 1rem 0 2rem
+      padding: 1rem 0 1.5rem
     }
 
     h1.hero-title {
-      font-size: clamp(2.3rem, 5.5vw, 4.2rem);
+      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
       font-weight: 900;
-      line-height: 1.07;
-      color: #03071e;
-      margin-bottom: 1.3rem;
-      letter-spacing: -1.5px
+      line-height: 1.04;
+      color: #101820;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.8px
     }
 
-    .resaltado-marca,
+    .resaltado-marca {
+      color: #003B78;
+      font-weight: 900
+    }
+
     .resaltado-localizacion {
-      color: #0096c7
+      color: #00AEEF;
+      font-weight: 900
     }
 
-    .hero-sub {
-      font-size: clamp(.9rem, 1.4vw, 1.04rem);
-      color: #64748b;
-      line-height: 1.76;
-      margin-bottom: 2.2rem
+    .hero-location-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 0.72rem;
+      letter-spacing: 1.6px;
+      color: #003B78;
+      margin-top: -0.1rem;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase
+    }
+
+    .hero-feature-screen {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      margin-bottom: 0.6rem;
+      background: rgba(0, 174, 239, 0.04);
+      border: 1px solid rgba(0, 174, 239, 0.14);
+      padding: 11px 15px;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0, 150, 199, 0.04)
+    }
+
+    .feature-screen-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(0, 59, 120, 0.12), rgba(0, 174, 239, 0.18));
+      border: 1.5px solid rgba(0, 174, 239, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #003B78;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0, 174, 239, 0.15)
+    }
+
+    .feature-screen-icon-wrap svg {
+      width: 26px;
+      height: 26px;
+      stroke: #003B78
+    }
+
+    .hero-sub-title {
+      font-family: var(--font-heading);
+      font-size: 0.92rem;
+      font-weight: 900;
+      color: #003B78;
+      letter-spacing: 0.3px;
+      margin-bottom: 0.2rem;
+      text-transform: uppercase;
+      line-height: 1.2
+    }
+
+    .hero-sub-title span {
+      color: #00AEEF
+    }
+
+    .hero-screen-desc {
+      color: #101820;
+      font-size: 0.86rem;
+      line-height: 1.5;
+      font-weight: 500;
+      margin: 0
     }
 
     .hero-left {
+      position: relative;
+      padding: 1.6rem 2rem;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, .65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid transparent;
+      background-image: linear-gradient(rgba(255, 255, 255, .65), rgba(255, 255, 255, .65)), linear-gradient(135deg, rgba(255, 255, 255, .95) 0%, rgba(0, 180, 216, .25) 40%, rgba(255, 255, 255, .1) 100%);
+      background-origin: padding-box, border-box;
+      background-clip: padding-box, border-box;
+      box-shadow: 0 8px 40px rgba(0, 150, 199, .08);
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: 2.5rem;
-      border-radius: 28px;
-      background: rgba(255, 255, 255, .55)
+      justify-content: center
     }
 
-    @media(max-width:768px) {
+    .hero-right-wrap {
+      position: relative;
+      height: clamp(420px, calc(100vh - 130px), 640px);
+      perspective: 1000px;
+      transform-style: preserve-3d
+    }
+
+    .mosaic-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 14px;
+      height: 100%;
+      position: relative;
+      z-index: 1
+    }
+
+    .m-card {
+      border-radius: 22px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 30px rgba(0, 180, 216, .25), 0 0 60px rgba(0, 180, 216, .10), 0 20px 60px rgba(0, 0, 0, .18);
+      background: linear-gradient(145deg, #03071e, #023e8a, #0077b6)
+    }
+
+    .m-main {
+      grid-row: 1/3
+    }
+
+    .slider-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover !important;
+      opacity: 0;
+      transition: opacity .8s ease-in-out
+    }
+
+    .slider-img.active {
+      opacity: 1;
+      z-index: 2
+    }
+
+    .fc {
+      position: absolute;
+      z-index: 20;
+      background: rgba(255, 255, 255, .97);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(0, 180, 216, .14);
+      border-radius: 18px;
+      padding: 13px 18px;
+      box-shadow: 0 10px 40px rgba(0, 150, 199, 0.15)
+    }
+
+    .fc1 {
+      top: -12px;
+      left: -20px;
+      animation: floatYAndPulse 3.5s ease-in-out infinite
+    }
+
+    @keyframes floatYAndPulse {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-9px)
+      }
+    }
+
+    .fc-tag {
+      font-size: .66rem;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 4px
+    }
+
+    .fc-val {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #03071e
+    }
+
+    .fc-val em {
+      font-style: normal;
+      color: #0096c7
+    }
+
+    .fc-bars {
+      display: flex;
+      gap: 3px;
+      margin-top: 8px;
+      align-items: flex-end;
+      height: 30px
+    }
+
+    .fc-bar-item {
+      width: 11px;
+      border-radius: 3px 3px 0 0;
+      transform-origin: bottom
+    }
+
+    .metrics-floating-card {
+      position: absolute;
+      bottom: -15px;
+      right: -20px;
+      z-index: 25;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(0, 180, 216, 0.15);
+      border-radius: 20px;
+      padding: 14px 24px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+      width: 90%;
+      max-width: 440px
+    }
+
+    .metrics-group {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%
+    }
+
+    .metric-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      text-align: center;
+      padding: 0 10px
+    }
+
+    .metric-item:not(:last-child) {
+      border-right: 1px solid rgba(0, 150, 199, 0.15)
+    }
+
+    .metric-number {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #0077b6;
+      line-height: 1.1
+    }
+
+    .metric-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: #64748b;
+      margin-top: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px
+    }
+
+    @media (max-width:960px) {
+      nav {
+        height: 70px
+      }
+
+      .logo img,
+      .header-logo-img {
+        height: 52px;
+        max-height: 54px
+      }
+
+      #inicio {
+        min-height: auto;
+        padding: 0.75rem 5% 3rem
+      }
+
       .hero-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
-        padding: .75rem 0 1.5rem
+        padding: 0
       }
 
       .hero-right-wrap {
-        display: none
-      }
-
-      h1.hero-title {
-        font-size: clamp(1.8rem, 7vw, 2.4rem);
-        letter-spacing: -.8px
+        height: clamp(340px, 86vw, 440px);
+        max-width: 500px;
+        width: 100%;
+        margin: 0.5rem auto 1.8rem;
+        order: 2;
+        display: block
       }
 
       .hero-left {
-        padding: 1.5rem 1rem;
-        border-radius: 20px
+        order: 1;
+        padding: 1.25rem 1.4rem 1.4rem;
+        border-radius: 22px
+      }
+
+      .metrics-floating-card {
+        bottom: -18px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        width: calc(100% - 24px);
+        max-width: 440px;
+        padding: 10px 14px;
+        border-radius: 16px
+      }
+
+      .metrics-floating-card .metric-item {
+        padding: 0 4px
+      }
+
+      .metrics-floating-card .metric-number {
+        font-size: clamp(1.05rem, 3.8vw, 1.25rem)
+      }
+
+      .metrics-floating-card .metric-label {
+        font-size: clamp(0.52rem, 1.8vw, 0.62rem)
+      }
+
+      .nav-links {
+        display: none
+      }
+
+      .hamburger {
+        display: flex
       }
     }
 
-    /* Hero: dimensiones mínimas fijas para CLS=0 sin ocultar el contenido */
-    #inicio {
-      min-height: 560px
+    @media (max-width:768px) {
+      #inicio {
+        padding: 0.5rem 5% 2.5rem
+      }
+
+      .hero-left {
+        padding: 1.1rem 1.15rem 1.3rem;
+        border-radius: 20px
+      }
+
+      .hero-right-wrap {
+        height: clamp(330px, 86vw, 420px);
+        margin: 0.5rem auto 2rem
+      }
+
+      .mosaic-grid {
+        gap: 10px
+      }
+
+      .m-card {
+        border-radius: 18px
+      }
+
+      .fc1 {
+        top: -12px;
+        left: -8px;
+        padding: 8px 14px;
+        border-radius: 14px;
+        box-shadow: 0 8px 25px rgba(0, 150, 199, 0.18)
+      }
+
+      .fc1 .fc-tag {
+        font-size: 0.62rem;
+        margin-bottom: 2px
+      }
+
+      .fc1 .fc-val {
+        font-size: 0.95rem
+      }
+
+      .fc1 .fc-bars {
+        height: 22px;
+        gap: 2px;
+        margin-top: 4px
+      }
+
+      .fc1 .fc-bar-item {
+        width: 7px
+      }
     }
 
-    @media(max-width:768px) {
+    @media (max-width:480px) {
+      .hero-right-wrap {
+        height: clamp(300px, 88vw, 360px)
+      }
+
+      .fc1 {
+        top: -10px;
+        left: -4px;
+        padding: 7px 11px;
+        border-radius: 12px
+      }
+
+      .fc1 .fc-tag {
+        font-size: 0.58rem
+      }
+
+      .fc1 .fc-val {
+        font-size: 0.88rem
+      }
+
+      .fc1 .fc-bars {
+        height: 18px;
+        gap: 2px
+      }
+
+      .fc1 .fc-bar-item {
+        width: 6px
+      }
+    }
+
+    @media (min-width: 1024px) {
       #inicio {
-        min-height: 420px
+        min-height: calc(100vh - 80px);
+        padding: 1rem 3% 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1.22fr 1fr;
+        gap: 1.8rem;
+        align-items: center;
+        min-height: calc(100vh - 120px);
+        max-width: none;
+        width: 100%;
+        padding: 0
+      }
+
+      .hero-left {
+        padding: 2rem 2.4rem;
+        border-radius: 26px;
+        margin: 0;
+        width: 100%;
+        max-width: none;
+        background: rgba(255, 255, 255, 0.78);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1.5px solid rgba(255, 255, 255, 0.95);
+        box-shadow: 0 16px 40px -10px rgba(0, 150, 255, 0.08)
+      }
+
+      h1.hero-title {
+        font-size: clamp(1.75rem, 2.6vw, 2.6rem);
+        line-height: 1.04;
+        margin-bottom: 0.55rem;
+        letter-spacing: -0.8px;
+        color: #072126;
+        font-weight: 900
+      }
+
+      .badge-superior {
+        padding: 4px 12px;
+        font-size: 0.72rem;
+        margin-bottom: 0.9rem;
+        align-self: flex-start
+      }
+
+      .hero-location-badge {
+        font-size: 0.72rem;
+        letter-spacing: 1.6px;
+        margin-top: 0;
+        margin-bottom: 1rem;
+        gap: 6px;
+        display: inline-flex;
+        align-items: center;
+        font-weight: 800;
+        text-transform: uppercase
+      }
+
+      .hero-feature-screen {
+        padding: 14px 18px;
+        margin-bottom: 1rem;
+        gap: 1rem;
+        border-radius: 14px;
+        width: 100%
+      }
+
+      .feature-screen-icon-wrap {
+        width: 40px;
+        height: 40px;
+        border-radius: 11px
+      }
+
+      .hero-sub-title {
+        font-size: 0.92rem;
+        margin-bottom: 0.2rem;
+        letter-spacing: 0.3px;
+        font-weight: 900
+      }
+
+      .hero-screen-desc {
+        font-size: 0.86rem;
+        line-height: 1.5
+      }
+
+      .info-bloques {
+        margin: 0 0 1.2rem 0;
+        gap: 0.6rem
+      }
+
+      .hero-ctas {
+        margin-top: 0.5rem;
+        gap: 0.85rem
       }
     }
   </style>
@@ -256,22 +750,10 @@
   <!-- HEADER -->
   <header>
     <nav>
-      <!-- VisuaLed Logo SVG (recreated from brand asset) -->
-      <a href="#inicio" class="logo">
-        <div class="logo-svg-wrap">
-          <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 110 110">
-            <!-- Pixel dots upper-right -->
-            <rect x="70" y="12" width="17" height="17" rx="4.5" fill="#00b4d8" />
-            <rect x="90" y="12" width="12" height="12" rx="3.5" fill="#00b4d8" />
-            <rect x="70" y="32" width="12" height="12" rx="3.5" fill="#00b4d8" />
-            <!-- Main rounded square outline -->
-            <rect x="12" y="23" width="70" height="70" rx="16" fill="none" stroke="#00b4d8" stroke-width="10" />
-          </svg>
-        </div>
-        <div class="logo-text-wrap">
-          <span class="logo-name">Visua<em>Led</em></span>
-          <span class="logo-sub">Publicidad Digital</span>
-        </div>
+      <!-- VisuaLed Logo Oficial -->
+      <a href="#inicio" class="logo" aria-label="VisuaLed Publicidad Digital">
+        <img src="imagenes/visualed_logo.png" alt="VisuaLed Publicidad Digital" class="header-logo-img" width="220"
+          height="64" style="height: 64px; width: auto; object-fit: contain; display: block;">
       </a>
 
       <ul class="nav-links" id="navLinks">
@@ -312,17 +794,46 @@
             estratégico</span>
 
           <h1 class="hero-title hero-titulo fade-up d1">
-            <span class="resaltado-marca">Publicita tu marca</span> y haz que todo <span
-              class="resaltado-localizacion">El
-              Empalme</span> sepa quién eres.
+            <span class="resaltado-marca">TU MARCA</span><br>
+            <span class="resaltado-localizacion">A LA VISTA DE TODOS</span>
           </h1>
 
-          <p class="hero-sub hero-descripcion fade-up d2">
-            Posiciona tu negocio en la pantalla gigante con mayor tráfico del cantón. En VisuaLed te ofrecemos asesoría,
-            diseño creativo profesional y exposición estratégica en el redondel principal. Asegura tu lugar donde todos
-            te
-            ven.
-          </p>
+          <div class="hero-location-badge fade-up d1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>EL EMPALME</span>
+          </div>
+
+          <!-- Feature con Icono de Pantalla LED -->
+          <div class="hero-feature-screen fade-up d2">
+            <div class="feature-screen-icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="13" rx="2"></rect>
+                <line x1="12" y1="16" x2="12" y2="21"></line>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="6" y1="7" x2="6.01" y2="7" stroke-width="2.5"></line>
+                <line x1="10" y1="7" x2="10.01" y2="7" stroke-width="2.5"></line>
+                <line x1="14" y1="7" x2="14.01" y2="7" stroke-width="2.5"></line>
+                <line x1="18" y1="7" x2="18.01" y2="7" stroke-width="2.5"></line>
+                <line x1="6" y1="10" x2="6.01" y2="10" stroke-width="2.5"></line>
+                <line x1="10" y1="10" x2="10.01" y2="10" stroke-width="2.5"></line>
+                <line x1="14" y1="10" x2="14.01" y2="10" stroke-width="2.5"></line>
+                <line x1="18" y1="10" x2="18.01" y2="10" stroke-width="2.5"></line>
+              </svg>
+            </div>
+            <div class="feature-screen-content">
+              <div class="hero-sub-title">
+                PUBLICIDAD QUE <span>SÍ SE VE.</span>
+              </div>
+              <p class="hero-screen-desc">
+                Eleva tu marca, sube de nivel tu Emprendimiento, tu negocio a lo grande con la pantalla de VisuaLed.
+              </p>
+            </div>
+          </div>
 
           <div class="info-bloques fade-up d3">
             <div class="info-item">
@@ -1224,10 +1735,10 @@
       <div>
         <div class="foot-logo-svg-wrap">
           <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 110 110">
-            <rect x="62" y="4" width="17" height="17" rx="4.5" fill="#0096c7" />
-            <rect x="82" y="4" width="12" height="12" rx="3.5" fill="#00b4d8" />
-            <rect x="62" y="24" width="12" height="12" rx="3.5" fill="#00b4d8" />
-            <rect x="4" y="15" width="70" height="70" rx="16" fill="none" stroke="#0096c7" stroke-width="10" />
+            <rect x="62" y="4" width="17" height="17" rx="4.5" fill="#00AEEF" />
+            <rect x="82" y="4" width="12" height="12" rx="3.5" fill="#00AEEF" />
+            <rect x="62" y="24" width="12" height="12" rx="3.5" fill="#00AEEF" />
+            <rect x="4" y="15" width="70" height="70" rx="16" fill="none" stroke="#00AEEF" stroke-width="10" />
           </svg>
           <div class="foot-logo-txt-wrap">
             <span class="foot-logo-name">Visua<em>Led</em></span>
@@ -1420,30 +1931,160 @@
       will-change: transform;
     }
 
-    /* Corrección colisión X de cierre en escritorio */
+    /* Posicionamiento del cupon dorado en escritorio */
     @media (min-width: 769px) {
       .ticket-modal {
-        position: relative;
+        position: fixed !important;
+        bottom: 20px !important;
+        left: -600px !important;
+        right: auto !important;
+        width: clamp(500px, 42vw, 560px) !important;
+        max-width: calc(100vw - 40px) !important;
+        padding: 10px 22px 10px 18px !important;
+        min-height: 76px !important;
+        max-height: 84px !important;
+        border-radius: 16px !important;
+        box-shadow: 0 14px 35px rgba(0, 0, 0, 0.22), 0 0 20px rgba(212, 175, 55, 0.2) !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 10px !important;
+        z-index: 10000 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        background: transparent !important;
+        border: none !important;
+        outline: none !important;
+      }
+
+      .ticket-modal>svg {
+        display: block !important;
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        z-index: -10 !important;
+      }
+
+      .ticket-modal .pointer-events-none {
+        display: block !important;
+      }
+
+      .ticket-modal.active {
+        left: 25px !important;
+        right: auto !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+
+      .ticket-content-left {
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        min-width: 0 !important;
+        padding-left: 6px !important;
+        padding-right: 4px !important;
+        position: relative !important;
+        z-index: 10 !important;
+      }
+
+      .ticket-content-left span {
+        font-size: 10px !important;
+        font-weight: 800 !important;
+        color: #451a03 !important;
+        letter-spacing: 0.5px !important;
+        text-transform: uppercase !important;
+        margin-bottom: 2px !important;
+      }
+
+      .ticket-content-left p {
+        font-size: 11px !important;
+        line-height: 1.28 !important;
+        font-weight: 600 !important;
+        color: #1e293b !important;
+        margin: 0 !important;
+      }
+
+      .ticket-divider {
+        display: block !important;
+        border-left: 2px dashed rgba(69, 26, 3, 0.3) !important;
+        height: 38px !important;
+        margin: 0 8px !important;
+        flex-shrink: 0 !important;
       }
 
       .promo-actions {
-        position: static !important;
+        display: flex !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+        position: relative !important;
+        z-index: 10 !important;
+        margin-right: 22px !important;
+        padding-right: 0 !important;
       }
 
-      .ticket-close,
-      .promo-close-btn,
-      .close-x {
+      .ticket-cta a {
+        background: #12d362 !important;
+        color: #ffffff !important;
+        font-weight: 800 !important;
+        font-size: 0.82rem !important;
+        border-radius: 10px !important;
+        padding: 8px 16px !important;
+        height: 38px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 6px !important;
+        text-decoration: none !important;
+        white-space: nowrap !important;
+        box-shadow: 0 4px 14px rgba(18, 211, 98, 0.35) !important;
+        transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease !important;
+      }
+
+      .ticket-cta a:hover {
+        transform: scale(1.03) !important;
+        background: #0eb653 !important;
+        box-shadow: 0 6px 20px rgba(18, 211, 98, 0.45) !important;
+      }
+
+      .ticket-cta a span {
+        display: inline !important;
+        color: #ffffff !important;
+        font-size: 0.82rem !important;
+        font-weight: 800 !important;
+      }
+
+      .ticket-cta svg {
+        width: 15px !important;
+        height: 15px !important;
+        fill: #ffffff !important;
+        flex-shrink: 0 !important;
+      }
+
+      .ticket-close {
         position: absolute !important;
-        top: 12px !important;
-        right: 16px !important;
-      }
-
-      .ticket-cta,
-      .promo-whatsapp-btn,
-      .btn-green {
+        top: 6px !important;
+        right: 10px !important;
+        width: 22px !important;
+        height: 22px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
+        font-size: 1.35rem !important;
+        color: #451a03 !important;
+        background: none !important;
+        border: none !important;
+        cursor: pointer !important;
+        z-index: 30 !important;
+        line-height: 1 !important;
+        padding: 0 !important;
+        transition: color 0.2s ease !important;
+      }
+
+      .ticket-close:hover {
+        color: #b91c1c !important;
       }
     }
 
@@ -1681,12 +2322,12 @@
           <span>Asegura Oferta Especial</span>
         </a>
       </div>
-
-      <!-- Botón de cierre (X) -->
-      <button
-        class="ticket-close absolute top-1.5 right-2 md:top-2 md:right-6 text-yellow-950 hover:text-red-700 w-5 h-5 flex items-center justify-center text-xs md:text-lg font-black transition-colors duration-200 focus:outline-none cursor-pointer select-none z-20"
-        id="closeTicket" aria-label="Cerrar oferta">×</button>
     </div>
+
+    <!-- Botón de cierre (X) en la esquina superior derecha del cupón -->
+    <button
+      class="ticket-close text-yellow-950 hover:text-red-700 font-black transition-colors duration-200 focus:outline-none cursor-pointer select-none z-30"
+      id="closeTicket" aria-label="Cerrar oferta">×</button>
   </div>
 
   <!-- 4. Script propio con defer para no bloquear renderizado -->
