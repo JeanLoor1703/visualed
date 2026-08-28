@@ -190,6 +190,112 @@
       transition: transform .25s ease
     }
 
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #1e293b;
+      font-weight: 500;
+      font-size: .88rem;
+      transition: color .25s;
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--cyan-mid, #00AEEF);
+      transform: scaleX(0);
+      transition: transform .3s;
+      border-radius: 2px;
+    }
+
+    .nav-links a:hover {
+      color: var(--cyan-mid, #00AEEF);
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .btn-chat {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      background: #25D366;
+      color: #ffffff !important;
+      padding: 9px 20px;
+      border-radius: 50px;
+      text-decoration: none !important;
+      font-weight: 700;
+      font-size: .83rem;
+      line-height: 1;
+      transition: all .3s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+      box-shadow: 0 4px 18px rgba(37, 211, 102, .45), 0 0 12px rgba(37, 211, 102, .25);
+    }
+
+    .btn-chat:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(37, 211, 102, .65), 0 0 24px rgba(37, 211, 102, .40);
+      background: #1ebe5d;
+      color: #ffffff !important;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      gap: 5px;
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: none;
+      padding: 0;
+      border-radius: 8px;
+      transition: background-color .2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2.5px;
+      background: #101820;
+      border-radius: 99px;
+      transition: transform .3s cubic-bezier(.4, 0, .2, 1), opacity .25s ease-in-out;
+      transform-origin: center;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7.5px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7.5px) rotate(-45deg);
+    }
+
     #inicio {
       min-height: calc(100vh - 80px);
       padding: 0 5%;
@@ -1043,16 +1149,13 @@
 
           <!-- [MARCA 2] Pingüino -->
           <div class="brand-card">
-            <img src="imagenes/pinguino-pantalla-publicitaria.png" alt="Pingüino" width="320" height="320"
+            <img src="imagenes/pinguino-pantalla-publicitaria.webp" alt="Pingüino" width="320" height="320"
               loading="lazy">
           </div>
 
           <!-- [MARCA 3] Alonzo -->
           <div class="brand-card">
-            <picture>
-              <source srcset="imagenes/importadora-alonzo (1).webp" type="image/webp">
-              <img src="imagenes/importadora-alonzo (1).png" alt="Alonzo" width="225" height="225" loading="lazy">
-            </picture>
+            <img src="imagenes/importadora-alonzo.webp" alt="Importadora Alonzo" width="225" height="225" loading="lazy">
           </div>
 
           <!-- [MARCA 4] Cerveza Club -->
@@ -1063,15 +1166,17 @@
             </picture>
           </div>
 
-          <!-- [MARCA 5] Kloe Estethic -->
+          <!-- [MARCA 5] Coraza -->
           <div class="brand-card">
-            <picture>
-              <source srcset="imagenes/khol.webp" type="image/webp">
-              <img src="imagenes/khol.png" alt="Kloe Estethic" width="1080" height="602" loading="lazy">
-            </picture>
+            <img src="imagenes/coraza.webp" alt="Coraza" width="320" height="180" loading="lazy">
           </div>
 
-          <!-- [MARCA 6] Megamaxi -->
+          <!-- [MARCA 6] GAD Municipal -->
+          <div class="brand-card">
+            <img src="imagenes/GAD.webp" alt="GAD Municipal" width="320" height="180" loading="lazy">
+          </div>
+
+          <!-- [MARCA 7] Megamaxi -->
           <div class="brand-card">
             <picture>
               <source srcset="imagenes/megamaxi-publicidad-digital.webp" type="image/webp">
@@ -1080,17 +1185,17 @@
             </picture>
           </div>
 
-          <!-- [MARCA 7] Natura -->
+          <!-- [MARCA 8] Natura -->
           <div class="brand-card">
             <img src="imagenes/natura.gif" alt="Natura" width="800" height="500" loading="lazy">
           </div>
 
-          <!-- [MARCA 8] Pilsener -->
+          <!-- [MARCA 9] Pilsener -->
           <div class="brand-card">
             <img src="imagenes/pilsener.png" alt="Pilsener" width="320" height="320" loading="lazy">
           </div>
 
-          <!-- DUPLICADO para el loop infinito -->
+          <!-- DUPLICADO para el loop infinito del carousel -->
           <div class="brand-card">
             <picture>
               <source srcset="imagenes/sana.webp" type="image/webp">
@@ -1098,14 +1203,11 @@
             </picture>
           </div>
           <div class="brand-card">
-            <img src="imagenes/pinguino-pantalla-publicitaria.png" alt="Pingüino" width="320" height="320"
+            <img src="imagenes/pinguino-pantalla-publicitaria.webp" alt="Pingüino" width="320" height="320"
               loading="lazy">
           </div>
           <div class="brand-card">
-            <picture>
-              <source srcset="imagenes/importadora-alonzo (1).webp" type="image/webp">
-              <img src="imagenes/importadora-alonzo (1).png" alt="Alonzo" width="225" height="225" loading="lazy">
-            </picture>
+            <img src="imagenes/importadora-alonzo.webp" alt="Importadora Alonzo" width="225" height="225" loading="lazy">
           </div>
           <div class="brand-card">
             <picture>
@@ -1114,10 +1216,10 @@
             </picture>
           </div>
           <div class="brand-card">
-            <picture>
-              <source srcset="imagenes/khol.webp" type="image/webp">
-              <img src="imagenes/khol.png" alt="Kloe Estethic" width="1080" height="602" loading="lazy">
-            </picture>
+            <img src="imagenes/coraza.webp" alt="Coraza" width="320" height="180" loading="lazy">
+          </div>
+          <div class="brand-card">
+            <img src="imagenes/GAD.webp" alt="GAD Municipal" width="320" height="180" loading="lazy">
           </div>
           <div class="brand-card">
             <picture>
@@ -1130,7 +1232,7 @@
             <img src="imagenes/natura.gif" alt="Natura" width="800" height="500" loading="lazy">
           </div>
           <div class="brand-card">
-            <img src="imagenes/Pilsenerlogo.png" alt="Pilsener" width="320" height="320" loading="lazy">
+            <img src="imagenes/pilsener.png" alt="Pilsener" width="320" height="320" loading="lazy">
           </div>
 
         </div>
