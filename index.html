@@ -482,13 +482,32 @@
 
     @media (max-width:960px) {
       nav {
-        height: 70px
+        height: 70px;
+        padding: 0 1.25rem;
       }
 
       .logo img,
       .header-logo-img {
         height: 52px;
         max-height: 54px
+      }
+
+      nav > div:last-child {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem !important;
+      }
+
+      .btn-chat {
+        padding: 8px 14px;
+        font-size: 0.8rem;
+        gap: 6px;
+        min-height: 38px;
+      }
+
+      .btn-chat svg {
+        width: 15px;
+        height: 15px;
       }
 
       #inicio {
@@ -547,6 +566,25 @@
       .hamburger {
         display: flex
       }
+    }
+
+    /* Animación del icono Hamburguesa a 'X' */
+    .hamburger span {
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease-in-out;
+      transform-origin: center;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7.5px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7.5px) rotate(-45deg);
     }
 
     @media (max-width:768px) {
