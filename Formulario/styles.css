@@ -387,9 +387,11 @@ svg {
   border-radius: 20px;
   background: linear-gradient(145deg, #0874d0, #003b78);
   box-shadow: 0 10px 20px rgba(0, 59, 120, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  line-height: 0;
 }
 
 .question-icon svg {
+  margin: auto;
   width: 36px;
   height: 36px;
   fill: none;
@@ -890,25 +892,189 @@ textarea:focus {
 }
 
 .page-footer {
+  margin-top: 14px;
+  overflow: hidden;
+  color: var(--ink);
+  border: 1px solid rgba(0, 91, 170, 0.15);
+  border-radius: 24px;
+  background: var(--white);
+  box-shadow: 0 18px 46px rgba(0, 59, 120, 0.09);
+}
+
+.thanks-panel {
   display: grid;
-  min-height: 82px;
-  margin-top: 18px;
-  padding: 12px 28px;
-  grid-template-columns: 1fr 1fr 1fr;
+  padding: 22px 28px;
+  grid-template-columns: minmax(0, 1.8fr) minmax(220px, 0.8fr);
   align-items: center;
-  gap: 16px;
+  gap: 28px;
+  background: linear-gradient(115deg, #f8fcff, #eef7ff);
+}
+
+.thanks-copy {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+}
+
+.thanks-heart {
+  display: grid;
+  width: 72px;
+  height: 72px;
+  place-items: center;
   color: var(--white);
-  border-radius: 20px;
-  background: linear-gradient(100deg, var(--navy-deep), var(--navy), #005cab);
+  border-radius: 50%;
+  background: linear-gradient(145deg, #075ab8, #00275c);
+  box-shadow: 0 12px 24px rgba(0, 59, 120, 0.18);
+}
+
+.thanks-heart svg {
+  width: 38px;
+  height: 38px;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 0.5;
+}
+
+.thanks-copy h2 {
+  margin: 0 0 5px;
+  color: var(--navy);
+  font-family: "Montserrat", "Poppins", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.thanks-copy p {
+  margin: 2px 0;
+  color: #344961;
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.follow-panel {
+  display: grid;
+  min-height: 105px;
+  padding-left: 28px;
+  place-items: center;
+  align-content: center;
+  border-left: 1px solid #bfd3e4;
+  text-align: center;
+}
+
+.follow-panel > p {
+  margin: 0 0 8px;
+  color: var(--navy-deep);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  line-height: 0;
+}
+
+.social-link {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0, 39, 92, 0.14);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.social-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 18px rgba(0, 39, 92, 0.2);
+}
+
+.social-link:focus-visible,
+.website-link:focus-visible,
+.footer-whatsapp:focus-visible {
+  outline: 3px solid rgba(0, 174, 239, 0.42);
+  outline-offset: 3px;
+}
+
+.social-link svg {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  fill: currentColor;
+}
+
+.social-link--facebook svg {
+  width: 21px;
+  height: 21px;
+}
+
+.social-link--facebook {
+  background: #1877f2;
+}
+
+.social-link--instagram {
+  background: radial-gradient(circle at 30% 105%, #ffd600 0 18%, #ff7a00 30%, #ff0169 55%, #d300c5 78%, #7638fa 100%);
+}
+
+.social-link--instagram svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+.social-link--tiktok {
+  background: #101820;
+  border-color: #2b3542;
+}
+
+.social-link--tiktok svg {
+  width: 20px;
+  height: 20px;
+}
+
+.website-link {
+  margin-top: 8px;
+  padding: 5px 14px;
+  color: var(--white);
+  border-radius: 999px;
+  background: var(--navy);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.footer-utility {
+  display: grid;
+  min-height: 78px;
+  padding: 10px 28px;
+  grid-template-columns: minmax(130px, 1fr) 1px minmax(170px, 1fr) 1px minmax(170px, 1fr);
+  align-items: center;
+  gap: 26px;
+  background: var(--white);
+}
+
+.footer-utility > a,
+.footer-utility > div {
+  justify-self: center;
 }
 
 .footer-brand {
   display: block;
-  width: 118px;
-  height: 52px;
-  padding: 2px 8px;
+  width: 128px;
+  height: 58px;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.96);
 }
 
 .footer-brand img {
@@ -917,22 +1083,63 @@ textarea:focus {
   object-fit: contain;
 }
 
-.page-footer p {
-  margin: 0;
-  text-align: center;
+.footer-divider {
+  width: 1px;
+  height: 42px;
+  background: #c7d7e5;
+}
+
+.footer-slogan,
+.footer-whatsapp {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  line-height: 1;
+}
+
+.footer-slogan {
+  color: var(--navy-deep);
   font-family: "Montserrat", sans-serif;
   font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
+  line-height: 1.35;
   text-transform: uppercase;
 }
 
-.page-footer > a:last-child {
-  color: var(--white);
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-align: right;
+.footer-slogan svg,
+.footer-whatsapp svg {
+  width: 32px;
+  height: 32px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.footer-whatsapp {
+  width: max-content;
+  color: #128c4a;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  white-space: nowrap;
   text-decoration: none;
+}
+
+.footer-whatsapp svg {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  overflow: visible;
+}
+
+.footer-whatsapp span {
+  display: block;
+  line-height: 1;
 }
 
 @media (max-width: 780px) {
@@ -966,45 +1173,54 @@ textarea:focus {
   }
 
   .campaign-stage {
-    min-height: 0;
+    min-height: 146px;
     margin: 0 10px 10px;
-    padding: 24px 18px 0;
-    grid-template-columns: 0.9fr 1fr;
-    grid-template-areas:
-      "copy copy"
-      "mascot gift";
-    gap: 4px 14px;
+    padding: 12px 8px 0;
+    grid-template-columns: minmax(66px, 0.75fr) minmax(0, 2fr) minmax(66px, 0.75fr);
+    grid-template-areas: "mascot copy gift";
+    gap: 4px;
     border-radius: 22px 22px 14px 14px;
   }
 
   .campaign-copy {
     grid-area: copy;
-    padding: 0;
+    align-self: center;
+    padding: 0 0 10px;
   }
 
   .campaign-character--mascot {
     grid-area: mascot;
-    width: min(100%, 210px);
+    width: min(100%, 118px);
     justify-self: center;
   }
 
   .campaign-character--gift {
     grid-area: gift;
-    width: min(100%, 190px);
+    width: min(100%, 110px);
     justify-self: center;
   }
 
   .campaign-kicker {
-    font-size: clamp(1.85rem, 9.5vw, 3rem);
+    margin-bottom: 6px;
+    font-size: clamp(1.05rem, 5.1vw, 1.55rem);
+    line-height: 1;
   }
 
   .campaign-copy h1 {
-    margin-bottom: 12px;
-    font-size: clamp(1rem, 4.4vw, 1.35rem);
+    margin-bottom: 7px;
+    padding: 5px 8px;
+    font-size: clamp(0.64rem, 2.8vw, 0.9rem);
+    border-radius: 6px;
   }
 
   .campaign-copy p:not(.campaign-kicker) {
-    font-size: 0.82rem;
+    margin-bottom: 5px;
+    font-size: clamp(0.45rem, 1.75vw, 0.64rem);
+    line-height: 1.35;
+  }
+
+  .campaign-copy strong {
+    font-size: clamp(0.48rem, 1.9vw, 0.67rem);
   }
 
   .form-panel {
@@ -1075,6 +1291,24 @@ textarea:focus {
   .coupon-face small {
     font-size: 0.64rem;
   }
+
+  .thanks-panel {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .follow-panel {
+    min-height: 0;
+    padding: 18px 0 0;
+    border-top: 1px solid #bfd3e4;
+    border-left: 0;
+  }
+
+  .footer-utility {
+    padding: 12px 18px;
+    grid-template-columns: minmax(100px, 1fr) 1px minmax(130px, 1fr) 1px minmax(135px, 1fr);
+    gap: 12px;
+  }
 }
 
 @media (max-width: 520px) {
@@ -1105,15 +1339,15 @@ textarea:focus {
 
   .campaign-stage {
     margin: 0 8px 8px;
-    padding: 20px 12px 0;
+    padding: 10px 5px 0;
   }
 
   .campaign-copy p:not(.campaign-kicker) {
-    max-width: 340px;
+    max-width: 205px;
   }
 
   .campaign-copy strong {
-    font-size: 0.8rem;
+    font-size: clamp(0.45rem, 1.95vw, 0.58rem);
   }
 
   .form-intro {
@@ -1175,15 +1409,69 @@ textarea:focus {
     display: grid;
   }
 
-  .page-footer {
-    margin-top: 0;
-    padding: 18px;
-    grid-template-columns: 1fr;
-    justify-items: center;
+  .thanks-panel {
+    padding: 20px 16px;
   }
 
-  .page-footer > a:last-child {
-    text-align: center;
+  .thanks-copy {
+    grid-template-columns: 58px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .thanks-heart {
+    width: 54px;
+    height: 54px;
+  }
+
+  .thanks-heart svg {
+    width: 29px;
+    height: 29px;
+  }
+
+  .thanks-copy h2 {
+    font-size: 1rem;
+  }
+
+  .thanks-copy p {
+    font-size: 0.68rem;
+  }
+
+  .footer-utility {
+    padding: 10px 8px;
+    grid-template-columns: minmax(66px, 0.9fr) 1px minmax(82px, 1fr) 1px minmax(105px, 1.25fr);
+    gap: 6px;
+  }
+
+  .footer-divider {
+    width: 1px;
+    height: 36px;
+  }
+
+  .footer-brand {
+    width: 80px;
+    height: 42px;
+    justify-self: center;
+  }
+
+  .footer-slogan {
+    gap: 5px;
+    font-size: 0.52rem;
+    letter-spacing: 0.03em;
+  }
+
+  .footer-slogan svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .footer-whatsapp {
+    gap: 5px;
+    font-size: 0.68rem;
+  }
+
+  .footer-whatsapp svg {
+    width: 24px;
+    height: 24px;
   }
 }
 
@@ -1212,6 +1500,11 @@ textarea:focus {
     grid-row: span 2;
     margin: 0;
   }
+}
+
+.question-icon--whatsapp svg {
+  width: 59%;
+  height: 59%;
 }
 
 @media (prefers-reduced-motion: reduce) {

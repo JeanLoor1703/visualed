@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
   observer.observe(counterObj);
 });
 
-/* === Animación de Contadores Dinámicos Globales (Hero) === */
+/* === Animación de Contadores Dinámicos Globales (Hero y Ubicación) === */
 document.addEventListener("DOMContentLoaded", () => {
   const configs = [
     { id: "impacto-mensual-counter", end: 12, suffix: "", prefix: "" },
@@ -77,7 +77,12 @@ document.addEventListener("DOMContentLoaded", () => {
     { id: "loc-vistas-counter", end: 15, suffix: "", prefix: "" },
     { id: "loc-visibilidad-counter", end: 24, suffix: "", prefix: "" },
     { id: "loc-provincias-counter", end: 3, suffix: "", prefix: "" },
-    { id: "loc-trafico-counter", end: 1, suffix: "", prefix: "" }
+    { id: "loc-trafico-counter", end: 1, suffix: "", prefix: "" },
+    // Contadores de páginas secundarias
+    { id: "c-vistas", end: 15, suffix: "", prefix: "" },
+    { id: "c-horas", end: 24, suffix: "", prefix: "" },
+    { id: "c-prov", end: 3, suffix: "", prefix: "" },
+    { id: "c-ranking", end: 1, suffix: "", prefix: "" }
   ];
 
   const animateCounter = (el, end, duration, prefix, suffix, isFormatted) => {
@@ -152,7 +157,35 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/* === Animaciones Fade-up (IntersectionObserver) === */
+/* === Control Inteligente de Video (Zero-Lag & Battery Saver) === */
+document.addEventListener("DOMContentLoaded", () => {
+  const videos = document.querySelectorAll('video');
+  if (videos.length === 0) return;
+
+  const videoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const video = entry.target;
+      if (entry.isIntersecting) {
+        if (video.paused) {
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {});
+          }
+        }
+      } else {
+        if (!video.paused) {
+          video.pause();
+        }
+      }
+    });
+  }, { threshold: 0.1 });
+
+  videos.forEach(video => {
+    videoObserver.observe(video);
+  });
+});
+
+/* === Animaciones Fade-up Fluídas (IntersectionObserver) === */
 document.addEventListener("DOMContentLoaded", () => {
   const fadeElements = document.querySelectorAll('.fade-up');
   if (fadeElements.length === 0) return;
@@ -164,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
         obs.unobserve(entry.target); // Animamos solo una vez
       }
     });
-  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+  }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
 
   fadeElements.forEach(el => fadeObserver.observe(el));
 });
