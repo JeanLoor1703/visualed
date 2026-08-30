@@ -107,20 +107,20 @@ svg {
 
 .campaign::before {
   top: -80px;
-  left: -85px;
-  width: 250px;
-  height: 220px;
+  left: -72px;
+  width: 230px;
+  height: 210px;
   background: linear-gradient(145deg, var(--navy), var(--cyan));
-  clip-path: polygon(0 0, 100% 0, 20% 100%, 0 74%);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
 }
 
 .campaign::after {
-  top: -70px;
-  right: -64px;
+  top: -80px;
+  right: -72px;
   width: 230px;
-  height: 230px;
+  height: 210px;
   background: linear-gradient(145deg, rgba(0, 174, 239, 0.35), var(--blue));
-  clip-path: polygon(32% 0, 100% 0, 100% 100%, 0 30%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
 }
 
 .brand {
@@ -193,7 +193,8 @@ svg {
 }
 
 .campaign-character--mascot {
-  transform: translateY(10px);
+  transform: translateY(10px) scale(1.16);
+  transform-origin: bottom center;
 }
 
 .campaign-character--gift {
@@ -1152,18 +1153,21 @@ textarea:focus {
     border-radius: 24px 24px 12px 12px;
   }
 
-  .campaign::before {
+  .campaign::before,
+  .campaign::after {
     width: 150px;
     height: 150px;
     top: -54px;
+  }
+
+  .campaign::before {
     left: -58px;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
   }
 
   .campaign::after {
-    width: 145px;
-    height: 145px;
-    top: -45px;
-    right: -48px;
+    right: -58px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
   }
 
   .brand {
@@ -1192,6 +1196,7 @@ textarea:focus {
     grid-area: mascot;
     width: min(100%, 118px);
     justify-self: center;
+    transform: translateY(10px) scale(1.3);
   }
 
   .campaign-character--gift {

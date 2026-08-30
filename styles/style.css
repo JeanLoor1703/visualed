@@ -3,14 +3,14 @@
 /* === VARIABLES === */
 :root {
   /* ── PALETA OFICIAL VISUALED ── */
-  --brand-blue: #003878;       /* Azul corporativo oficial */
-  --brand-celeste: #00AEEF;    /* Celeste LED oficial */
-  --brand-white: #ffffff;      /* Blanco */
-  --brand-gray-light: #F2F5F8; /* Gris suave */
-  --brand-grafito: #101820;    /* Grafito */
+  --brand-blue: #003B78;       /* Azul corporativo oficial (#003B78) */
+  --brand-celeste: #00AEEF;    /* Celeste LED oficial (#00AEEF) */
+  --brand-white: #FFFFFF;      /* Blanco (#FFFFFF) */
+  --brand-gray-light: #F2F5F8; /* Gris suave (#F2F5F8) */
+  --brand-grafito: #101820;    /* Grafito (#101820) */
 
   /* ── VARIABLES DE COLOR Y TEMA ── */
-  --cyan: #003878;
+  --cyan: #003B78;
   --cyan-mid: #00AEEF;
   --cyan-light: #00b4d8;
   --cyan-lighter: #48cae4;
@@ -20,13 +20,13 @@
   --emerald-dark: #059669;
   --navy: #101820;
   --navy-mid: #1e293b;
-  --slate: #1e293b;            /* Texto oscuro y legible */
+  --slate: #101820;            /* Grafito para máxima nitidez */
   --slate-light: #475569;
   --white: #ffffff;
 
-  /* ── TIPOGRAFÍAS RECOMENDADAS ── */
-  --font-heading: 'Montserrat', sans-serif;
-  --font-body: 'Poppins', system-ui, -apple-system, sans-serif;
+  /* ── TIPOGRAFÍAS OFICIALES ── */
+  --font-heading: 'Montserrat', 'Poppins', sans-serif; /* Títulos: Montserrat Bold / Poppins Bold */
+  --font-body: 'Poppins', 'Montserrat', sans-serif;   /* Textos: Montserrat Regular / Poppins Regular */
 }
 
 /* === RESET === */
@@ -58,7 +58,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Tipografía de Títulos y Encabezados */
+/* Tipografía de Títulos y Encabezados — Montserrat Bold */
 h1, h2, h3, h4, h5, h6,
 .hero-title, .hero-titulo,
 .sec-title, .sec-title-glow,
@@ -68,8 +68,20 @@ h1, h2, h3, h4, h5, h6,
 .redes-titulo, .foot-logo-name,
 .foot-logo-sub, .testim-hdr,
 .btn-primary, .btn-outline, .btn-chat, .btn-wa-big, .btn-wa-modern,
-.hm-num, .st-num, .metrica-numero, .metric-number, .bg-visual-counter {
+.hm-num, .st-num, .metrica-numero, .metric-number, .bg-visual-counter,
+.t-name, .mc-highlight, .bg-visual-title {
   font-family: var(--font-heading);
+}
+
+/* Tipografía de Tags, Pills, Categorías — Poppins (más suave) */
+.tag-pill, .hero-tag, .badge-superior,
+.t-category, .mc-sub, .mc-repros,
+.nav-links a, .foot-col a, .foot-col span,
+.foot-contact-item, .ct-tag, .ct-sub,
+.loc-video-tag, .loc-video-sub,
+.srv-desc, .service-desc,
+.planes-sub-modern, .foot-copy {
+  font-family: var(--font-body);
 }
 
 /* ── HEADER ── */
@@ -955,6 +967,11 @@ h1.hero-title .accent {
   letter-spacing: .4px;
 }
 
+.tag-pill svg {
+  color: var(--brand-celeste, #00AEEF);
+  flex-shrink: 0;
+}
+
 .sec-title {
   font-size: clamp(1.7rem, 3.5vw, 2.9rem);
   font-weight: 900;
@@ -1093,6 +1110,11 @@ h1.hero-title .accent {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
 }
 
+.loc-video-badge svg {
+  color: var(--brand-celeste, #00AEEF);
+  flex-shrink: 0;
+}
+
 .live-dot {
   width: 8px;
   height: 8px;
@@ -1105,7 +1127,7 @@ h1.hero-title .accent {
 .loc-video-caption {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 10px;
   flex-wrap: wrap;
 }
@@ -1626,7 +1648,7 @@ footer::before {
 .foot-logo-svg-wrap {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 1.2rem;
 }
 
@@ -1636,24 +1658,25 @@ footer::before {
 }
 
 .foot-logo-name {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 900;
   color: white;
   line-height: 1;
+  letter-spacing: -0.3px;
 }
 
 .foot-logo-name em {
   font-style: normal;
-  color: var(--cyan-lighter);
+  color: #00AEEF;
 }
 
 .foot-logo-sub {
-  font-size: .5rem;
+  font-size: 0.56rem;
   font-weight: 800;
-  letter-spacing: 2.5px;
-  color: var(--cyan-light);
+  letter-spacing: 2.2px;
+  color: #00AEEF;
   text-transform: uppercase;
-  margin-top: 3px;
+  margin-top: 4px;
 }
 
 .foot-contact-list {
@@ -2215,7 +2238,7 @@ a.foot-contact-item:hover {
 }
 
 .testim-hdr {
-  color: #0A0F2C !important;
+  color: var(--brand-blue) !important;
   font-size: clamp(2rem, 4vw, 2.8rem);
   font-weight: 900;
   margin-bottom: 3.5rem;
@@ -2277,7 +2300,7 @@ a.foot-contact-item:hover {
 
 .t-name {
   font-weight: 800;
-  color: #0A0F2C;
+  color: var(--brand-grafito);
   font-size: 1.05rem;
 }
 
@@ -4164,7 +4187,7 @@ li [class*="text-[#12d362]"] {
 }
 
 .text-\[\#03071e\] {
-  color: #03071e !important;
+  color: var(--brand-grafito) !important;
 }
 
 .text-\[\#00b4d8\] {
@@ -4402,7 +4425,37 @@ li [class*="text-[#12d362]"] {
 
 /* --- Recommended badge (plan avanzado) --- */
 .bg-cyan-500 {
-  background-color: #06b6d4 !important;
+  background-color: #00AEEF !important;
+}
+
+.plan-badge-tag {
+  position: absolute !important;
+  top: -12px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background-color: #00AEEF !important;
+  color: #ffffff !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1.5px !important;
+  padding: 4px 14px !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 2px 6px rgba(0, 174, 239, 0.35) !important;
+  white-space: nowrap !important;
+  z-index: 10 !important;
+}
+
+.border-2 {
+  border-width: 2px !important;
+}
+
+.border-cyan-400 {
+  border-color: #00AEEF !important;
+}
+
+.border-slate-100 {
+  border-color: #f1f5f9 !important;
 }
 
 /* --- Icon container in plan cards --- */
@@ -4426,6 +4479,10 @@ li [class*="text-[#12d362]"] {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 
+  .md\:scale-105 {
+    transform: scale(1.05) !important;
+  }
+
   .md\:text-sm {
     font-size: 0.875rem !important;
   }
@@ -4444,6 +4501,10 @@ li [class*="text-[#12d362]"] {
 
   .md\:text-\[10px\] {
     font-size: 10px !important;
+  }
+
+  .md\:text-\[11px\] {
+    font-size: 11px !important;
   }
 
   .md\:shadow-xl {
