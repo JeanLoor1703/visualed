@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#003b78">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; form-action 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src https://ffaypyjokinfzdkwtezz.supabase.co wss://ffaypyjokinfzdkwtezz.supabase.co; manifest-src 'self'">
+  <link rel="canonical" href="https://crm.visualed-ec.com/">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <title>Acceso privado | CRM VisuaLed</title>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Ir al contenido</a>
+
+  <div class="page-shell">
+    <header class="brand-bar" aria-label="VisuaLed CRM">
+      <a class="brand" href="/" aria-label="VisuaLed CRM, inicio">
+        <img src="assets/visualed-mark.svg" alt="" width="46" height="46">
+        <span class="brand-copy">
+          <strong>Visua<span>Led</span></strong>
+          <small>Centro de gestión</small>
+        </span>
+      </a>
+      <span class="private-badge">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+        Acceso privado
+      </span>
+    </header>
+
+    <main id="main-content" class="main-layout" tabindex="-1">
+      <section class="intro-panel" aria-labelledby="intro-title">
+        <p class="eyebrow">CRM · VISUALED</p>
+        <h1 id="intro-title">Tu operación,<br><span>bien protegida.</span></h1>
+        <p class="intro-copy">Un espacio privado para organizar contactos, oportunidades y el avance comercial de VisuaLed.</p>
+
+        <div class="security-note">
+          <span class="security-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z"></path><path d="m9 12 2 2 4-4"></path></svg>
+          </span>
+          <div>
+            <strong>Código de acceso seguro</strong>
+            <p>Recibirás un código temporal en tu correo y solo funcionará una vez.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="auth-column" aria-label="Acceso al CRM">
+        <div class="auth-card">
+          <div id="global-message" class="message" role="status" aria-live="polite" hidden></div>
+
+          <section id="view-loading" class="auth-view auth-view--loading" aria-labelledby="loading-title">
+            <span class="spinner" aria-hidden="true"></span>
+            <h2 id="loading-title">Protegiendo tu acceso</h2>
+            <p>Estamos verificando la sesión.</p>
+          </section>
+
+          <section id="view-login" class="auth-view" aria-labelledby="login-title" hidden>
+            <p class="step-label">ACCESO AUTORIZADO</p>
+            <h2 id="login-title">Acceso por correo</h2>
+            <p class="view-copy">Escribe un correo autorizado y te enviaremos un código temporal a Gmail.</p>
+
+            <form id="login-form" novalidate>
+              <div class="field">
+                <label for="login-email">Correo electrónico</label>
+                <input id="login-email" name="email" type="email" inputmode="email" autocomplete="username" required aria-describedby="login-email-help">
+                <small id="login-email-help">Solo los correos invitados pueden acceder.</small>
+              </div>
+              <button class="primary-button" type="submit">Enviar código</button>
+            </form>
+
+            <p class="invite-hint">El registro público está desactivado. Las cuentas se crean únicamente por invitación.</p>
+          </section>
+
+          <section id="view-email-verify" class="auth-view" aria-labelledby="email-verify-title" hidden>
+            <button class="back-button" type="button" data-go-login aria-label="Volver al acceso por correo">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+              Cambiar correo
+            </button>
+            <p class="step-label">CÓDIGO DE ACCESO</p>
+            <h2 id="email-verify-title">Revisa tu correo</h2>
+            <p class="view-copy">Enviamos un código temporal a <strong id="otp-email-label">tu correo</strong>. El código es de un solo uso.</p>
+            <form id="email-verify-form" novalidate>
+              <div class="field">
+                <label for="email-otp">Código de 6 dígitos</label>
+                <input id="email-otp" name="code" class="otp-input" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required autofocus>
+              </div>
+              <button class="primary-button" type="submit">Verificar y entrar</button>
+            </form>
+            <button id="resend-otp" class="text-button" type="button">Reenviar código</button>
+            <p class="invite-hint">Si no ves el correo, revisa Spam o Promociones.</p>
+          </section>
+
+          <section id="view-denied" class="auth-view" aria-labelledby="denied-title" hidden>
+            <div class="status-icon status-icon--warning" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3 21 20H3L12 3Z"></path><path d="M12 9v5M12 17h.01"></path></svg>
+            </div>
+            <p class="step-label">ACCESO RESTRINGIDO</p>
+            <h2 id="denied-title">No pudimos autorizar esta cuenta</h2>
+            <p class="view-copy">La cuenta no tiene una membresía activa para el CRM. Contacta al administrador de VisuaLed.</p>
+            <button class="secondary-button sign-out-action" type="button">Cerrar sesión</button>
+          </section>
+
+          <section id="view-ready" class="auth-view" aria-labelledby="ready-title" hidden>
+            <div class="ready-header">
+              <span class="status-icon status-icon--success" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z"></path><path d="m9 12 2 2 4-4"></path></svg>
+              </span>
+              <div>
+                <p class="step-label">SESIÓN PROTEGIDA</p>
+                <h2 id="ready-title">CRM en preparación</h2>
+              </div>
+            </div>
+            <p class="view-copy">La autenticación ya está lista. Los módulos de gestión se incorporarán en la siguiente etapa.</p>
+            <dl class="session-card">
+              <div><dt>Usuario</dt><dd id="member-name">—</dd></div>
+              <div><dt>Rol</dt><dd id="member-role">—</dd></div>
+              <div><dt>Seguridad</dt><dd><span class="aal-badge">MFA verificado</span></dd></div>
+            </dl>
+            <button class="secondary-button sign-out-action" type="button">Cerrar sesión</button>
+          </section>
+        </div>
+
+        <p class="support-copy">Acceso exclusivo para el equipo autorizado de VisuaLed.</p>
+      </section>
+    </main>
+
+    <footer>
+      <span>© <span id="current-year"></span> VisuaLed</span>
+      <span>Conexión cifrada · Acceso monitoreado</span>
+    </footer>
+  </div>
+
+  <script src="vendor/supabase-2.111.0.js" defer></script>
+  <script src="config.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
