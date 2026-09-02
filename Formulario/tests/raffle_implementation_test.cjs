@@ -1,0 +1,146 @@
+'use strict';
+
+const fs = require('node:fs');
+const http = require('node:http');
+const path = require('node:path');
+
+const moduleRoot = process.env.CODEX_TEST_NODE_MODULES;
+if (!moduleRoot) throw new Error('CODEX_TEST_NODE_MODULES is required.');
+const { chromium } = require(path.join(moduleRoot, 'playwright'));
+const browserExecutable = process.env.CODEX_TEST_BROWSER;
+
+const root = path.resolve(__dirname, '..', 'crm');
+const results = path.resolve(__dirname, 'results', 'raffle');
+const baseUrl = 'http://127.0.0.1:4174';
+const mime = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.svg': 'image/svg+xml' };
+
+const server = http.createServer((request, response) => {
+  const requestUrl = new URL(request.url, baseUrl);
+  const relative = decodeURIComponent(requestUrl.pathname).replace(/^\/+/, '') || 'index.html';
+  let file = path.resolve(root, relative);
+  if (!path.extname(file)) file = path.join(file, 'index.html');
+  if (!file.startsWith(root + path.sep)) return response.writeHead(403).end('Forbidden');
+  fs.readFile(file, (error, data) => {
+    if (error) return response.writeHead(404).end('Not found');
+    response.writeHead(200, { 'Content-Type': mime[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
+    response.end(data);
+  });
+});
+
+function check(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+async function revealDashboard(page) {
+  await page.evaluate(() => {
+    document.querySelectorAll('.auth-view').forEach((view) => { view.hidden = true; });
+    document.querySelector('#view-ready').hidden = false;
+    document.body.classList.add('crm-open');
+  });
+  await page.locator('#studio-title').waitFor({ state: 'visible' });
+}
+
+async function openRaffle(page) {
+  if (await page.evaluate(() => innerWidth <= 900)) await page.locator('#studio-menu-toggle').click();
+  await page.locator('.studio-nav__item[data-crm-target="raffle"]').click();
+  await page.locator('#studio-raffle-start').waitFor({ state: 'visible' });
+}
+
+async function checkNoOverflow(page, label) {
+  check(!(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)), `${label}: hay desbordamiento horizontal`);
+}
+
+(async () => {
+  fs.mkdirSync(results, { recursive: true });
+  await new Promise((resolve, reject) => {
+    server.once('error', reject);
+    server.listen(4174, '127.0.0.1', resolve);
+  });
+
+  const browser = await chromium.launch({ headless: true, ...(browserExecutable ? { executablePath: browserExecutable } : {}) });
+  const errors = [];
+
+  try {
+    const page = await browser.newPage({ viewport: { width: 1440, height: 960 } });
+    const requests = [];
+    page.on('console', (message) => { if (message.type() === 'error') errors.push(`console:${message.text()}`); });
+    page.on('pageerror', (error) => errors.push(`page:${error.message}`));
+    page.on('request', (request) => requests.push(request.url()));
+    await page.goto(baseUrl, { waitUntil: 'networkidle' });
+    await page.locator('#view-login').waitFor({ state: 'visible' });
+    await revealDashboard(page);
+    await openRaffle(page);
+
+    check(!/simulaci[oó]n/i.test(await page.locator('.studio-panel[data-crm-panel="raffle"]').innerText()), 'El sorteo todavía muestra etiquetas de simulación.');
+    check(/sorteo\s+un mes de publicidad gratis/i.test((await page.locator('#studio-raffle-title').innerText()).replace(/\s+/g, ' ').trim()), 'El título del sorteo no coincide con el solicitado.');
+    check(!/Participantes elegibles|Una empresa\.|Una señal\.|45 segundos/i.test(await page.locator('.studio-raffle__controls').innerText()), 'El panel todavía muestra el texto anterior.');
+    check(await page.locator('#studio-raffle-ticker span').count() === 3, 'El ticker no muestra los tres ejemplos.');
+    check(await page.locator('#studio-raffle-company-count').innerText() === '3', 'El contador de empresas demo es incorrecto.');
+    check(await page.locator('.studio-raffle__screen > img').evaluate((image) => image.complete && image.naturalWidth > 0), 'No carga la pantalla LED.');
+    check(await page.locator('.studio-raffle__robot img').evaluate((image) => image.complete && image.naturalWidth > 0), 'No carga el robot.');
+
+    const baseline = requests.length;
+    const startedAt = Date.now();
+    await page.locator('#studio-raffle-start').click();
+    check(await page.locator('#studio-raffle-start').isDisabled(), 'El botón permite doble clic durante el sorteo.');
+    check(await page.locator('#studio-raffle-coupon').isDisabled(), 'El filtro no se bloquea durante el sorteo.');
+    check(await page.locator('.studio-raffle__stage').getAttribute('data-raffle-state') === 'countdown', 'No empieza la cuenta regresiva.');
+    check(/PREPARANDO SORTEO|COMENZANDO EN/.test(await page.locator('#studio-raffle-kicker').innerText()), 'El clic no produce respuesta visual inmediata.');
+
+    await page.locator('#studio-raffle-winner-card').waitFor({ state: 'visible', timeout: 24000 });
+    await page.waitForTimeout(1400);
+    const elapsed = (Date.now() - startedAt) / 1000;
+    check(elapsed >= 16 && elapsed <= 22, `La experiencia no dura aproximadamente 18 segundos: ${elapsed.toFixed(1)}s.`);
+    check(['Julissa Castro', 'Kayal', 'Ivis'].includes(await page.locator('#studio-raffle-winner-name').innerText()), 'El ganador no pertenece al grupo demo.');
+    check((await page.locator('#studio-raffle-winner-code').innerText()).startsWith('VL-'), 'El ganador no muestra código.');
+    check(await page.locator('#studio-raffle-confetti i').count() === 18, 'No se generó el confeti.');
+    check(await page.locator('#studio-raffle-start').isEnabled(), 'El botón no se habilita al terminar.');
+    check(!requests.slice(baseline).some((url) => url.includes('supabase.co')), 'La simulación hizo una solicitud a Supabase.');
+    await checkNoOverflow(page, 'Sorteo escritorio');
+    await page.screenshot({ path: path.join(results, 'raffle-desktop-winner.png'), fullPage: true });
+    await page.close();
+
+    const compact = await browser.newPage({ viewport: { width: 1900, height: 900 } });
+    await compact.goto(baseUrl, { waitUntil: 'networkidle' });
+    await compact.locator('#view-login').waitFor({ state: 'visible' });
+    await revealDashboard(compact);
+    await openRaffle(compact);
+    await checkNoOverflow(compact, 'Sorteo compacto 90%');
+    check(await compact.locator('#crm-workspace-main').evaluate((element) => getComputedStyle(element).overflowY === 'hidden'), 'El scroll general sigue activo en la vista del sorteo.');
+    check(await compact.locator('.studio-panel[data-crm-panel="raffle"]').evaluate((element) => ['auto', 'scroll'].includes(getComputedStyle(element).overflowY)), 'El sorteo no tiene su propio scroll vertical.');
+    await compact.screenshot({ path: path.join(results, 'raffle-compact-90.png'), fullPage: true });
+    await compact.close();
+
+    const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    await mobile.goto(baseUrl, { waitUntil: 'networkidle' });
+    await mobile.locator('#view-login').waitFor({ state: 'visible' });
+    await revealDashboard(mobile);
+    await openRaffle(mobile);
+    await checkNoOverflow(mobile, 'Sorteo móvil');
+    const stageBox = await mobile.locator('.studio-raffle__stage').boundingBox();
+    check(stageBox && stageBox.width <= 374, `El escenario excede el ancho móvil: ${stageBox ? stageBox.width : 'sin caja'}.`);
+    await mobile.screenshot({ path: path.join(results, 'raffle-mobile-idle.png'), fullPage: true });
+    await mobile.close();
+
+    const reduced = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'reduce' });
+    const reducedPage = await reduced.newPage();
+    await reducedPage.goto(baseUrl, { waitUntil: 'networkidle' });
+    await reducedPage.locator('#view-login').waitFor({ state: 'visible' });
+    await revealDashboard(reducedPage);
+    await openRaffle(reducedPage);
+    await reducedPage.locator('#studio-raffle-start').click();
+    await reducedPage.locator('#studio-raffle-winner-card').waitFor({ state: 'visible', timeout: 2000 });
+    await reducedPage.waitForTimeout(150);
+    check(await reducedPage.evaluate(() => document.getAnimations().filter((animation) => animation.playState === 'running').length) === 0, 'Quedaron animaciones activas con movimiento reducido.');
+    await reduced.close();
+  } finally {
+    await browser.close();
+    await new Promise((resolve) => server.close(resolve));
+  }
+
+  check(errors.length === 0, `Errores del navegador: ${errors.join(' | ')}`);
+  console.log('PASS raffle: respuesta inmediata, ~18s, ganador, scroll interno, responsive y reduced motion.');
+})().catch((error) => {
+  console.error(error.stack || error.message);
+  process.exitCode = 1;
+});

@@ -2,7 +2,13 @@
   "use strict";
 
   const DRAFT_KEY = "visualed_campaign_form_draft_v1";
-  const LOCAL_SUBMISSIONS_KEY = "visualed_campaign_local_submissions_v1";
+  const supabaseConfig = window.VISUALED_CRM_CONFIG;
+  const supabaseClient = window.supabase?.createClient && supabaseConfig?.supabaseUrl && supabaseConfig?.supabasePublishableKey
+    ? window.supabase.createClient(supabaseConfig.supabaseUrl, supabaseConfig.supabasePublishableKey, {
+      auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+      global: { headers: { "X-Client-Info": "visualed-public-form/1.0.0" } }
+    })
+    : null;
 
   const form = document.querySelector("#campaignForm");
   const formPanel = document.querySelector(".form-panel");
@@ -229,9 +235,6 @@
   function makeRegistrationPayload() {
     const data = collectDraft();
     return {
-      id: typeof crypto.randomUUID === "function"
-        ? crypto.randomUUID()
-        : `visualed-${Date.now()}-${Math.random().toString(16).slice(2)}`,
       full_name: String(data.full_name || "").trim(),
       business_name: String(data.business_name || "").trim(),
       whatsapp: normalizePhone(String(data.whatsapp || "")),
@@ -240,27 +243,19 @@
       source: data.source || null,
       coupon_percent: Number(data.coupon),
       consent: Boolean(data.consent),
-      campaign: "sorteo_un_mes_publicidad",
-      created_at: new Date().toISOString()
+      campaign: "sorteo_un_mes_publicidad"
     };
   }
 
-  /*
-   * Punto de conexión con Supabase.
-   * En la siguiente etapa se reemplaza el bloque local por:
-   * supabase.from("campaign_registrations").insert(payload)
-   */
   async function submitRegistration(payload) {
     if (typeof window.visualedSupabaseSubmit === "function") {
       await window.visualedSupabaseSubmit(payload);
       return { mode: "supabase" };
     }
-
-    const current = JSON.parse(localStorage.getItem(LOCAL_SUBMISSIONS_KEY) || "[]");
-    current.push(payload);
-    localStorage.setItem(LOCAL_SUBMISSIONS_KEY, JSON.stringify(current.slice(-100)));
-    await new Promise((resolve) => window.setTimeout(resolve, 500));
-    return { mode: "local" };
+    if (!supabaseClient) throw new Error("Supabase client unavailable");
+    const { error } = await supabaseClient.from("participants").insert(payload);
+    if (error) throw error;
+    return { mode: "supabase" };
   }
 
   function appendSummaryItem(label, value) {
@@ -282,9 +277,7 @@
     appendSummaryItem("WhatsApp", payload.whatsapp);
     appendSummaryItem("Cupón", `${payload.coupon_percent}% de descuento`);
 
-    successMessage.textContent = mode === "supabase"
-      ? "Tus datos fueron registrados correctamente. VisuaLed se pondrá en contacto contigo si resultas ganador."
-      : "El registro de prueba quedó guardado en este dispositivo. Cuando conectemos Supabase, se enviará directamente a VisuaLed.";
+    successMessage.textContent = "Tus datos fueron registrados correctamente. VisuaLed se pondrá en contacto contigo si resultas ganador.";
 
     campaignPanel.hidden = true;
     formPanel.hidden = true;
@@ -357,7 +350,7 @@
       showSuccess(payload, result.mode);
     } catch (error) {
       console.error("No se pudo registrar la participación", error);
-      formMessage.textContent = "No pudimos guardar el registro. Revisa el espacio disponible del navegador e inténtalo otra vez.";
+      formMessage.textContent = "No pudimos guardar el registro en este momento. Verifica tu conexión e inténtalo nuevamente.";
     } finally {
       submitButton.disabled = false;
       submitButton.querySelector("span").textContent = originalLabel;

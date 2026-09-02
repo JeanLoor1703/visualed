@@ -18,6 +18,7 @@ const mimeTypes = {
   '.css': 'text/css; charset=utf-8',
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
+  '.png': 'image/png',
   '.svg': 'image/svg+xml',
   '.txt': 'text/plain; charset=utf-8'
 };
@@ -71,9 +72,10 @@ const server = http.createServer((request, response) => {
     await desktop.locator('#view-login').waitFor({ state: 'visible' });
 
     if (!(await desktop.locator('#view-loading').isHidden())) throw new Error('Loading view remained visible.');
-    if (!(await desktop.getByRole('heading', { name: 'Acceso por correo' }).isVisible())) throw new Error('Login heading not visible.');
-    if ((await desktop.locator('input[type="password"]').count()) !== 0) throw new Error('Password input still present.');
-    if (!(await desktop.locator('#email-otp').count())) throw new Error('Email OTP input missing.');
+    if (!(await desktop.getByRole('heading', { name: 'Bienvenido de nuevo' }).isVisible())) throw new Error('Login heading not visible.');
+    if ((await desktop.locator('#login-username').count()) !== 1) throw new Error('Username input missing.');
+    if ((await desktop.locator('#login-password').count()) !== 1) throw new Error('Password input missing.');
+    if ((await desktop.locator('#email-otp').count()) !== 0) throw new Error('Obsolete email OTP input still present.');
     if ((await desktop.locator('script:not([src])').count()) !== 0) throw new Error('Inline script found.');
     if ((await desktop.locator("script[src^='http']").count()) !== 0) throw new Error('External runtime script found.');
     if ((await desktop.locator("link[href^='http']").count()) !== 1) throw new Error('Unexpected external stylesheet or resource found.');
@@ -83,6 +85,36 @@ const server = http.createServer((request, response) => {
 
     await desktop.screenshot({ path: path.join(results, 'crm-login-desktop.png'), fullPage: true });
     if (consoleErrors.length) throw new Error(`Browser console errors before security checks: ${consoleErrors.join(' | ')}`);
+    consoleErrors.length = 0;
+
+    const dashboard = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+    dashboard.on('console', (message) => {
+      if (message.type() === 'error') consoleErrors.push(message.text());
+    });
+    await dashboard.goto(baseUrl, { waitUntil: 'networkidle' });
+    await dashboard.locator('#view-login').waitFor({ state: 'visible' });
+    await dashboard.evaluate(() => {
+      document.querySelectorAll('.auth-view').forEach((view) => { view.hidden = true; });
+      document.querySelector('#view-ready').hidden = false;
+      document.body.classList.add('crm-open');
+    });
+    await dashboard.getByRole('heading', { name: 'Centro de operación', exact: true }).waitFor({ state: 'visible' });
+    if ((await dashboard.locator('[data-crm-panel="overview"] .participant-row').count()) !== 5) throw new Error('Demo participant flow was not rendered.');
+    if (await dashboard.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)) throw new Error('Dashboard horizontal overflow detected.');
+    await dashboard.screenshot({ path: path.join(results, 'crm-dashboard-desktop.png'), fullPage: true });
+
+    await dashboard.getByRole('button', { name: /Participantes/ }).click();
+    await dashboard.getByRole('heading', { name: 'Personas detrás de cada registro' }).waitFor({ state: 'visible' });
+    await dashboard.locator('#participant-search').fill('Mora Café');
+    if ((await dashboard.locator('#participant-table-body tr').count()) !== 1) throw new Error('Participant filtering failed.');
+
+    await dashboard.getByRole('button', { name: 'Sorteo' }).click();
+    await dashboard.locator('#raffle-coupon').selectOption('20%');
+    if ((await dashboard.locator('#raffle-pool-count').innerText()) !== '4 elegibles') throw new Error('Raffle eligibility filter failed.');
+    await dashboard.getByRole('button', { name: 'Iniciar simulación' }).click();
+    await dashboard.locator('#raffle-kicker').filter({ hasText: 'SEÑAL SELECCIONADA' }).waitFor({ timeout: 6000 });
+    await dashboard.screenshot({ path: path.join(results, 'crm-raffle-winner.png'), fullPage: true });
+    if (consoleErrors.length) throw new Error(`Dashboard console errors: ${consoleErrors.join(' | ')}`);
     consoleErrors.length = 0;
 
     const anonResult = await desktop.evaluate(async () => {
@@ -96,12 +128,13 @@ const server = http.createServer((request, response) => {
       throw new Error(`Anonymous membership query unexpectedly succeeded: ${anonResult.body}`);
     }
 
-    await desktop.locator('#login-email').fill('not-a-member@example.invalid');
-    await desktop.getByRole('button', { name: 'Enviar código' }).click();
+    await desktop.locator('#login-username').fill('not-a-member');
+    await desktop.locator('#login-password').fill('not-a-valid-password');
+    await desktop.getByRole('button', { name: 'Entrar al panel' }).click();
     await desktop.locator('#global-message').waitFor({ state: 'visible', timeout: 15000 });
-    const sendMessage = await desktop.locator('#global-message').innerText();
-    if (sendMessage !== 'Si el correo está autorizado, recibirás un código temporal en unos instantes.') {
-      throw new Error(`Email response is not neutral: ${sendMessage}`);
+    const loginMessage = await desktop.locator('#global-message').innerText();
+    if (loginMessage !== 'No pudimos completar el acceso. Verifica tus credenciales e inténtalo nuevamente.') {
+      throw new Error(`Login response is not neutral: ${loginMessage}`);
     }
 
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
@@ -111,12 +144,26 @@ const server = http.createServer((request, response) => {
     if (mobileOverflow) throw new Error('Mobile horizontal overflow detected.');
     await mobile.screenshot({ path: path.join(results, 'crm-login-mobile.png'), fullPage: true });
 
+    const mobileDashboard = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    await mobileDashboard.goto(baseUrl, { waitUntil: 'networkidle' });
+    await mobileDashboard.locator('#view-login').waitFor({ state: 'visible' });
+    await mobileDashboard.evaluate(() => {
+      document.querySelectorAll('.auth-view').forEach((view) => { view.hidden = true; });
+      document.querySelector('#view-ready').hidden = false;
+      document.body.classList.add('crm-open');
+    });
+    await mobileDashboard.locator('#crm-menu-toggle').click();
+    await mobileDashboard.locator('.crm-sidebar').waitFor({ state: 'visible' });
+    await mobileDashboard.waitForTimeout(350);
+    if (await mobileDashboard.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)) throw new Error('Mobile dashboard horizontal overflow detected.');
+    await mobileDashboard.screenshot({ path: path.join(results, 'crm-dashboard-mobile.png'), fullPage: true });
+
     const callback = await browser.newPage({ viewport: { width: 900, height: 800 } });
     await callback.goto(`${baseUrl}/auth/invite/?flow=invite`, { waitUntil: 'networkidle' });
     await callback.locator('#view-login').waitFor({ state: 'visible' });
     if (callback.url() !== `${baseUrl}/`) throw new Error('Authentication callback URL was not cleaned.');
 
-    console.log('CRM UI checks passed: desktop, mobile, callback cleanup, local resources and interactions.');
+    console.log('CRM UI checks passed: login, dashboard, filters, raffle, responsive layout, callback cleanup, local resources and interactions.');
   } finally {
     await browser.close();
     await new Promise((resolve) => server.close(resolve));

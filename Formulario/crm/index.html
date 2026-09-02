@@ -17,39 +17,32 @@
 
   <div class="page-shell">
     <header class="brand-bar" aria-label="VisuaLed CRM">
-      <a class="brand" href="/" aria-label="VisuaLed CRM, inicio">
-        <img src="assets/visualed-mark.svg" alt="" width="46" height="46">
-        <span class="brand-copy">
-          <strong>Visua<span>Led</span></strong>
-          <small>Centro de gestión</small>
-        </span>
+      <a class="brand" href="/" aria-label="VisuaLed, inicio">
+        <img class="brand-logo" src="imagenes/visualed_logo.png" alt="VisuaLed, publicidad digital" width="220" height="160" decoding="async" fetchpriority="high">
       </a>
-      <span class="private-badge">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
-        Acceso privado
-      </span>
     </header>
 
     <main id="main-content" class="main-layout" tabindex="-1">
       <section class="intro-panel" aria-labelledby="intro-title">
-        <p class="eyebrow">CRM · VISUALED</p>
-        <h1 id="intro-title">Tu operación,<br><span>bien protegida.</span></h1>
-        <p class="intro-copy">Un espacio privado para organizar contactos, oportunidades y el avance comercial de VisuaLed.</p>
+        <h1 id="intro-title"><span>Tu marca</span><br><span class="accent-line">a la vista</span><br><span>de todos.</span></h1>
+        <p class="hero-kicker">Publicidad que sí se ve.</p>
+        <p class="intro-copy">Accede a tu panel para gestionar campañas, clientes y oportunidades en un solo lugar.</p>
 
-        <div class="security-note">
-          <span class="security-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z"></path><path d="m9 12 2 2 4-4"></path></svg>
-          </span>
-          <div>
-            <strong>Código de acceso seguro</strong>
-            <p>Recibirás un código temporal en tu correo y solo funcionará una vez.</p>
-          </div>
+        <div class="hero-visual" aria-hidden="true">
+          <span class="orbit orbit--one"></span>
+          <span class="orbit orbit--two"></span>
+          <span class="signal signal--one"></span>
+          <span class="signal signal--two"></span>
+          <span class="signal signal--three"></span>
+          <span class="visual-grid"></span>
+          <span class="city-silhouette"></span>
+          <img src="imagenes/pantalla-visualed.png" alt="" width="500" height="500" decoding="async" fetchpriority="high">
         </div>
       </section>
 
       <section class="auth-column" aria-label="Acceso al CRM">
         <div class="auth-card">
-          <div id="global-message" class="message" role="status" aria-live="polite" hidden></div>
+          <div id="global-message" class="message" role="status" aria-live="polite" tabindex="-1" hidden></div>
 
           <section id="view-loading" class="auth-view auth-view--loading" aria-labelledby="loading-title">
             <span class="spinner" aria-hidden="true"></span>
@@ -58,39 +51,55 @@
           </section>
 
           <section id="view-login" class="auth-view" aria-labelledby="login-title" hidden>
-            <p class="step-label">ACCESO AUTORIZADO</p>
-            <h2 id="login-title">Acceso por correo</h2>
-            <p class="view-copy">Escribe un correo autorizado y te enviaremos un código temporal a Gmail.</p>
+            <h2 id="login-title">Bienvenido de nuevo</h2>
+            <p class="view-copy">Inicia sesión en tu cuenta</p>
 
             <form id="login-form" novalidate>
               <div class="field">
-                <label for="login-email">Correo electrónico</label>
-                <input id="login-email" name="email" type="email" inputmode="email" autocomplete="username" required aria-describedby="login-email-help">
-                <small id="login-email-help">Solo los correos invitados pueden acceder.</small>
+                <label for="login-username">Usuario</label>
+                <div class="input-shell">
+                  <span class="field-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c.6-3.5 3-5.5 7-5.5s6.4 2 7 5.5"></path></svg></span>
+                  <input id="login-username" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Ingresa tu usuario…" required aria-describedby="login-username-help">
+                </div>
+                <small id="login-username-help">Solo los usuarios autorizados pueden acceder.</small>
               </div>
-              <button class="primary-button" type="submit">Enviar código</button>
+              <div class="field password-field">
+                <label for="login-password">Contraseña</label>
+                <div class="input-shell">
+                  <span class="field-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></span>
+                  <input id="login-password" name="password" type="password" autocomplete="current-password" spellcheck="false" placeholder="Ingresa tu contraseña…" required aria-describedby="login-password-help">
+                  <button class="password-toggle" type="button" data-toggle-password="login-password" aria-label="Mostrar contraseña" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12s3.2-5 9-5 9 5 9 5-3.2 5-9 5-9-5-9-5Z"></path><circle cx="12" cy="12" r="2.2"></circle></svg></button>
+                </div>
+                <small id="login-password-help">Usa la contraseña asignada por el administrador.</small>
+              </div>
+              <div class="login-options">
+                <label class="remember-option"><input id="remember-session" name="remember" type="checkbox" checked> <span>Recordarme</span></label>
+                <button id="password-help" class="help-link" type="button">¿Olvidaste tu contraseña?</button>
+              </div>
+              <button class="primary-button" type="submit">Entrar al panel <span aria-hidden="true">→</span></button>
             </form>
 
-            <p class="invite-hint">El registro público está desactivado. Las cuentas se crean únicamente por invitación.</p>
+            <p class="invite-hint">Tu sesión se conecta de forma segura con el panel privado de VisuaLed.</p>
           </section>
 
-          <section id="view-email-verify" class="auth-view" aria-labelledby="email-verify-title" hidden>
-            <button class="back-button" type="button" data-go-login aria-label="Volver al acceso por correo">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
-              Cambiar correo
-            </button>
-            <p class="step-label">CÓDIGO DE ACCESO</p>
-            <h2 id="email-verify-title">Revisa tu correo</h2>
-            <p class="view-copy">Enviamos un código temporal a <strong id="otp-email-label">tu correo</strong>. El código es de un solo uso.</p>
-            <form id="email-verify-form" novalidate>
-              <div class="field">
-                <label for="email-otp">Código de 6 dígitos</label>
-                <input id="email-otp" name="code" class="otp-input" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required autofocus>
+          <section id="view-set-password" class="auth-view" aria-labelledby="set-password-title" hidden>
+            <p class="step-label">CONFIGURACIÓN INICIAL</p>
+            <h2 id="set-password-title">Define tu contraseña</h2>
+            <p class="view-copy">Tu invitación fue aceptada. Define una contraseña para entrar al CRM con tu usuario.</p>
+            <form id="set-password-form" novalidate>
+              <div class="field password-field">
+                <label for="setup-password">Contraseña</label>
+                <input id="setup-password" name="password" type="password" autocomplete="new-password" minlength="8" required aria-describedby="setup-password-help">
+                <button class="password-toggle" type="button" data-toggle-password="setup-password" aria-label="Mostrar contraseña" aria-pressed="false">Mostrar</button>
+                <small id="setup-password-help">Usa al menos 8 caracteres y no la compartas.</small>
               </div>
-              <button class="primary-button" type="submit">Verificar y entrar</button>
+              <div class="field password-field">
+                <label for="setup-password-confirm">Confirmar contraseña</label>
+                <input id="setup-password-confirm" name="password-confirm" type="password" autocomplete="new-password" minlength="8" required>
+                <button class="password-toggle" type="button" data-toggle-password="setup-password-confirm" aria-label="Mostrar contraseña" aria-pressed="false">Mostrar</button>
+              </div>
+              <button class="primary-button" type="submit">Guardar contraseña <span aria-hidden="true">→</span></button>
             </form>
-            <button id="resend-otp" class="text-button" type="button">Reenviar código</button>
-            <p class="invite-hint">Si no ves el correo, revisa Spam o Promociones.</p>
           </section>
 
           <section id="view-denied" class="auth-view" aria-labelledby="denied-title" hidden>
@@ -103,23 +112,339 @@
             <button class="secondary-button sign-out-action" type="button">Cerrar sesión</button>
           </section>
 
-          <section id="view-ready" class="auth-view" aria-labelledby="ready-title" hidden>
-            <div class="ready-header">
-              <span class="status-icon status-icon--success" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z"></path><path d="m9 12 2 2 4-4"></path></svg>
-              </span>
-              <div>
-                <p class="step-label">SESIÓN PROTEGIDA</p>
-                <h2 id="ready-title">CRM en preparación</h2>
+          <section id="view-ready" class="auth-view crm-view" aria-labelledby="studio-title" hidden>
+            <div class="studio-shell">
+              <button id="studio-nav-scrim" class="studio-nav-scrim" type="button" aria-label="Cerrar navegación" hidden></button>
+
+              <aside class="studio-sidebar" aria-label="Navegación principal">
+                <div class="studio-brand">
+                  <img src="imagenes/visualed_logo.png" alt="VisuaLed" width="164" height="116">
+                </div>
+
+                <nav class="studio-nav" aria-label="Módulos del CRM">
+                  <button class="studio-nav__item is-active" type="button" data-crm-target="overview" aria-current="page">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg>
+                    <span>Dashboard</span>
+                  </button>
+                  <button class="studio-nav__item" type="button" data-crm-target="coupons">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v4a2 2 0 0 0 0 4v4H4v-4a2 2 0 0 0 0-4V7Z"></path><path d="M9 7v12"></path></svg>
+                    <span>Cupones</span>
+                  </button>
+                  <button class="studio-nav__item" type="button" data-crm-target="raffle">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16v12H4V8ZM2 4h20v4H2V4Z"></path><path d="M12 4v16M8 4c-2 0-3-1-3-2s1-2 2-2c2 0 5 4 5 4m4-4c2 0 3 1 3 2s-1 2-3 2h-4s2-4 4-4"></path></svg>
+                    <span>Sorteo</span>
+                  </button>
+                  <button class="studio-nav__item" type="button" data-crm-target="activity">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg>
+                    <span>Reportes</span>
+                  </button>
+                </nav>
+
+                <div class="studio-promo">
+                  <img src="imagenes/mascota_viusaled.png" alt="Mascota de VisuaLed saludando" width="78" height="78">
+                  <div><strong>Impulsa tu negocio</strong><span>con VisuaLed</span><p>Soluciones LED para que vendas más y te destaques.</p></div>
+                </div>
+
+                <div class="studio-sidebar__footer">
+                  <span class="studio-avatar" id="member-avatar" aria-hidden="true">VL</span>
+                  <span><strong id="member-name">VisuaLed</strong><small id="member-role">Administrador</small></span>
+                  <button class="studio-icon-button sign-out-action" type="button" aria-label="Cerrar sesión" title="Cerrar sesión">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5v16h5M14 8l4 4-4 4M8 12h10"></path></svg>
+                  </button>
+                </div>
+              </aside>
+
+              <div class="studio-workspace">
+                <header class="studio-topbar">
+                  <div class="studio-topbar__title">
+                    <button id="studio-menu-toggle" class="studio-menu-toggle" type="button" aria-label="Abrir navegación" aria-expanded="false"><span></span><span></span><span></span></button>
+                    <div><h2 id="studio-title">CRM VisuaLed</h2><p>Participa y gana</p></div>
+                  </div>
+                  <div class="studio-topbar__actions">
+                    <button id="studio-search-action" class="studio-icon-button" type="button" aria-label="Buscar registros"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg></button>
+                    <button id="studio-notification-action" class="studio-icon-button studio-notification" type="button" aria-label="Ver notificaciones"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"></path></svg><span id="studio-notification-count" hidden>0</span></button>
+                    <div class="studio-profile">
+                      <button id="studio-profile-action" class="studio-profile__button" type="button" aria-expanded="false">
+                        <span class="studio-avatar">JC</span><span><strong>Julissa Castro</strong><small>Administrador</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"></path></svg>
+                      </button>
+                      <div id="studio-profile-menu" class="studio-profile__menu" hidden><p>Sesión protegida</p><button class="sign-out-action" type="button">Cerrar sesión</button></div>
+                    </div>
+                  </div>
+                </header>
+
+                <div id="studio-toast" class="studio-toast" role="status" aria-live="polite" hidden></div>
+
+                <main id="crm-workspace-main" class="studio-content" tabindex="-1">
+                  <section class="studio-panel is-active" data-crm-panel="overview" aria-labelledby="dashboard-title">
+                    <h3 id="dashboard-title" class="sr-only">Dashboard de participaciones</h3>
+                    <div class="studio-metrics" aria-label="Indicadores principales">
+                      <article><span class="metric-icon metric-icon--navy"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"></circle><path d="M3 20c.5-4 2.5-6 6-6s5.5 2 6 6M16 6h5M18.5 3.5v5"></path></svg></span><div><p>Total registros</p><strong id="metric-total-count" data-count="3">3</strong><small id="metric-week-label">3 ejemplos iniciales</small></div></article>
+                      <article><span class="metric-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M22 12h-3M12 22v-3M2 12h3"></path></svg></span><div><p>Interesados en planes</p><strong id="metric-interest-count" data-count="2">2</strong><small id="metric-interest-label">66.7% del total</small></div></article>
+                      <article><span class="metric-icon metric-icon--light"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v6l4 2"></path></svg></span><div><p>Pendientes por contactar</p><strong id="metric-pending-count" data-count="3">3</strong><small id="metric-pending-label">100% del total</small></div></article>
+                      <article><span class="metric-icon metric-icon--ink"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16v12H4V9ZM2 5h20v4H2V5ZM12 5v16"></path><path d="M8 5C6 5 5 4 5 3s1-2 2-2c2 0 5 4 5 4m4-4c2 0 3 1 3 2s-1 2-3 2h-4s2-4 4-4"></path></svg></span><div><p>Cupones entregados</p><strong id="metric-coupon-count" data-count="3">3</strong><small id="metric-coupon-label">1 por registro</small></div></article>
+                    </div>
+
+                    <div class="studio-toolbar">
+                      <label class="studio-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg><span class="sr-only">Buscar registro</span><input id="dashboard-search" type="search" autocomplete="off" placeholder="Buscar por nombre, negocio o WhatsApp…"></label>
+                      <div class="studio-filters" aria-label="Filtrar por interés">
+                        <button class="is-active" type="button" data-record-filter="all" aria-pressed="true">Todos</button>
+                        <button type="button" data-record-filter="direct" aria-pressed="false">Sí, quiero que me contacten</button>
+                        <button type="button" data-record-filter="maybe" aria-pressed="false">Quizás</button>
+                        <button type="button" data-record-filter="raffle" aria-pressed="false">Solo sorteo</button>
+                      </div>
+                      <div class="studio-toolbar__actions">
+                        <button id="studio-add-participant" class="studio-action studio-action--primary" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg><span>Agregar participación</span></button>
+                        <button id="studio-export-excel" class="studio-action studio-action--secondary" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"></path></svg><span>Descargar Excel</span></button>
+                      </div>
+                    </div>
+
+                    <div class="studio-dashboard-grid">
+                      <section class="studio-records-card" aria-label="Listado de registros">
+                        <div class="studio-table-scroll"><table class="studio-table"><thead><tr><th>Nombre y apellido</th><th>Negocio</th><th>WhatsApp</th><th>¿A qué se dedica?</th><th>Interés en planes</th><th>Origen</th><th>Cupón</th><th>Estado</th></tr></thead><tbody id="dashboard-table-body"></tbody></table></div>
+                        <footer><span id="dashboard-table-count">Mostrando 3 registros</span><div><button class="is-active" type="button" aria-current="page">1</button></div></footer>
+                      </section>
+
+                      <aside class="studio-detail" aria-labelledby="record-detail-name">
+                        <div class="studio-detail__identity"><span id="record-detail-avatar" class="studio-avatar studio-avatar--large">DM</span><div><h4 id="record-detail-name">Daniela Mora</h4><p id="record-detail-business">Mora Café</p></div></div>
+                        <h5>Información del registro</h5>
+                        <dl class="studio-detail__list">
+                          <div><dt>Nombre y apellido</dt><dd id="record-detail-fullname">Daniela Mora</dd></div>
+                          <div><dt>Negocio</dt><dd id="record-detail-company">Mora Café</dd></div>
+                          <div><dt>WhatsApp</dt><dd id="record-detail-phone">099 412 6381</dd></div>
+                          <div><dt>¿A qué se dedica?</dt><dd id="record-detail-activity">Cafetería de especialidad</dd></div>
+                          <div><dt>Interés en planes publicitarios</dt><dd id="record-detail-interest">Sí, quiero que me contacten</dd></div>
+                          <div><dt>¿Cómo conociste a VisuaLed?</dt><dd id="record-detail-source">Expoferia</dd></div>
+                          <div><dt>Cupón seleccionado</dt><dd id="record-detail-coupon">20% de descuento</dd></div>
+                          <div class="is-consent"><dt>Consentimiento para uso de datos</dt><dd>Aceptado</dd></div>
+                        </dl>
+                        <div class="studio-detail__actions">
+                          <label for="record-status">Estado actual</label><select id="record-status"><option>Nuevo</option><option>Por contactar</option><option>Contactado</option><option>Calificado</option></select>
+                          <a id="record-whatsapp" class="studio-whatsapp" href="#" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4l-4.4 1.3 1.3-4.2a8.5 8.5 0 1 1 15.7-4.5Z"></path><path d="M8.1 7.7c.2-.5.4-.5.7-.5h.5c.2 0 .4 0 .5.4l.8 2c.1.3 0 .5-.1.7l-.6.8c-.2.2-.2.4 0 .7.5 1 1.4 1.9 2.4 2.4.3.2.5.1.7-.1l.9-1.1c.2-.2.4-.3.7-.2l2 .9c.3.1.5.3.5.5 0 .2-.1 1.2-.7 1.8-.6.6-1.5.9-2.4.7-1.1-.2-2.5-.7-4-2.1-1.2-1.1-2-2.5-2.3-3.4-.3-.9 0-1.9.4-2.5Z"></path></svg><span>Contactar por WhatsApp</span></a>
+                          <button id="record-history" class="studio-history" type="button">Ver historial de seguimiento</button>
+                        </div>
+                      </aside>
+                    </div>
+                  </section>
+
+                  <section class="studio-panel" data-crm-panel="coupons" hidden><div class="studio-section-heading"><div><p>BENEFICIOS ENTREGADOS</p><h3>Cupones de la promoción</h3><span>Distribución visual de los descuentos registrados.</span></div><strong id="coupon-total-label">3 entregados</strong></div><div id="studio-coupon-board" class="studio-coupon-board"></div></section>
+                  <section class="studio-panel" data-crm-panel="raffle" hidden>
+                    <div class="studio-raffle">
+                      <div class="studio-raffle__controls">
+                        <h3 id="studio-raffle-title"><span>Sorteo</span><em>Un mes de publicidad gratis</em></h3>
+
+                        <label class="raffle-filter" for="studio-raffle-coupon"><span class="sr-only">Filtrar participantes por cupón</span>
+                          <select id="studio-raffle-coupon" name="studio-raffle-coupon">
+                            <option value="all">Todos los cupones</option>
+                            <option value="10%">Cupón del 10%</option>
+                            <option value="15%">Cupón del 15%</option>
+                            <option value="20%">Cupón del 20%</option>
+                          </select>
+                        </label>
+
+                        <div class="studio-raffle__metrics" aria-label="Resumen de participaciones">
+                          <div><strong id="studio-raffle-company-count">3</strong><span>empresas</span></div>
+                          <div><strong id="studio-raffle-ticket-count">3</strong><span>códigos</span></div>
+                        </div>
+
+                        <p class="studio-raffle__rule"><span aria-hidden="true">↳</span> Una empresa, una oportunidad</p>
+                        <button id="studio-raffle-start" class="raffle-button raffle-button--studio" type="button"><span>Iniciar sorteo</span><i aria-hidden="true">→</i></button>
+                        <p id="studio-raffle-status" class="studio-raffle__status-copy" role="status">Participantes listos para sortear.</p>
+                      </div>
+
+                      <div class="studio-raffle__stage" aria-live="polite" aria-labelledby="studio-raffle-title" data-raffle-state="idle">
+                        <div class="studio-raffle__stage-top"><span><i></i> SELECTOR VISUALED</span><strong id="studio-raffle-pool-count">3 empresas</strong></div>
+                        <div class="studio-raffle__lights" aria-hidden="true"><b></b><b></b><b></b></div>
+                        <div class="studio-raffle__screen">
+                          <img src="sorteo/pantalla-led.png" alt="" width="598" height="507" decoding="async">
+                          <div class="studio-raffle__screen-content">
+                            <span id="studio-raffle-kicker">LISTOS PARA PARTICIPAR</span>
+                            <strong id="studio-raffle-name">VisuaLed</strong>
+                            <small id="studio-raffle-business">Presiona iniciar para comenzar</small>
+                            <b id="studio-raffle-code">VL-0000</b>
+                          </div>
+                          <span class="studio-raffle__scan" aria-hidden="true"></span>
+                        </div>
+                        <div class="studio-raffle__robot"><div id="studio-raffle-confetti" class="studio-raffle__confetti" aria-hidden="true"></div><img src="sorteo/robot-animacion.png" alt="Robot de VisuaLed celebrando" width="260" height="260" decoding="async"></div>
+                        <div id="studio-raffle-ticker" class="studio-raffle__ticker" aria-hidden="true"></div>
+                        <div id="studio-raffle-winner-card" class="studio-raffle__winner-card" hidden><span>¡Felicidades!</span><strong id="studio-raffle-winner-name"></strong><small id="studio-raffle-winner-business"></small><b id="studio-raffle-winner-code"></b></div>
+                      </div>
+                    </div>
+                  </section>
+                  <section class="studio-panel" data-crm-panel="activity" hidden><div class="studio-section-heading"><div><p>REPORTE DEL EVENTO</p><h3>Actividad reciente</h3><span>Un resumen legible del movimiento del equipo.</span></div><strong>Hoy</strong></div><ol id="studio-activity-feed" class="studio-activity"></ol></section>
+                </main>
+
+                <dialog id="add-participant-dialog" class="studio-dialog" aria-labelledby="add-participant-title">
+                  <form id="add-participant-form" class="studio-dialog__form" novalidate>
+                    <header class="studio-dialog__header">
+                      <div><p class="studio-dialog__eyebrow">NUEVA PARTICIPACIÓN</p><h3 id="add-participant-title">Agregar desde el CRM</h3><span>Usa las mismas preguntas de la página pública.</span></div>
+                      <button class="studio-dialog__close" type="button" data-close-add-participant aria-label="Cerrar formulario">&times;</button>
+                    </header>
+                    <div class="studio-dialog__grid">
+                      <label class="studio-dialog__field"><span>1. Nombre y apellido <em>*</em></span><input name="full_name" type="text" minlength="3" maxlength="120" autocomplete="name" required placeholder="Ej. María Camila Ortega"></label>
+                      <label class="studio-dialog__field"><span>2. Negocio o emprendimiento <em>*</em></span><input name="business_name" type="text" minlength="2" maxlength="160" autocomplete="organization" required placeholder="Ej. Pastelería Dulce Luz"></label>
+                      <label class="studio-dialog__field"><span>3. WhatsApp <em>*</em></span><input name="whatsapp" type="tel" inputmode="tel" maxlength="16" autocomplete="tel" required placeholder="099 000 0000"><small>Aceptamos números de Ecuador con 09 o +593.</small></label>
+                      <label class="studio-dialog__field"><span>4. ¿A qué se dedica? <em>*</em></span><textarea name="business_activity" rows="3" minlength="4" maxlength="240" required placeholder="Describe brevemente sus productos o servicios"></textarea><small class="studio-dialog__counter" data-add-counter>0/240</small></label>
+                      <fieldset class="studio-dialog__field studio-dialog__field--wide"><legend>5. ¿Le gustaría conocer nuestros planes publicitarios? <em>*</em></legend><label><input name="plan_interest" type="radio" value="contactar" required><span>Sí, quiero que me contacten</span></label><label><input name="plan_interest" type="radio" value="informacion"><span>Quizás, quiero más información</span></label><label><input name="plan_interest" type="radio" value="solo_sorteo"><span>Por ahora solo deseo participar en el sorteo</span></label></fieldset>
+                      <label class="studio-dialog__field"><span>6. ¿Cómo conoció a VisuaLed?</span><select name="source"><option value="">Seleccionar (opcional)</option><option value="expoferia">Expoferia</option><option value="ya_conocia">Ya conocía VisuaLed</option><option value="redes_sociales">Redes sociales</option><option value="recomendacion">Recomendación</option><option value="otro">Otro</option></select></label>
+                      <label class="studio-dialog__field"><span>7. Cupón obtenido <em>*</em></span><select name="coupon" required><option value="">Seleccionar cupón</option><option value="10">10% de descuento</option><option value="15">15% de descuento</option><option value="20">20% de descuento</option></select></label>
+                      <label class="studio-dialog__consent studio-dialog__field--wide"><input name="consent" type="checkbox" required><span>Acepto que VisuaLed use estos datos para gestionar la participación y contactar a esta persona sobre la promoción. <em>*</em></span></label>
+                    </div>
+                    <p id="add-participant-error" class="studio-dialog__error" role="alert" hidden></p>
+                    <footer class="studio-dialog__footer"><button class="studio-action studio-action--secondary" type="button" data-close-add-participant>Cancelar</button><button class="studio-action studio-action--primary" type="submit">Guardar participación</button></footer>
+                  </form>
+                </dialog>
               </div>
             </div>
-            <p class="view-copy">La autenticación ya está lista. Los módulos de gestión se incorporarán en la siguiente etapa.</p>
-            <dl class="session-card">
-              <div><dt>Usuario</dt><dd id="member-name">—</dd></div>
-              <div><dt>Rol</dt><dd id="member-role">—</dd></div>
-              <div><dt>Seguridad</dt><dd><span class="aal-badge">MFA verificado</span></dd></div>
-            </dl>
-            <button class="secondary-button sign-out-action" type="button">Cerrar sesión</button>
+          </section>
+
+          <section id="view-ready-legacy" class="crm-view" aria-labelledby="ready-title" hidden inert aria-hidden="true">
+            <div class="crm-shell">
+              <aside class="crm-sidebar" aria-label="Navegación del CRM">
+                <div class="crm-brand">
+                  <img src="imagenes/visualed_logo.png" alt="VisuaLed" width="170" height="125">
+                  <span>Centro de operación</span>
+                </div>
+
+                <nav class="crm-nav" aria-label="Módulos">
+                  <button class="crm-nav__item is-active" type="button" data-crm-target="overview" aria-current="page">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13h6V4H4v9Zm0 7h6v-4H4v4Zm10 0h6v-9h-6v9Zm0-16v4h6V4h-6Z"></path></svg>
+                    <span>Resumen</span>
+                  </button>
+                  <button class="crm-nav__item" type="button" data-crm-target="participants">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"></circle><path d="M3.8 19c.6-3.5 2.5-5.3 5.2-5.3s4.6 1.8 5.2 5.3M16 7h5M18.5 4.5v5"></path></svg>
+                    <span>Participantes</span>
+                    <strong id="nav-participant-count">12</strong>
+                  </button>
+                  <button class="crm-nav__item" type="button" data-crm-target="leads">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17V7l8-4 8 4v10l-8 4-8-4Z"></path><path d="m8 12 2.3 2.3L16.5 8"></path></svg>
+                    <span>Interesados</span>
+                  </button>
+                  <button class="crm-nav__item" type="button" data-crm-target="coupons">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5A2.5 2.5 0 0 0 6.5 10 2.5 2.5 0 0 0 4 12.5V18h16v-5.5a2.5 2.5 0 0 0 0-5V2H4v5.5Z"></path><path d="M12 5v10"></path></svg>
+                    <span>Cupones</span>
+                  </button>
+                  <button class="crm-nav__item" type="button" data-crm-target="raffle">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14v12H5V8ZM3 4h18v4H3V4Z"></path><path d="M12 4v16M8.5 4c-1.8 0-3-1-3-2.2C5.5.8 6.2 0 7.3 0 9.1 0 12 4 12 4m3.5 0c1.8 0 3-1 3-2.2 0-1-.7-1.8-1.8-1.8C14.9 0 12 4 12 4"></path></svg>
+                    <span>Sorteo</span>
+                  </button>
+                  <button class="crm-nav__item" type="button" data-crm-target="activity">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v16M5 7h7l2-2h5v6h-5l-2-2H5"></path><circle cx="16" cy="17" r="3"></circle></svg>
+                    <span>Actividad</span>
+                  </button>
+                </nav>
+
+                <div class="crm-sidebar__footer">
+                  <span class="member-avatar" id="member-avatar-legacy" aria-hidden="true">VL</span>
+                  <span class="member-summary"><strong id="member-name-legacy">VisuaLed</strong><small id="member-role-legacy">Administrador</small></span>
+                  <button class="icon-button sign-out-action" type="button" aria-label="Cerrar sesión" title="Cerrar sesión">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5v16h5M14 8l4 4-4 4M8 12h10"></path></svg>
+                  </button>
+                </div>
+              </aside>
+
+              <div class="crm-workspace">
+                <header class="crm-topbar">
+                  <button id="crm-menu-toggle" class="crm-menu-toggle" type="button" aria-label="Abrir navegación" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                  </button>
+                  <div>
+                    <p class="crm-eyebrow">CRM · VISUALED</p>
+                    <h2 id="ready-title">Centro de operación</h2>
+                  </div>
+                  <div class="crm-topbar__status">
+                    <span class="demo-badge"><i></i> Datos de demostración</span>
+                    <time id="crm-date"></time>
+                  </div>
+                </header>
+
+                <div class="crm-content" id="crm-content" tabindex="-1">
+                  <section class="crm-panel is-active" data-crm-panel="overview" aria-labelledby="overview-title">
+                    <div class="operation-hero">
+                      <div class="operation-hero__copy">
+                        <p class="crm-eyebrow">SEÑAL DEL EVENTO · EN VIVO</p>
+                        <h3 id="overview-title">Cada registro entra<br>con una historia.</h3>
+                        <p>El formulario se convierte en una ruta clara: participación, oportunidad y seguimiento.</p>
+                      </div>
+                      <div class="signal-board" aria-label="Siete campos del formulario listos para ingresar al CRM">
+                        <div class="signal-board__screen">
+                          <span class="screen-label">ENTRADA / FORMULARIO</span>
+                          <strong><span id="live-signal-count">12</span> señales recibidas</strong>
+                          <div class="signal-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                        </div>
+                        <ol class="signal-fields">
+                          <li><span>01</span>Persona</li><li><span>02</span>Negocio</li><li><span>03</span>WhatsApp</li><li><span>04</span>Actividad</li><li><span>05</span>Interés</li><li><span>06</span>Origen</li><li><span>07</span>Cupón</li>
+                        </ol>
+                      </div>
+                    </div>
+
+                    <div class="metric-rail" aria-label="Indicadores principales">
+                      <article><span>Participaciones</span><strong data-count="128">128</strong><small>Registros del evento</small></article>
+                      <article><span>Interés comercial</span><strong data-count="43">43</strong><small>Solicitan información</small></article>
+                      <article><span>Por contactar</span><strong data-count="19">19</strong><small>Prioridad del equipo</small></article>
+                      <article><span>Conversión potencial</span><strong data-count="34" data-suffix="%">34%</strong><small>Sobre participantes</small></article>
+                    </div>
+
+                    <div class="overview-grid">
+                      <article class="ledger-panel ledger-panel--wide">
+                        <header><div><p class="crm-eyebrow">ENTRADAS RECIENTES</p><h4>Flujo de participantes</h4></div><button class="text-action" type="button" data-crm-jump="participants">Ver todos →</button></header>
+                        <div id="recent-participants" class="recent-participants"></div>
+                      </article>
+                      <article class="ledger-panel interest-panel">
+                        <header><div><p class="crm-eyebrow">PULSO COMERCIAL</p><h4>Qué quieren hacer</h4></div></header>
+                        <div id="interest-bars" class="interest-bars"></div>
+                      </article>
+                      <article class="ledger-panel coupon-panel">
+                        <header><div><p class="crm-eyebrow">CUPONES ACTIVOS</p><h4>Distribución</h4></div></header>
+                        <div id="coupon-orbit" class="coupon-orbit" aria-label="Distribución de cupones"></div>
+                      </article>
+                    </div>
+                  </section>
+
+                  <section class="crm-panel" data-crm-panel="participants" aria-labelledby="participants-title" hidden>
+                    <div class="panel-heading"><div><p class="crm-eyebrow">BASE DE PARTICIPANTES</p><h3 id="participants-title">Personas detrás de cada registro</h3><p>Consulta el contexto completo antes de contactar.</p></div><span class="panel-index">128 / EVENTO</span></div>
+                    <div class="participant-controls">
+                      <label class="search-control"><span class="sr-only">Buscar participante o negocio</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg><input id="participant-search" name="participant-search" type="search" autocomplete="off" spellcheck="false" placeholder="Buscar persona, negocio o actividad…"></label>
+                      <label><span class="sr-only">Filtrar por estado</span><select id="participant-status" name="participant-status"><option value="all">Todos los estados</option><option value="Nuevo">Nuevo</option><option value="Por contactar">Por contactar</option><option value="Contactado">Contactado</option></select></label>
+                    </div>
+                    <div class="participant-table-wrap"><table class="participant-table"><thead><tr><th>Persona / negocio</th><th>Contacto</th><th>Interés</th><th>Cupón</th><th>Estado</th></tr></thead><tbody id="participant-table-body"></tbody></table></div>
+                    <p id="participant-empty" class="empty-state" hidden>No hay participantes que coincidan con esta búsqueda.</p>
+                  </section>
+
+                  <section class="crm-panel" data-crm-panel="leads" aria-labelledby="leads-title" hidden>
+                    <div class="panel-heading"><div><p class="crm-eyebrow">SEGUIMIENTO COMERCIAL</p><h3 id="leads-title">Interesados que vale la pena escuchar</h3><p>Ordenados por intención para que el siguiente paso sea evidente.</p></div><span class="panel-index">43 / OPORTUNIDADES</span></div>
+                    <div id="lead-board" class="lead-board"></div>
+                  </section>
+
+                  <section class="crm-panel" data-crm-panel="coupons" aria-labelledby="coupons-title" hidden>
+                    <div class="panel-heading"><div><p class="crm-eyebrow">LECTURA DE BENEFICIOS</p><h3 id="coupons-title">Cupones que están circulando</h3><p>Una lectura rápida de la promoción entregada durante el evento.</p></div><span class="panel-index">3 / VALORES</span></div>
+                    <div id="coupon-detail" class="coupon-detail"></div>
+                  </section>
+
+                  <section class="crm-panel" data-crm-panel="raffle" aria-labelledby="raffle-title" hidden>
+                    <div class="raffle-layout">
+                      <div class="raffle-copy">
+                        <p class="crm-eyebrow">MODO DEMOSTRACIÓN</p>
+                        <h3 id="raffle-title">Una señal.<br>Un nombre.</h3>
+                        <p>Esta simulación usa únicamente participantes ficticios y no guarda resultados en Supabase.</p>
+                        <label class="raffle-filter">Participantes elegibles<select id="raffle-coupon" name="raffle-coupon"><option value="all">Todos los cupones</option><option value="10%">Cupón del 10%</option><option value="15%">Cupón del 15%</option><option value="20%">Cupón del 20%</option></select></label>
+                        <button id="raffle-start" class="raffle-button" type="button"><span>Iniciar simulación</span><i aria-hidden="true">→</i></button>
+                      </div>
+                      <div class="raffle-stage" aria-live="polite">
+                        <div class="raffle-stage__status"><span><i></i> SELECTOR VISUALED</span><strong id="raffle-pool-count">12 elegibles</strong></div>
+                        <div class="raffle-scan" aria-hidden="true"></div>
+                        <div class="raffle-display"><span id="raffle-kicker">LISTOS PARA PARTICIPAR</span><strong id="raffle-name">Selecciona una categoría</strong><small id="raffle-business">La animación comenzará cuando presiones el botón</small></div>
+                        <div class="raffle-tape" id="raffle-tape" aria-hidden="true"></div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="crm-panel" data-crm-panel="activity" aria-labelledby="activity-title" hidden>
+                    <div class="panel-heading"><div><p class="crm-eyebrow">BITÁCORA DEL EVENTO</p><h3 id="activity-title">Lo que se movió hoy</h3><p>Una línea de tiempo sencilla para entender el avance del equipo.</p></div><span class="panel-index">HOY / 6 MOVIMIENTOS</span></div>
+                    <ol id="activity-feed" class="activity-feed"></ol>
+                  </section>
+                </div>
+              </div>
+            </div>
           </section>
         </div>
 
@@ -134,6 +459,7 @@
   </div>
 
   <script src="vendor/supabase-2.111.0.js" defer></script>
+  <script src="vendor/anime-4.5.0.umd.min.js" defer></script>
   <script src="config.js" defer></script>
   <script src="app.js" defer></script>
 </body>
