@@ -9,6 +9,8 @@
   const motion = window.anime;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const mobileNavMedia = window.matchMedia('(max-width: 880px)');
+  const isAppleTouchDevice = /iPad|iPhone|iPod/.test(navigator.userAgent)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   const studioRaffleTiming = Object.freeze({
     prepare: 250,
     countdownStep: 650,
@@ -49,7 +51,6 @@
     addParticipantForm: document.querySelector('#add-participant-form'),
     addParticipantError: document.querySelector('#add-participant-error'),
     addParticipantCounter: document.querySelector('[data-add-counter]'),
-    recordStatus: document.querySelector('#record-status'),
     studioRaffleCoupon: document.querySelector('#studio-raffle-coupon'),
     studioRaffleStart: document.querySelector('#studio-raffle-start'),
     studioRaffleModeBadge: document.querySelector('#studio-raffle-mode-badge'),
@@ -114,7 +115,6 @@
     contactado: 'Contactado',
     calificado: 'Calificado'
   };
-  const databaseStatuses = Object.fromEntries(Object.entries(statusLabels).map(([key, value]) => [value, key]));
 
   function formatPhone(phone) {
     const digits = String(phone || '').replace(/\D/g, '').slice(0, 10);
@@ -347,7 +347,6 @@
       const target = document.querySelector(selector);
       if (target) target.textContent = value;
     });
-    if (elements.recordStatus) elements.recordStatus.value = person.status;
     const whatsapp = document.querySelector('#record-whatsapp');
     if (whatsapp) {
       const localNumber = person.phone.replace(/\D/g, '');
@@ -374,7 +373,6 @@
         <td data-label="Interés"><span class="record-interest">${escapeHtml(person.interest)}</span></td>
         <td data-label="Origen">${escapeHtml(person.source)}</td>
         <td data-label="Cupón"><strong>${escapeHtml(person.coupon)}</strong></td>
-        <td data-label="Estado"><span class="status-pill status-pill--${statusClass(person.status)}">${escapeHtml(person.status)}</span></td>
       </tr>`).join('');
     if (elements.dashboardTableCount) {
       elements.dashboardTableCount.textContent = records.length
@@ -424,12 +422,20 @@
   function openAddParticipantDialog() {
     if (!elements.addParticipantDialog || !elements.addParticipantForm) return;
     resetAddParticipantForm();
-    elements.addParticipantDialog.showModal();
+    if (typeof elements.addParticipantDialog.showModal === 'function') {
+      elements.addParticipantDialog.showModal();
+    } else {
+      elements.addParticipantDialog.setAttribute('open', '');
+      elements.addParticipantDialog.classList.add('is-fallback-open');
+    }
     elements.addParticipantForm.elements.full_name.focus();
   }
 
   function closeAddParticipantDialog() {
-    if (elements.addParticipantDialog?.open) elements.addParticipantDialog.close();
+    if (!elements.addParticipantDialog?.open) return;
+    if (typeof elements.addParticipantDialog.close === 'function') elements.addParticipantDialog.close();
+    else elements.addParticipantDialog.removeAttribute('open');
+    elements.addParticipantDialog.classList.remove('is-fallback-open');
   }
 
   async function handleAddParticipant(event) {
@@ -599,8 +605,8 @@
 
   function animateDashboardEntrance() {
     countUpMetrics();
-    if (reduceMotion || !motion?.waapi?.animate) return;
-    motion.waapi.animate('.studio-sidebar', { x: { from: -22 }, opacity: { from: 0 }, duration: 420, ease: 'outCubic' });
+    if (reduceMotion || isAppleTouchDevice || !motion?.waapi?.animate) return;
+    motion.waapi.animate('.studio-sidebar > *', { x: { from: -22 }, opacity: { from: 0 }, duration: 420, ease: 'outCubic' });
     motion.waapi.animate('.studio-topbar', { y: { from: -12 }, opacity: { from: 0 }, duration: 360, delay: 40, ease: 'outCubic' });
     motion.waapi.animate('.studio-metrics article, .studio-toolbar, .studio-records-card, .studio-detail', {
       y: { from: 16 }, opacity: { from: 0 }, duration: 420,
@@ -609,7 +615,7 @@
   }
 
   function animatePanel(panel) {
-    if (reduceMotion || !motion?.waapi?.animate || !panel) return;
+    if (reduceMotion || isAppleTouchDevice || !motion?.waapi?.animate || !panel) return;
     const targets = panel.querySelectorAll('.studio-section-heading, .studio-person-card, .studio-kanban section, .studio-coupon-card, .studio-raffle > div, .studio-activity li');
     motion.waapi.animate(targets, { y: { from: 14 }, opacity: { from: 0 }, duration: 360, delay: motion.stagger(35), ease: 'outCubic' });
   }
@@ -637,7 +643,9 @@
   function setNavOpen(open) {
     const shouldOpen = mobileNavMedia.matches && Boolean(open);
     elements.crmShell?.classList.toggle('is-nav-open', shouldOpen);
-    document.querySelector('#studio-menu-toggle')?.setAttribute('aria-expanded', String(shouldOpen));
+    const toggle = document.querySelector('#studio-menu-toggle');
+    toggle?.setAttribute('aria-expanded', String(shouldOpen));
+    toggle?.setAttribute('aria-label', shouldOpen ? 'Cerrar navegación' : 'Abrir navegación');
     const sidebar = document.querySelector('.studio-sidebar');
     const scrim = document.querySelector('#studio-nav-scrim');
     if (sidebar) sidebar.inert = mobileNavMedia.matches && !shouldOpen;
@@ -660,6 +668,16 @@
       .toLowerCase()
       .replace(/\s+/g, ' ')
       .trim();
+  }
+
+  function createRequestId() {
+    if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID();
+    if (window.crypto && typeof window.crypto.getRandomValues === 'function') {
+      const values = new Uint32Array(4);
+      window.crypto.getRandomValues(values);
+      return [...values].map((value) => value.toString(16).padStart(8, '0')).join('-');
+    }
+    return `visualed-${Date.now()}-${Math.random().toString(16).slice(2)}`;
   }
 
   function getStudioRafflePool() {
@@ -818,7 +836,7 @@
       headers: { Authorization: `Bearer ${accessToken}` },
       body: {
         coupon_percent: value === 'all' ? null : Number(value.replace('%', '')),
-        request_id: crypto.randomUUID()
+        request_id: createRequestId()
       }
     });
     if (error || !data?.winner) throw new Error('Unable to prepare raffle');
@@ -959,23 +977,34 @@
   }
 
   function openProtectedCrm(animated) {
+    let revealed = false;
     const reveal = () => {
+      if (revealed) return;
+      revealed = true;
       showView('view-ready');
       window.requestAnimationFrame(animateDashboardEntrance);
     };
-    if (!animated || reduceMotion || !motion?.waapi?.animate) {
+    if (!animated || reduceMotion || isAppleTouchDevice || !motion?.waapi?.animate) {
       reveal();
       return;
     }
-    const exitAnimations = [
-      motion.waapi.animate('.intro-panel', { x: -46, opacity: 0, duration: 460, ease: 'inOutCubic' }),
-      motion.waapi.animate('.brand-bar', { y: -24, opacity: 0, duration: 380, delay: 40, ease: 'inOutCubic' }),
-      motion.waapi.animate('#view-login', { scale: .96, opacity: 0, duration: 460, ease: 'inOutCubic' })
-    ];
-    Promise.all(exitAnimations.map((animation) => animation.then())).then(() => {
-      exitAnimations.forEach((animation) => animation.cancel());
+    try {
+      const exitAnimations = [
+        motion.waapi.animate('.intro-panel', { x: -46, opacity: 0, duration: 460, ease: 'inOutCubic' }),
+        motion.waapi.animate('.brand-bar', { y: -24, opacity: 0, duration: 380, delay: 40, ease: 'inOutCubic' }),
+        motion.waapi.animate('#view-login', { scale: .96, opacity: 0, duration: 460, ease: 'inOutCubic' })
+      ];
+      const animationFinished = Promise.all(exitAnimations.map((animation) => animation.then()));
+      const safetyTimeout = new Promise((resolve) => window.setTimeout(resolve, 700));
+      Promise.race([animationFinished, safetyTimeout]).then(() => {
+        exitAnimations.forEach((animation) => {
+          try { animation.cancel(); } catch { /* Safari can release completed animations early. */ }
+        });
+        reveal();
+      }, reveal);
+    } catch {
       reveal();
-    });
+    }
   }
 
   function showMessage(text, type = 'info') {
@@ -1252,31 +1281,6 @@
         renderStudioTable();
       });
     });
-    elements.recordStatus?.addEventListener('change', async () => {
-      const participant = demoParticipants[selectedRecordIndex];
-      if (!participant) return;
-      const previousStatus = participant.status;
-      const nextStatus = elements.recordStatus.value;
-      participant.status = nextStatus;
-      renderStudioTable();
-      updateDashboardSummary();
-      if (!participant.id) {
-        showStudioToast('Estado actualizado en el ejemplo local.');
-        return;
-      }
-      const { error } = await client
-        .from('participants')
-        .update({ status: databaseStatuses[nextStatus] })
-        .eq('id', participant.id);
-      if (error) {
-        participant.status = previousStatus;
-        renderStudioTable();
-        updateDashboardSummary();
-        showStudioToast('No pudimos guardar el cambio de estado.');
-        return;
-      }
-      showStudioToast('Estado guardado en Supabase.');
-    });
     document.querySelector('#studio-participant-cards')?.addEventListener('click', (event) => {
       const button = event.target.closest('[data-open-record]');
       if (!button) return;
@@ -1347,7 +1351,13 @@
     elements.raffleStart?.addEventListener('click', startRaffle);
 
     document.querySelector('#studio-menu-toggle')?.addEventListener('click', () => {
-      setNavOpen(!elements.crmShell?.classList.contains('is-nav-open'));
+      const willOpen = !elements.crmShell?.classList.contains('is-nav-open');
+      setNavOpen(willOpen);
+      if (willOpen) document.querySelector('#studio-sidebar-close')?.focus();
+    });
+    document.querySelector('#studio-sidebar-close')?.addEventListener('click', () => {
+      setNavOpen(false);
+      document.querySelector('#studio-menu-toggle')?.focus();
     });
     document.querySelector('#studio-nav-scrim')?.addEventListener('click', () => setNavOpen(false));
 
@@ -1374,7 +1384,12 @@
         trigger?.setAttribute('aria-expanded', 'false');
       }
     });
-    mobileNavMedia.addEventListener('change', () => setNavOpen(false));
+    const closeNavAfterViewportChange = () => setNavOpen(false);
+    if (typeof mobileNavMedia.addEventListener === 'function') {
+      mobileNavMedia.addEventListener('change', closeNavAfterViewportChange);
+    } else if (typeof mobileNavMedia.addListener === 'function') {
+      mobileNavMedia.addListener(closeNavAfterViewportChange);
+    }
 
   }
 
@@ -1426,5 +1441,11 @@
     }
   }
 
-  initialize();
+  initialize().catch((error) => {
+    console.error('No se pudo inicializar el CRM.', error);
+    showView('view-login', {
+      message: 'No pudimos cargar el panel en este dispositivo. Actualiza la página e inténtalo nuevamente.',
+      type: 'error'
+    });
+  });
 })();

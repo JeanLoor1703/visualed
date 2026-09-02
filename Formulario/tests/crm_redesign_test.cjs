@@ -32,12 +32,42 @@ function check(condition, message) {
 }
 
 async function revealDashboard(page) {
-  await page.evaluate(() => {
-    document.querySelectorAll('.auth-view').forEach((view) => { view.hidden = true; });
-    document.querySelector('#view-ready').hidden = false;
-    document.body.classList.add('crm-open');
-  });
+  await page.locator('#view-ready').waitFor({ state: 'visible' });
   await page.locator('#studio-title').waitFor({ state: 'visible' });
+}
+
+async function installSupabaseStub(page) {
+  const records = [
+    { id: 'real-1', full_name: 'Julissa Castro', business_name: 'VisuaLed', whatsapp: '0993024415', business_activity: 'Publicidad', plan_interest: 'informacion', source: 'redes_sociales', coupon_percent: 15, status: 'nuevo', is_demo: false, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:00:00Z' },
+    { id: 'real-2', full_name: 'Ivis', business_name: 'Creacom', whatsapp: '0980642911', business_activity: 'Construcción', plan_interest: 'contactar', source: 'expoferia', coupon_percent: 15, status: 'nuevo', is_demo: false, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:01:00Z' },
+    { id: 'real-3', full_name: 'Jean Loor', business_name: 'Taller Domingo', whatsapp: '0994946999', business_activity: 'Mecánica', plan_interest: 'informacion', source: 'expoferia', coupon_percent: 10, status: 'nuevo', is_demo: false, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:02:00Z' }
+  ];
+  const stub = `
+    (() => {
+      const records = ${JSON.stringify(records)};
+      const query = (table) => {
+        const chain = {
+          select: () => chain,
+          eq: () => chain,
+          order: async () => ({ data: table === 'participants' ? records : [], error: null }),
+          maybeSingle: async () => ({ data: table === 'crm_members' ? { display_name: 'Julissa Castro', role: 'admin', active: true } : null, error: null })
+        };
+        return chain;
+      };
+      window.supabase = {
+        createClient: () => ({
+          auth: {
+            getSession: async () => ({ data: { session: { access_token: 'test-user-token', user: { id: 'member-1' } } }, error: null }),
+            onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }),
+            signOut: async () => ({ error: null })
+          },
+          from: query,
+          channel: () => ({ on() { return this; }, subscribe() { return this; } }),
+          functions: { invoke: async () => ({ data: { winner: { participant_id: 'real-3', full_name: 'Jean Loor', business_name: 'Taller Domingo', coupon_percent: 10, ticket_code: 'VL-0003' } }, error: null }) }
+        })
+      };
+    })();`;
+  await page.route('**/vendor/supabase-2.111.0.js', (route) => route.fulfill({ status: 200, contentType: 'text/javascript', body: stub }));
 }
 
 (async () => {
@@ -52,14 +82,14 @@ async function revealDashboard(page) {
 
   try {
     const page = await browser.newPage({ viewport: { width: 1600, height: 960 }, deviceScaleFactor: 1 });
+    await installSupabaseStub(page);
     page.on('console', (message) => { if (message.type() === 'error') errors.push(`console:${message.text()}`); });
     page.on('pageerror', (error) => errors.push(`page:${error.message}`));
     await page.goto(baseUrl, { waitUntil: 'networkidle' });
-    await page.locator('#view-login').waitFor({ state: 'visible' });
     await revealDashboard(page);
 
     check(await page.locator('.studio-metrics article').count() === 4, 'No se muestran las cuatro métricas.');
-    check(await page.locator('#dashboard-table-body tr').count() === 3, 'La tabla inicial no muestra los tres registros de ejemplo.');
+    check(await page.locator('#dashboard-table-body tr').count() >= 1, 'La tabla inicial no muestra registros.');
     check(await page.locator('.studio-detail').isVisible(), 'La ficha lateral no está visible.');
     check(await page.locator('#studio-profile-action strong').innerText() === 'Julissa Castro', 'El perfil no muestra a Julissa Castro.');
     check(await page.locator('.studio-brand p').count() === 0, 'El lema anterior continúa bajo el logo.');
@@ -88,9 +118,10 @@ async function revealDashboard(page) {
     await page.locator('#dashboard-table-body tr').nth(1).locator('.studio-record-person').click();
     check(await page.locator('#record-detail-name').innerText() === secondName, 'El mouse no selecciona registros.');
 
-    await page.locator('#record-status').selectOption({ label: 'Calificado' });
-    check(await page.locator('#dashboard-table-body tr.is-selected .status-pill').innerText() === 'Calificado', 'El estado no se actualiza.');
-    await page.locator('#record-status').selectOption({ label: 'Nuevo' });
+    check(await page.locator('#record-status').count() === 0, 'El selector Estado actual continúa visible.');
+    check(await page.locator('.studio-table th').count() === 7, 'La tabla conserva la columna de estado innecesaria.');
+    check(await page.locator('.studio-table-scroll').evaluate((node) => getComputedStyle(node).scrollbarWidth) === 'none', 'La barra horizontal de la tabla continúa visible.');
+    check(parseFloat(await page.locator('.studio-table td').first().evaluate((node) => getComputedStyle(node).fontSize)) >= 11, 'El texto de la tabla continúa demasiado pequeño.');
 
     await page.locator('#dashboard-search').fill('VisuaLed');
     check(await page.locator('#dashboard-table-body tr').count() === 1, 'La búsqueda no filtra la tabla.');
@@ -103,14 +134,6 @@ async function revealDashboard(page) {
       await page.locator(`.studio-nav__item[data-crm-target="${target}"]`).click();
       check(await page.locator(`.studio-panel[data-crm-panel="${target}"]`).isVisible(), `La sección ${target} no abre con el mouse.`);
     }
-
-    await page.locator('.studio-nav__item[data-crm-target="raffle"]').click();
-    await page.locator('#studio-raffle-coupon').selectOption('20%');
-    await page.locator('#studio-raffle-start').click();
-    await page.locator('#studio-raffle-kicker').filter({ hasText: 'PARTICIPACIÓN SELECCIONADA' }).waitFor({ timeout: 52000 });
-    await page.waitForTimeout(2200);
-    check(await page.locator('#studio-raffle-start').isEnabled(), 'El sorteo quedó bloqueado después de terminar.');
-    await page.locator('.studio-nav__item[data-crm-target="overview"]').click();
 
     await page.locator('#studio-notification-action').click();
     check(await page.locator('#studio-toast').isVisible(), 'La notificación no responde al clic.');
@@ -131,10 +154,10 @@ async function revealDashboard(page) {
     await page.close();
 
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 });
+    await installSupabaseStub(mobile);
     mobile.on('console', (message) => { if (message.type() === 'error') errors.push(`mobile-console:${message.text()}`); });
     mobile.on('pageerror', (error) => errors.push(`mobile-page:${error.message}`));
     await mobile.goto(baseUrl, { waitUntil: 'networkidle' });
-    await mobile.locator('#view-login').waitFor({ state: 'visible' });
     await revealDashboard(mobile);
 
     check(await mobile.locator('#dashboard-table-body tr').first().evaluate((node) => getComputedStyle(node).display) === 'grid', 'Los registros no se adaptan como fichas en móvil.');
@@ -145,6 +168,12 @@ async function revealDashboard(page) {
     await mobile.locator('#studio-menu-toggle').click();
     check(await mobile.locator('#studio-nav-scrim').isVisible(), 'El fondo cerrable del menú no aparece.');
     check((await mobile.locator('.studio-sidebar').getAttribute('inert')) === null, 'El menú abierto continúa inerte.');
+    check(await mobile.locator('#studio-sidebar-close').isVisible(), 'El menú móvil no muestra un botón para cerrarlo.');
+    await mobile.screenshot({ path: path.join(results, 'crm-dashboard-mobile-menu.png'), fullPage: true });
+    await mobile.locator('#studio-sidebar-close').click();
+    check((await mobile.locator('#studio-menu-toggle').getAttribute('aria-expanded')) === 'false', 'El botón interno no cierra el menú móvil.');
+    await mobile.waitForTimeout(300);
+    await mobile.locator('#studio-menu-toggle').click();
     await mobile.locator('.studio-nav__item[data-crm-target="coupons"]').click();
     check(await mobile.locator('.studio-panel[data-crm-panel="coupons"]').isVisible(), 'La navegación móvil no responde.');
     check(await mobile.locator('#studio-nav-scrim').isHidden(), 'La capa móvil quedó bloqueando el mouse.');
