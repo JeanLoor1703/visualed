@@ -32,12 +32,45 @@ function check(condition, message) {
 }
 
 async function revealDashboard(page) {
-  await page.evaluate(() => {
-    document.querySelectorAll('.auth-view').forEach((view) => { view.hidden = true; });
-    document.querySelector('#view-ready').hidden = false;
-    document.body.classList.add('crm-open');
-  });
+  await page.locator('#view-ready').waitFor({ state: 'visible' });
   await page.locator('#studio-title').waitFor({ state: 'visible' });
+}
+
+async function installSupabaseStub(page) {
+  const records = [
+    { id: 'demo-1', full_name: 'Julissa Castro', business_name: 'VisuaLed', whatsapp: '0990000101', business_activity: 'Diseño', plan_interest: 'contactar', source: 'otro', coupon_percent: 10, status: 'nuevo', is_demo: true, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:00:00Z' },
+    { id: 'demo-2', full_name: 'Kayal', business_name: 'Creacom', whatsapp: '0990000102', business_activity: 'Diseño', plan_interest: 'informacion', source: 'redes_sociales', coupon_percent: 15, status: 'nuevo', is_demo: true, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:01:00Z' },
+    { id: 'demo-3', full_name: 'Ivis', business_name: 'All in Construcción', whatsapp: '0990000103', business_activity: 'Construcción', plan_interest: 'solo_sorteo', source: 'recomendacion', coupon_percent: 20, status: 'nuevo', is_demo: true, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:02:00Z' },
+    { id: 'real-1', full_name: 'Jean Loor', business_name: 'Taller Domingo', whatsapp: '0994946999', business_activity: 'Mecánica', plan_interest: 'informacion', source: 'expoferia', coupon_percent: 10, status: 'nuevo', is_demo: false, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-02T04:45:37Z' }
+  ];
+  const stub = `
+    (() => {
+      const records = ${JSON.stringify(records)};
+      const query = (table) => {
+        const chain = {
+          select: () => chain,
+          eq: () => chain,
+          order: async () => ({ data: table === 'participants' ? records : [], error: null }),
+          maybeSingle: async () => ({ data: table === 'crm_members' ? { display_name: 'Julissa Castro', role: 'admin', active: true } : null, error: null })
+        };
+        return chain;
+      };
+      window.supabase = {
+        createClient: () => ({
+          auth: {
+            getSession: async () => ({ data: { session: { user: { id: 'member-1' } } }, error: null }),
+            onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }),
+            signOut: async () => ({ error: null })
+          },
+          from: query,
+          channel: () => ({ on() { return this; }, subscribe() { return this; } }),
+          functions: {
+            invoke: async () => ({ data: { winner: { participant_id: 'real-1', full_name: 'Jean Loor', business_name: 'Taller Domingo', coupon_percent: 10, ticket_code: 'VL-0001' } }, error: null })
+          }
+        })
+      };
+    })();`;
+  await page.route('**/vendor/supabase-2.111.0.js', (route) => route.fulfill({ status: 200, contentType: 'text/javascript', body: stub }));
 }
 
 async function openRaffle(page) {
@@ -62,20 +95,21 @@ async function checkNoOverflow(page, label) {
 
   try {
     const page = await browser.newPage({ viewport: { width: 1440, height: 960 } });
+    await installSupabaseStub(page);
     const requests = [];
     page.on('console', (message) => { if (message.type() === 'error') errors.push(`console:${message.text()}`); });
     page.on('pageerror', (error) => errors.push(`page:${error.message}`));
     page.on('request', (request) => requests.push(request.url()));
     await page.goto(baseUrl, { waitUntil: 'networkidle' });
-    await page.locator('#view-login').waitFor({ state: 'visible' });
     await revealDashboard(page);
     await openRaffle(page);
 
     check(!/simulaci[oó]n/i.test(await page.locator('.studio-panel[data-crm-panel="raffle"]').innerText()), 'El sorteo todavía muestra etiquetas de simulación.');
     check(/sorteo\s+un mes de publicidad gratis/i.test((await page.locator('#studio-raffle-title').innerText()).replace(/\s+/g, ' ').trim()), 'El título del sorteo no coincide con el solicitado.');
     check(!/Participantes elegibles|Una empresa\.|Una señal\.|45 segundos/i.test(await page.locator('.studio-raffle__controls').innerText()), 'El panel todavía muestra el texto anterior.');
-    check(await page.locator('#studio-raffle-ticker span').count() === 3, 'El ticker no muestra los tres ejemplos.');
-    check(await page.locator('#studio-raffle-company-count').innerText() === '3', 'El contador de empresas demo es incorrecto.');
+    check(await page.locator('#studio-raffle-ticker span').count() === 1, 'El ticker no muestra únicamente el registro real.');
+    check(await page.locator('#studio-raffle-company-count').innerText() === '1', 'El contador del sorteo no refleja el registro real.');
+    check(!/Julissa Castro|Kayal|Ivis/.test(await page.locator('#studio-raffle-ticker').innerText()), 'El sorteo todavía mezcla registros de demostración.');
     check(await page.locator('.studio-raffle__screen > img').evaluate((image) => image.complete && image.naturalWidth > 0), 'No carga la pantalla LED.');
     check(await page.locator('.studio-raffle__robot img').evaluate((image) => image.complete && image.naturalWidth > 0), 'No carga el robot.');
 
@@ -91,7 +125,7 @@ async function checkNoOverflow(page, label) {
     await page.waitForTimeout(1400);
     const elapsed = (Date.now() - startedAt) / 1000;
     check(elapsed >= 16 && elapsed <= 22, `La experiencia no dura aproximadamente 18 segundos: ${elapsed.toFixed(1)}s.`);
-    check(['Julissa Castro', 'Kayal', 'Ivis'].includes(await page.locator('#studio-raffle-winner-name').innerText()), 'El ganador no pertenece al grupo demo.');
+    check(await page.locator('#studio-raffle-winner-name').innerText() === 'Jean Loor', 'El ganador no pertenece a los registros reales.');
     check((await page.locator('#studio-raffle-winner-code').innerText()).startsWith('VL-'), 'El ganador no muestra código.');
     check(await page.locator('#studio-raffle-confetti i').count() === 18, 'No se generó el confeti.');
     check(await page.locator('#studio-raffle-start').isEnabled(), 'El botón no se habilita al terminar.');
@@ -101,8 +135,8 @@ async function checkNoOverflow(page, label) {
     await page.close();
 
     const compact = await browser.newPage({ viewport: { width: 1900, height: 900 } });
+    await installSupabaseStub(compact);
     await compact.goto(baseUrl, { waitUntil: 'networkidle' });
-    await compact.locator('#view-login').waitFor({ state: 'visible' });
     await revealDashboard(compact);
     await openRaffle(compact);
     await checkNoOverflow(compact, 'Sorteo compacto 90%');
@@ -112,8 +146,8 @@ async function checkNoOverflow(page, label) {
     await compact.close();
 
     const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    await installSupabaseStub(mobile);
     await mobile.goto(baseUrl, { waitUntil: 'networkidle' });
-    await mobile.locator('#view-login').waitFor({ state: 'visible' });
     await revealDashboard(mobile);
     await openRaffle(mobile);
     await checkNoOverflow(mobile, 'Sorteo móvil');
@@ -124,8 +158,8 @@ async function checkNoOverflow(page, label) {
 
     const reduced = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'reduce' });
     const reducedPage = await reduced.newPage();
+    await installSupabaseStub(reducedPage);
     await reducedPage.goto(baseUrl, { waitUntil: 'networkidle' });
-    await reducedPage.locator('#view-login').waitFor({ state: 'visible' });
     await revealDashboard(reducedPage);
     await openRaffle(reducedPage);
     await reducedPage.locator('#studio-raffle-start').click();
@@ -139,7 +173,7 @@ async function checkNoOverflow(page, label) {
   }
 
   check(errors.length === 0, `Errores del navegador: ${errors.join(' | ')}`);
-  console.log('PASS raffle: respuesta inmediata, ~18s, ganador, scroll interno, responsive y reduced motion.');
+  console.log('PASS raffle: solo datos reales, respuesta inmediata, ~18s, scroll interno, responsive y reduced motion.');
 })().catch((error) => {
   console.error(error.stack || error.message);
   process.exitCode = 1;

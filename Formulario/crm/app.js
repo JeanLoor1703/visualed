@@ -28,7 +28,7 @@
   let routingPromise = null;
   let animateNextAccess = false;
   let raffleBusy = false;
-  let studioRaffleMode = 'demo';
+  let studioRaffleMode = 'real';
   let studioRaffleTimer = null;
   let currentMemberRole = 'viewer';
   let selectedRecordIndex = 0;
@@ -138,7 +138,9 @@
       status: statusLabels[row.status] || 'Nuevo',
       time: new Intl.DateTimeFormat('es-EC', { hour: '2-digit', minute: '2-digit' }).format(createdAt),
       createdAt: row.created_at,
-      isDemo: Boolean(row.is_demo)
+      isDemo: Boolean(row.is_demo),
+      consent: Boolean(row.consent),
+      campaign: row.campaign
     };
   }
 
@@ -188,7 +190,7 @@
     if (!client) return false;
     const { data, error } = await client
       .from('participants')
-      .select('id, full_name, business_name, whatsapp, business_activity, plan_interest, source, coupon_percent, status, is_demo, created_at')
+      .select('id, full_name, business_name, whatsapp, business_activity, plan_interest, source, coupon_percent, status, is_demo, consent, campaign, created_at')
       .order('created_at', { ascending: false });
     if (error) return false;
     demoParticipants = data.map(participantFromDatabase);
@@ -452,7 +454,7 @@
       const { data, error } = await client
         .from('participants')
         .insert(payload)
-        .select('id, full_name, business_name, whatsapp, business_activity, plan_interest, source, coupon_percent, status, is_demo, created_at')
+        .select('id, full_name, business_name, whatsapp, business_activity, plan_interest, source, coupon_percent, status, is_demo, consent, campaign, created_at')
         .single();
       if (error || !data) throw error || new Error('Participant was not returned.');
 
@@ -460,6 +462,7 @@
       selectedRecordIndex = 0;
       renderStudioModules();
       updateDashboardSummary();
+      updateStudioRafflePool();
       closeAddParticipantDialog();
       showStudioToast('Participación guardada en Supabase.');
     } catch {
@@ -663,14 +666,12 @@
 
   function getStudioRafflePool() {
     const coupon = elements.studioRaffleCoupon?.value || 'all';
-    const demoMode = studioRaffleMode === 'demo';
     const seenBusinesses = new Set();
     const source = demoParticipants
-      .filter((person) => Boolean(person.isDemo) === demoMode)
+      .filter((person) => !person.isDemo && person.consent && person.campaign === 'sorteo_un_mes_publicidad')
       .filter((person) => coupon === 'all' || person.coupon === coupon)
       .filter((person) => person.name && person.business && person.activity && person.coupon)
       .sort((first, second) => {
-        if (demoMode) return 0;
         const firstDate = first.createdAt ? new Date(first.createdAt).getTime() : Number.MAX_SAFE_INTEGER;
         const secondDate = second.createdAt ? new Date(second.createdAt).getTime() : Number.MAX_SAFE_INTEGER;
         return firstDate - secondDate;
