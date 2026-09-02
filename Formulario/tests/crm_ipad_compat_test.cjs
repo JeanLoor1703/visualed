@@ -62,7 +62,7 @@ const supabaseStub = `
         },
         from: query,
         channel: () => ({ on() { return this; }, subscribe() { return this; } }),
-        functions: { invoke: async () => ({ data: null, error: null }) }
+        functions: { invoke: async () => ({ data: { winner: { participant_id: 'ipad-1', full_name: 'Julissa Castro', business_name: 'VisuaLed', coupon_percent: 15, ticket_code: 'VL-001' } }, error: null }) }
       })
     };
   })();`;
@@ -122,6 +122,14 @@ const safariLimits = `
     if (!(await page.locator('#view-ready').isVisible())) throw new Error('El CRM desapareció al rotar el iPad.');
     if (!(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth))) throw new Error('Hay desbordamiento horizontal en iPad.');
     await page.screenshot({ path: path.join(results, 'crm-ipad-landscape.png'), fullPage: true });
+
+    await page.locator('.studio-nav__item[data-crm-target="raffle"]').click();
+    await page.evaluate(() => {
+      if (window.anime?.waapi?.animate) window.anime.waapi.animate = () => { throw new Error('Safari WAAPI fallback test'); };
+    });
+    await page.locator('#studio-raffle-start').click();
+    await page.locator('#studio-raffle-winner-card').waitFor({ state: 'visible', timeout: 24000 });
+    if (await page.locator('#studio-raffle-winner-code').innerText() !== 'VL-001') throw new Error('El sorteo iPad no muestra el código permanente.');
 
     if (errors.length) throw new Error(`Errores del navegador: ${errors.join(' | ')}`);
     console.log('PASS CRM iPad: acceso, compatibilidad Safari, diálogo, navegación y rotación.');

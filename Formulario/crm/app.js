@@ -664,6 +664,15 @@
     showStudioToast.timeoutId = window.setTimeout(() => { toast.hidden = true; }, 3200);
   }
 
+  function safeStudioAnimation(targets, properties) {
+    if (reduceMotion || !motion?.waapi?.animate) return null;
+    try {
+      return motion.waapi.animate(targets, properties);
+    } catch {
+      return null;
+    }
+  }
+
   function normalizeRaffleBusiness(value) {
     return String(value || '')
       .normalize('NFD')
@@ -822,11 +831,9 @@
       confetti.classList.remove('uses-anime');
     }
     setStudioRaffleState('winner');
-    if (!reduceMotion && motion?.waapi?.animate) {
-      motion.waapi.animate('.studio-raffle__screen-content', { scale: [{ from: .92 }, { to: 1 }], opacity: [{ from: .3 }, { to: 1 }], duration: 720, ease: 'outElastic(1, .55)' });
-      motion.waapi.animate('#studio-raffle-winner-card', { translateY: [{ from: 22 }, { to: 0 }], scale: [{ from: .94 }, { to: 1 }], opacity: [{ from: 0 }, { to: 1 }], duration: 760, ease: 'outCubic' });
-      motion.waapi.animate('.studio-raffle__robot', { translateY: [{ from: 18 }, { to: -8 }, { to: 0 }], rotate: [{ from: -2 }, { to: 2 }, { to: 0 }], duration: 980, ease: 'outElastic(1, .55)' });
-    }
+    safeStudioAnimation('.studio-raffle__screen-content', { scale: [{ from: .92 }, { to: 1 }], opacity: [{ from: .3 }, { to: 1 }], duration: 720, ease: 'outElastic(1, .55)' });
+    safeStudioAnimation('#studio-raffle-winner-card', { translateY: [{ from: 22 }, { to: 0 }], scale: [{ from: .94 }, { to: 1 }], opacity: [{ from: 0 }, { to: 1 }], duration: 760, ease: 'outCubic' });
+    safeStudioAnimation('.studio-raffle__robot', { translateY: [{ from: 18 }, { to: -8 }, { to: 0 }], rotate: [{ from: -2 }, { to: 2 }, { to: 0 }], duration: 980, ease: 'outElastic(1, .55)' });
   }
 
   async function requestRealStudioWinner() {
@@ -859,14 +866,12 @@
 
     setStudioRaffleState('countdown');
     updateStudioRaffleText(null, 'PREPARANDO SORTEO');
-    if (!reduceMotion && motion?.waapi?.animate) {
-      motion.waapi.animate('.studio-raffle__screen-content', {
-        scale: [{ from: .97 }, { to: 1 }],
-        opacity: [{ from: .7 }, { to: 1 }],
-        duration: 320,
-        ease: 'outCubic'
-      });
-    }
+    safeStudioAnimation('.studio-raffle__screen-content', {
+      scale: [{ from: .97 }, { to: 1 }],
+      opacity: [{ from: .7 }, { to: 1 }],
+      duration: 320,
+      ease: 'outCubic'
+    });
     if (timing.prepare) await delay(timing.prepare);
 
     for (const number of ['3', '2', '1']) {

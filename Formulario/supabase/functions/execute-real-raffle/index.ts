@@ -11,10 +11,14 @@ const admin = createClient(supabaseUrl, serviceRoleKey, {
   auth: { autoRefreshToken: false, persistSession: false }
 });
 
-const productionOrigin = "https://crm.visualed-ec.com";
+const productionOrigins = new Set([
+  "https://crm.visualed-ec.com",
+  "https://visualed-ec.com",
+  "https://www.visualed-ec.com"
+]);
 
 function isAllowedOrigin(origin: string): boolean {
-  if (origin === productionOrigin || origin === "null") return true;
+  if (productionOrigins.has(origin) || origin === "null") return true;
   try {
     const url = new URL(origin);
     return url.protocol === "http:" && ["localhost", "127.0.0.1"].includes(url.hostname);
@@ -26,9 +30,10 @@ function isAllowedOrigin(origin: string): boolean {
 function responseHeaders(request: Request): HeadersInit {
   const origin = request.headers.get("Origin") || "";
   return {
-    "Access-Control-Allow-Origin": isAllowedOrigin(origin) ? origin : productionOrigin,
-    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-retry-count, traceparent, tracestate, baggage",
+    "Access-Control-Allow-Origin": isAllowedOrigin(origin) ? origin : "https://crm.visualed-ec.com",
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-api-version, x-retry-count, traceparent, tracestate, baggage",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Max-Age": "600",
     "Content-Type": "application/json",
     "Vary": "Origin"
   };
