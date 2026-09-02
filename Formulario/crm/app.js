@@ -125,6 +125,7 @@
     const createdAt = row.created_at ? new Date(row.created_at) : new Date();
     return {
       id: row.id,
+      participationCode: row.participation_code,
       name: row.full_name,
       business: row.business_name,
       phone: formatPhone(row.whatsapp),
@@ -187,7 +188,7 @@
     if (!client) return false;
     const { data, error } = await client
       .from('participants')
-      .select('id, full_name, business_name, whatsapp, business_activity, plan_interest, source, coupon_percent, status, is_demo, consent, campaign, created_at')
+      .select('id, participation_code, full_name, business_name, whatsapp, business_activity, plan_interest, source, coupon_percent, status, is_demo, consent, campaign, created_at')
       .eq('is_demo', false)
       .order('created_at', { ascending: false });
     if (error) return false;
@@ -322,7 +323,7 @@
     return demoParticipants
       .map((person, index) => ({ person, index }))
       .filter(({ person }) => {
-        const haystack = normalizeValue(`${person.name} ${person.business} ${person.phone} ${person.activity}`);
+        const haystack = normalizeValue(`${person.participationCode} ${person.name} ${person.business} ${person.phone} ${person.activity}`);
         return recordMatchesFilter(person) && (!term || haystack.includes(term));
       });
   }
@@ -336,6 +337,7 @@
       '#record-detail-name': person.name,
       '#record-detail-business': person.business,
       '#record-detail-fullname': person.name,
+      '#record-detail-code': person.participationCode,
       '#record-detail-company': person.business,
       '#record-detail-phone': person.phone,
       '#record-detail-activity': person.activity,
@@ -366,7 +368,7 @@
     const records = studioRecords().slice(0, 8);
     elements.dashboardTableBody.innerHTML = records.map(({ person, index }) => `
       <tr data-record-row="${index}" class="${index === selectedRecordIndex ? 'is-selected' : ''}" aria-selected="${index === selectedRecordIndex}">
-        <td data-label="Participante"><button class="studio-record-person" type="button" data-record-select="${index}"><i>${initials(person.name)}</i><span><strong>${escapeHtml(person.name)}</strong></span></button></td>
+        <td data-label="Participante"><button class="studio-record-person" type="button" data-record-select="${index}"><i>${initials(person.name)}</i><span><strong>${escapeHtml(person.name)}</strong><small class="studio-record-code">${escapeHtml(person.participationCode)}</small></span></button></td>
         <td data-label="Negocio">${escapeHtml(person.business)}</td>
         <td data-label="WhatsApp">${escapeHtml(person.phone)}</td>
         <td data-label="Actividad">${escapeHtml(person.activity)}</td>
@@ -458,7 +460,7 @@
       const { data, error } = await client
         .from('participants')
         .insert(payload)
-        .select('id, full_name, business_name, whatsapp, business_activity, plan_interest, source, coupon_percent, status, is_demo, consent, campaign, created_at')
+        .select('id, participation_code, full_name, business_name, whatsapp, business_activity, plan_interest, source, coupon_percent, status, is_demo, consent, campaign, created_at')
         .single();
       if (error || !data) throw error || new Error('Participant was not returned.');
 
@@ -483,6 +485,7 @@
     }
     const columns = [
       ['ID', (person) => person.id || 'Ejemplo local'],
+      ['Código de participación', (person) => person.participationCode],
       ['Nombre y apellido', (person) => person.name],
       ['Negocio o emprendimiento', (person) => person.business],
       ['WhatsApp', (person) => person.phone],
@@ -700,7 +703,7 @@
         seenBusinesses.add(businessKey);
         return true;
       })
-      .map((person, index) => ({ ...person, raffleCode: `VL-${String(index + 1).padStart(4, '0')}` }));
+      .map((person) => ({ ...person, raffleCode: person.participationCode }));
   }
 
   function updateStudioRaffleText(person, kicker = 'CAMBIANDO SEÑALES') {

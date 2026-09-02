@@ -38,9 +38,9 @@ async function revealDashboard(page) {
 
 async function installSupabaseStub(page) {
   const records = [
-    { id: 'real-1', full_name: 'Julissa Castro', business_name: 'VisuaLed', whatsapp: '0993024415', business_activity: 'Publicidad', plan_interest: 'informacion', source: 'redes_sociales', coupon_percent: 15, status: 'nuevo', is_demo: false, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:00:00Z' },
-    { id: 'real-2', full_name: 'Ivis', business_name: 'Creacom', whatsapp: '0980642911', business_activity: 'Construcción', plan_interest: 'contactar', source: 'expoferia', coupon_percent: 15, status: 'nuevo', is_demo: false, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:01:00Z' },
-    { id: 'real-3', full_name: 'Jean Loor', business_name: 'Taller Domingo', whatsapp: '0994946999', business_activity: 'Mecánica', plan_interest: 'informacion', source: 'expoferia', coupon_percent: 10, status: 'nuevo', is_demo: false, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:02:00Z' }
+    { id: 'real-1', participation_code: 'VL-001', full_name: 'Julissa Castro', business_name: 'VisuaLed', whatsapp: '0993024415', business_activity: 'Publicidad', plan_interest: 'informacion', source: 'redes_sociales', coupon_percent: 15, status: 'nuevo', is_demo: false, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:00:00Z' },
+    { id: 'real-2', participation_code: 'VL-002', full_name: 'Ivis', business_name: 'Creacom', whatsapp: '0980642911', business_activity: 'Construcción', plan_interest: 'contactar', source: 'expoferia', coupon_percent: 15, status: 'nuevo', is_demo: false, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:01:00Z' },
+    { id: 'real-3', participation_code: 'VL-003', full_name: 'Jean Loor', business_name: 'Taller Domingo', whatsapp: '0994946999', business_activity: 'Mecánica', plan_interest: 'informacion', source: 'expoferia', coupon_percent: 10, status: 'nuevo', is_demo: false, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:02:00Z' }
   ];
   const stub = `
     (() => {
@@ -63,7 +63,7 @@ async function installSupabaseStub(page) {
           },
           from: query,
           channel: () => ({ on() { return this; }, subscribe() { return this; } }),
-          functions: { invoke: async () => ({ data: { winner: { participant_id: 'real-3', full_name: 'Jean Loor', business_name: 'Taller Domingo', coupon_percent: 10, ticket_code: 'VL-0003' } }, error: null }) }
+          functions: { invoke: async () => ({ data: { winner: { participant_id: 'real-3', full_name: 'Jean Loor', business_name: 'Taller Domingo', coupon_percent: 10, ticket_code: 'VL-003' } }, error: null }) }
         })
       };
     })();`;
@@ -117,6 +117,7 @@ async function installSupabaseStub(page) {
     const secondName = await page.locator('#dashboard-table-body tr').nth(1).locator('.studio-record-person strong').innerText();
     await page.locator('#dashboard-table-body tr').nth(1).locator('.studio-record-person').click();
     check(await page.locator('#record-detail-name').innerText() === secondName, 'El mouse no selecciona registros.');
+    check(await page.locator('#record-detail-code').innerText() === 'VL-002', 'La ficha no muestra el código permanente del participante.');
 
     check(await page.locator('#record-status').count() === 0, 'El selector Estado actual continúa visible.');
     check(await page.locator('.studio-table th').count() === 7, 'La tabla conserva la columna de estado innecesaria.');
@@ -125,6 +126,8 @@ async function installSupabaseStub(page) {
 
     await page.locator('#dashboard-search').fill('VisuaLed');
     check(await page.locator('#dashboard-table-body tr').count() === 1, 'La búsqueda no filtra la tabla.');
+    await page.locator('#dashboard-search').fill('VL-003');
+    check(await page.locator('#dashboard-table-body tr').count() === 1, 'La búsqueda no encuentra el código de participación.');
     await page.locator('#dashboard-search').fill('');
     await page.locator('[data-record-filter="direct"]').click();
     check(await page.locator('#dashboard-table-body tr').count() === 1, 'El filtro de contacto directo es incorrecto.');

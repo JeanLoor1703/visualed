@@ -1177,6 +1177,7 @@ footer {
 .studio-record-person:focus-visible { outline: 3px solid rgba(0,174,239,.24); outline-offset: 2px; border-radius: 7px; }
 .studio-record-person i { width: 30px; height: 30px; display: grid; place-items: center; color: #fff; background: var(--led-navy); border-radius: 50%; font-style: normal; font-size: 8px; font-weight: 800; }
 .studio-record-person strong { display: block; overflow: hidden; color: #102847; font-size: 11px; white-space: nowrap; text-overflow: ellipsis; transition: color .14s cubic-bezier(.23,1,.32,1); }
+.studio-record-code { display: block; margin-top: 2px; color: #008fd3; font-size: 8px; font-weight: 800; letter-spacing: .08em; }
 .studio-table .record-interest { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .record-consent { color: #0ba15f; font-size: 14px; font-weight: 800; }
 .status-pill { min-height: 25px; padding: 4px 8px; display: inline-flex; align-items: center; justify-content: center; color: #0074b9; background: #e5f4ff; border-radius: 7px; font-size: 8px; font-weight: 700; white-space: nowrap; }
@@ -1201,6 +1202,8 @@ footer {
 .studio-detail__list dd { margin: 2px 0 0; color: #132a47; font-size: 11px; line-height: 1.5; }
 .studio-detail__list .is-consent dd { color: #0b994f; font-weight: 750; }
 .studio-detail__list .is-consent::before { border-color: #0b994f; background: #dff7ea; }
+.studio-detail__list .is-code dd { color: #007fc4; font-family: "Montserrat", sans-serif; font-weight: 800; letter-spacing: .06em; }
+.studio-detail__list .is-code::before { border-color: var(--led-cyan); background: #dff7ff; }
 .studio-detail__actions { margin-top: 16px; padding-top: 14px; display: grid; grid-template-columns: 1fr; align-items: center; gap: 9px; border-top: 1px solid var(--led-line); }
 .studio-detail__actions label { color: #0875ba; font-size: 9px; font-weight: 700; }
 .studio-detail__actions select { width: 100%; height: 38px; padding: 0 10px; color: #17304d; background: #f3f7fa; border: 1px solid var(--led-line); border-radius: 8px; outline: 0; font-size: 9px; }

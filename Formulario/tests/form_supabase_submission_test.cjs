@@ -36,9 +36,9 @@ const server = http.createServer((request, response) => {
     let capturedPayload = null;
     await page.route('https://fonts.googleapis.com/**', (route) => route.abort());
     await page.route('https://fonts.gstatic.com/**', (route) => route.abort());
-    await page.route('https://ffaypyjokinfzdkwtezz.supabase.co/rest/v1/participants*', async (route) => {
+    await page.route('https://ffaypyjokinfzdkwtezz.supabase.co/rest/v1/rpc/register_participant*', async (route) => {
       capturedPayload = route.request().postDataJSON();
-      await route.fulfill({ status: 201, contentType: 'application/json', body: '' });
+      await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify([{ participation_code: 'VL-007' }]) });
     });
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
     await page.locator('#campaignForm').waitFor({ state: 'visible' });
@@ -53,13 +53,14 @@ const server = http.createServer((request, response) => {
     await page.locator('#submitButton').click();
     await page.locator('#successPanel').waitFor({ state: 'visible' });
     if (!capturedPayload) throw new Error('El formulario no intentó guardar en Supabase.');
-    if (capturedPayload.full_name !== 'Registro Prueba') throw new Error('Nombre incorrecto en el payload.');
-    if (capturedPayload.whatsapp !== '0991234567') throw new Error('WhatsApp no fue normalizado.');
-    if (capturedPayload.plan_interest !== 'contactar' || capturedPayload.coupon_percent !== 15) throw new Error('Campos de campaña incorrectos.');
-    for (const forbidden of ['id', 'status', 'is_demo', 'created_at']) {
+    if (capturedPayload.p_full_name !== 'Registro Prueba') throw new Error('Nombre incorrecto en el payload.');
+    if (capturedPayload.p_whatsapp !== '0991234567') throw new Error('WhatsApp no fue normalizado.');
+    if (capturedPayload.p_plan_interest !== 'contactar' || capturedPayload.p_coupon_percent !== 15) throw new Error('Campos de campaña incorrectos.');
+    for (const forbidden of ['p_id', 'p_status', 'p_is_demo', 'p_created_at', 'p_participation_code']) {
       if (Object.hasOwn(capturedPayload, forbidden)) throw new Error(`El formulario intentó controlar ${forbidden}.`);
     }
-    console.log('PASS formulario: payload validado y enviado a participants en Supabase.');
+    if (!(await page.locator('#successSummary').innerText()).includes('VL-007')) throw new Error('La confirmación no muestra el código asignado por Supabase.');
+    console.log('PASS formulario: registro enviado y código VL asignado mostrado en la confirmación.');
   } finally {
     await browser.close();
     await new Promise((resolve) => server.close(resolve));

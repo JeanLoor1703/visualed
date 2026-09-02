@@ -26,7 +26,7 @@ const server = http.createServer((request, response) => {
 });
 
 const records = [{
-  id: 'ipad-1', full_name: 'Julissa Castro', business_name: 'VisuaLed',
+  id: 'ipad-1', participation_code: 'VL-001', full_name: 'Julissa Castro', business_name: 'VisuaLed',
   whatsapp: '0993024415', business_activity: 'Publicidad',
   plan_interest: 'informacion', source: 'redes_sociales', coupon_percent: 15,
   status: 'nuevo', is_demo: false, consent: true,

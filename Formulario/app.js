@@ -249,29 +249,43 @@
 
   async function submitRegistration(payload) {
     if (typeof window.visualedSupabaseSubmit === "function") {
-      await window.visualedSupabaseSubmit(payload);
-      return { mode: "supabase" };
+      const data = await window.visualedSupabaseSubmit(payload);
+      const participationCode = data?.participation_code || data?.participationCode;
+      if (!participationCode) throw new Error("Participation code was not returned");
+      return { mode: "supabase", participationCode };
     }
     if (!supabaseClient) throw new Error("Supabase client unavailable");
-    const { error } = await supabaseClient.from("participants").insert(payload);
-    if (error) throw error;
-    return { mode: "supabase" };
+    const { data, error } = await supabaseClient.rpc("register_participant", {
+      p_full_name: payload.full_name,
+      p_business_name: payload.business_name,
+      p_whatsapp: payload.whatsapp,
+      p_business_activity: payload.business_activity,
+      p_plan_interest: payload.plan_interest,
+      p_source: payload.source,
+      p_coupon_percent: payload.coupon_percent,
+      p_consent: payload.consent,
+      p_campaign: payload.campaign
+    });
+    const participationCode = Array.isArray(data) ? data[0]?.participation_code : data?.participation_code;
+    if (error || !participationCode) throw error || new Error("Participation code was not returned");
+    return { mode: "supabase", participationCode };
   }
 
-  function appendSummaryItem(label, value) {
+  function appendSummaryItem(label, value, className = "") {
     const item = document.createElement("div");
     const small = document.createElement("small");
     const strong = document.createElement("strong");
 
-    item.className = "summary-item";
+    item.className = `summary-item ${className}`.trim();
     small.textContent = label;
     strong.textContent = value;
     item.append(small, strong);
     successSummary.append(item);
   }
 
-  function showSuccess(payload, mode) {
+  function showSuccess(payload, participationCode) {
     successSummary.replaceChildren();
+    appendSummaryItem("Código de participación", participationCode, "summary-item--code");
     appendSummaryItem("Participante", payload.full_name);
     appendSummaryItem("Negocio", payload.business_name);
     appendSummaryItem("WhatsApp", payload.whatsapp);
@@ -347,7 +361,7 @@
     try {
       const result = await submitRegistration(payload);
       localStorage.removeItem(DRAFT_KEY);
-      showSuccess(payload, result.mode);
+      showSuccess(payload, result.participationCode);
     } catch (error) {
       console.error("No se pudo registrar la participación", error);
       formMessage.textContent = "No pudimos guardar el registro en este momento. Verifica tu conexión e inténtalo nuevamente.";

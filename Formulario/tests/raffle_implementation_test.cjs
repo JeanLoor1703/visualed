@@ -38,10 +38,10 @@ async function revealDashboard(page) {
 
 async function installSupabaseStub(page) {
   const records = [
-    { id: 'demo-1', full_name: 'Julissa Castro', business_name: 'VisuaLed', whatsapp: '0990000101', business_activity: 'Diseño', plan_interest: 'contactar', source: 'otro', coupon_percent: 10, status: 'nuevo', is_demo: true, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:00:00Z' },
-    { id: 'demo-2', full_name: 'Kayal', business_name: 'Creacom', whatsapp: '0990000102', business_activity: 'Diseño', plan_interest: 'informacion', source: 'redes_sociales', coupon_percent: 15, status: 'nuevo', is_demo: true, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:01:00Z' },
-    { id: 'demo-3', full_name: 'Ivis', business_name: 'All in Construcción', whatsapp: '0990000103', business_activity: 'Construcción', plan_interest: 'solo_sorteo', source: 'recomendacion', coupon_percent: 20, status: 'nuevo', is_demo: true, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:02:00Z' },
-    { id: 'real-1', full_name: 'Jean Loor', business_name: 'Taller Domingo', whatsapp: '0994946999', business_activity: 'Mecánica', plan_interest: 'informacion', source: 'expoferia', coupon_percent: 10, status: 'nuevo', is_demo: false, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-02T04:45:37Z' }
+    { id: 'demo-1', participation_code: null, full_name: 'Julissa Castro', business_name: 'VisuaLed', whatsapp: '0990000101', business_activity: 'Diseño', plan_interest: 'contactar', source: 'otro', coupon_percent: 10, status: 'nuevo', is_demo: true, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:00:00Z' },
+    { id: 'demo-2', participation_code: null, full_name: 'Kayal', business_name: 'Creacom', whatsapp: '0990000102', business_activity: 'Diseño', plan_interest: 'informacion', source: 'redes_sociales', coupon_percent: 15, status: 'nuevo', is_demo: true, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:01:00Z' },
+    { id: 'demo-3', participation_code: null, full_name: 'Ivis', business_name: 'All in Construcción', whatsapp: '0990000103', business_activity: 'Construcción', plan_interest: 'solo_sorteo', source: 'recomendacion', coupon_percent: 20, status: 'nuevo', is_demo: true, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:02:00Z' },
+    { id: 'real-1', participation_code: 'VL-001', full_name: 'Jean Loor', business_name: 'Taller Domingo', whatsapp: '0994946999', business_activity: 'Mecánica', plan_interest: 'informacion', source: 'expoferia', coupon_percent: 10, status: 'nuevo', is_demo: false, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-02T04:45:37Z' }
   ];
   const stub = `
     (() => {
@@ -65,7 +65,7 @@ async function installSupabaseStub(page) {
           from: query,
           channel: () => ({ on() { return this; }, subscribe() { return this; } }),
           functions: {
-            invoke: async () => ({ data: { winner: { participant_id: 'real-1', full_name: 'Jean Loor', business_name: 'Taller Domingo', coupon_percent: 10, ticket_code: 'VL-0001' } }, error: null })
+            invoke: async () => ({ data: { winner: { participant_id: 'real-1', full_name: 'Jean Loor', business_name: 'Taller Domingo', coupon_percent: 10, ticket_code: 'VL-001' } }, error: null })
           }
         })
       };
@@ -132,6 +132,7 @@ async function checkNoOverflow(page, label) {
     check(elapsed >= 16 && elapsed <= 22, `La experiencia no dura aproximadamente 18 segundos: ${elapsed.toFixed(1)}s.`);
     check(await page.locator('#studio-raffle-winner-name').innerText() === 'Jean Loor', 'El ganador no pertenece a los registros reales.');
     check((await page.locator('#studio-raffle-winner-code').innerText()).startsWith('VL-'), 'El ganador no muestra código.');
+    check(await page.locator('#studio-raffle-winner-code').innerText() === 'VL-001', 'El sorteo no conserva el código permanente del formulario.');
     check(await page.locator('#studio-raffle-confetti i').count() === 64, 'No se generó el confeti de escenario completo.');
     check(await page.locator('#studio-raffle-kicker').innerText() === 'GANADOR DEL SORTEO', 'La pantalla no anuncia claramente al ganador.');
     check(/Sorteo realizado a las/.test(await page.locator('#studio-raffle-winner-time').innerText()), 'La tarjeta final no muestra la hora del sorteo.');

@@ -867,6 +867,30 @@ textarea:focus {
   white-space: nowrap;
 }
 
+.summary-item--code {
+  grid-column: 1 / -1;
+  padding: 12px 14px;
+  border: 1px solid rgba(0, 174, 239, 0.32);
+  border-radius: 12px;
+  background: #ffffff;
+  text-align: center;
+}
+
+.summary-item--code small {
+  color: var(--blue);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.summary-item--code strong {
+  margin-top: 3px;
+  color: var(--navy);
+  font-family: "Montserrat", "Poppins", sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+}
+
 .success-actions {
   display: flex;
   justify-content: center;
