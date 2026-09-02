@@ -15,14 +15,10 @@
     spin: 11000,
     decelerate: 2800,
     reveal: 900,
-    celebrate: 1200
+    celebrate: 2200
   });
 
-  let demoParticipants = [
-    { name: 'Julissa Castro', business: 'VisuaLed', phone: '099 000 0101', activity: 'Diseño y comunicación visual', interest: 'Sí, quiero que me contacten', source: 'Otro', coupon: '10%', status: 'Nuevo', time: 'Ahora', isDemo: true },
-    { name: 'Kayal', business: 'Creacom', phone: '099 000 0102', activity: 'Productos personalizados para emprendedores', interest: 'Quizás, quiero más información', source: 'Redes sociales', coupon: '15%', status: 'Nuevo', time: 'Ahora', isDemo: true },
-    { name: 'Ivis', business: 'All in Construcción', phone: '099 000 0103', activity: 'Servicios para pequeños negocios', interest: 'Por ahora solo deseo participar en el sorteo', source: 'Recomendación', coupon: '20%', status: 'Nuevo', time: 'Ahora', isDemo: true }
-  ];
+  let demoParticipants = [];
 
   let client;
   let routingPromise = null;
@@ -67,6 +63,7 @@
     studioRaffleWinnerName: document.querySelector('#studio-raffle-winner-name'),
     studioRaffleWinnerBusiness: document.querySelector('#studio-raffle-winner-business'),
     studioRaffleWinnerCode: document.querySelector('#studio-raffle-winner-code'),
+    studioRaffleWinnerTime: document.querySelector('#studio-raffle-winner-time'),
     participantSearch: document.querySelector('#participant-search'),
     participantStatus: document.querySelector('#participant-status'),
     participantTableBody: document.querySelector('#participant-table-body'),
@@ -191,9 +188,10 @@
     const { data, error } = await client
       .from('participants')
       .select('id, full_name, business_name, whatsapp, business_activity, plan_interest, source, coupon_percent, status, is_demo, consent, campaign, created_at')
+      .eq('is_demo', false)
       .order('created_at', { ascending: false });
     if (error) return false;
-    demoParticipants = data.map(participantFromDatabase);
+    demoParticipants = data.filter((row) => !row.is_demo).map(participantFromDatabase);
     selectedRecordIndex = 0;
     renderStudioModules();
     updateDashboardSummary();
@@ -206,7 +204,7 @@
     participantChannel = client
       .channel('crm-participant-notifications')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'participants' }, (payload) => {
-        if (!payload.new?.id || demoParticipants.some((person) => person.id === payload.new.id)) return;
+        if (!payload.new?.id || payload.new.is_demo || demoParticipants.some((person) => person.id === payload.new.id)) return;
         demoParticipants.unshift(participantFromDatabase(payload.new));
         selectedRecordIndex = 0;
         unreadParticipantCount += 1;
@@ -786,26 +784,38 @@
   }
 
   function celebrateStudioWinner(winner) {
-    updateStudioRaffleText(winner, 'PARTICIPACIÓN SELECCIONADA');
+    updateStudioRaffleText(winner, 'GANADOR DEL SORTEO');
     if (elements.studioRaffleWinnerName) elements.studioRaffleWinnerName.textContent = winner.name;
     if (elements.studioRaffleWinnerBusiness) elements.studioRaffleWinnerBusiness.textContent = winner.business;
     if (elements.studioRaffleWinnerCode) elements.studioRaffleWinnerCode.textContent = winner.raffleCode;
+    if (elements.studioRaffleWinnerTime) {
+      const winnerTime = new Intl.DateTimeFormat('es-EC', { hour: '2-digit', minute: '2-digit' }).format(new Date());
+      elements.studioRaffleWinnerTime.textContent = `Sorteo realizado a las ${winnerTime}`;
+    }
     if (elements.studioRaffleWinnerCard) elements.studioRaffleWinnerCard.hidden = false;
 
     const confetti = document.querySelector('#studio-raffle-confetti');
-    if (confetti) confetti.innerHTML = '<i></i>'.repeat(18);
+    if (confetti) {
+      const pieceCount = window.matchMedia('(max-width: 560px)').matches ? 40 : 64;
+      confetti.innerHTML = '<i></i>'.repeat(pieceCount);
+      confetti.classList.remove('uses-anime');
+    }
     setStudioRaffleState('winner');
     if (!reduceMotion && motion?.waapi?.animate) {
       motion.waapi.animate('.studio-raffle__screen-content', { scale: [{ from: .92 }, { to: 1 }], opacity: [{ from: .3 }, { to: 1 }], duration: 720, ease: 'outElastic(1, .55)' });
+      motion.waapi.animate('#studio-raffle-winner-card', { translateY: [{ from: 22 }, { to: 0 }], scale: [{ from: .94 }, { to: 1 }], opacity: [{ from: 0 }, { to: 1 }], duration: 760, ease: 'outCubic' });
       motion.waapi.animate('.studio-raffle__robot', { translateY: [{ from: 18 }, { to: -8 }, { to: 0 }], rotate: [{ from: -2 }, { to: 2 }, { to: 0 }], duration: 980, ease: 'outElastic(1, .55)' });
-      motion.waapi.animate('#studio-raffle-confetti i', { translateY: [{ from: -12 }, { to: 120 }], rotate: [{ from: 0 }, { to: 240 }], opacity: [{ from: 1 }, { to: 0 }], delay: motion.stagger(35), duration: 1200, ease: 'inQuad' });
     }
   }
 
   async function requestRealStudioWinner() {
     if (!client) throw new Error('Service unavailable');
     const value = elements.studioRaffleCoupon?.value || 'all';
+    const { data: sessionData, error: sessionError } = await client.auth.getSession();
+    const accessToken = sessionData?.session?.access_token;
+    if (sessionError || !accessToken) throw new Error('Session unavailable');
     const { data, error } = await client.functions.invoke('execute-real-raffle', {
+      headers: { Authorization: `Bearer ${accessToken}` },
       body: {
         coupon_percent: value === 'all' ? null : Number(value.replace('%', '')),
         request_id: crypto.randomUUID()
@@ -1077,7 +1087,7 @@
     subscribeToParticipantChanges();
     openProtectedCrm(animateNextAccess);
     if (!participantsLoaded) {
-      window.setTimeout(() => showStudioToast('No pudimos actualizar los registros. Mostramos los tres ejemplos locales.'), 350);
+      window.setTimeout(() => showStudioToast('No pudimos actualizar los registros reales. Inténtalo nuevamente.'), 350);
     }
     animateNextAccess = false;
   }

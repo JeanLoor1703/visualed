@@ -58,7 +58,7 @@ async function installSupabaseStub(page) {
       window.supabase = {
         createClient: () => ({
           auth: {
-            getSession: async () => ({ data: { session: { user: { id: 'member-1' } } }, error: null }),
+            getSession: async () => ({ data: { session: { access_token: 'test-user-token', user: { id: 'member-1' } } }, error: null }),
             onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }),
             signOut: async () => ({ error: null })
           },
@@ -102,6 +102,9 @@ async function checkNoOverflow(page, label) {
     page.on('request', (request) => requests.push(request.url()));
     await page.goto(baseUrl, { waitUntil: 'networkidle' });
     await revealDashboard(page);
+    const dashboardRows = await page.locator('#dashboard-table-body').innerText();
+    check(/Jean Loor/.test(dashboardRows), 'El CRM no muestra el registro real.');
+    check(!/Julissa Castro|Kayal|Ivis/.test(dashboardRows), 'El CRM todavía muestra registros de demostración.');
     await openRaffle(page);
 
     check(!/simulaci[oó]n/i.test(await page.locator('.studio-panel[data-crm-panel="raffle"]').innerText()), 'El sorteo todavía muestra etiquetas de simulación.');
@@ -122,12 +125,16 @@ async function checkNoOverflow(page, label) {
     check(/PREPARANDO SORTEO|COMENZANDO EN/.test(await page.locator('#studio-raffle-kicker').innerText()), 'El clic no produce respuesta visual inmediata.');
 
     await page.locator('#studio-raffle-winner-card').waitFor({ state: 'visible', timeout: 24000 });
-    await page.waitForTimeout(1400);
+    await page.waitForTimeout(450);
+    await page.screenshot({ path: path.join(results, 'raffle-winner-confetti.png'), fullPage: true });
+    await page.waitForTimeout(1950);
     const elapsed = (Date.now() - startedAt) / 1000;
     check(elapsed >= 16 && elapsed <= 22, `La experiencia no dura aproximadamente 18 segundos: ${elapsed.toFixed(1)}s.`);
     check(await page.locator('#studio-raffle-winner-name').innerText() === 'Jean Loor', 'El ganador no pertenece a los registros reales.');
     check((await page.locator('#studio-raffle-winner-code').innerText()).startsWith('VL-'), 'El ganador no muestra código.');
-    check(await page.locator('#studio-raffle-confetti i').count() === 18, 'No se generó el confeti.');
+    check(await page.locator('#studio-raffle-confetti i').count() === 64, 'No se generó el confeti de escenario completo.');
+    check(await page.locator('#studio-raffle-kicker').innerText() === 'GANADOR DEL SORTEO', 'La pantalla no anuncia claramente al ganador.');
+    check(/Sorteo realizado a las/.test(await page.locator('#studio-raffle-winner-time').innerText()), 'La tarjeta final no muestra la hora del sorteo.');
     check(await page.locator('#studio-raffle-start').isEnabled(), 'El botón no se habilita al terminar.');
     check(!requests.slice(baseline).some((url) => url.includes('supabase.co')), 'La simulación hizo una solicitud a Supabase.');
     await checkNoOverflow(page, 'Sorteo escritorio');
@@ -165,7 +172,10 @@ async function checkNoOverflow(page, label) {
     await reducedPage.locator('#studio-raffle-start').click();
     await reducedPage.locator('#studio-raffle-winner-card').waitFor({ state: 'visible', timeout: 2000 });
     await reducedPage.waitForTimeout(150);
-    check(await reducedPage.evaluate(() => document.getAnimations().filter((animation) => animation.playState === 'running').length) === 0, 'Quedaron animaciones activas con movimiento reducido.');
+    const runningAnimations = await reducedPage.evaluate(() => document.getAnimations()
+      .filter((animation) => animation.playState === 'running')
+      .map((animation) => ({ name: animation.animationName || 'waapi', target: animation.effect?.target?.className || animation.effect?.target?.id || 'unknown' })));
+    check(runningAnimations.length === 0, `Quedaron animaciones activas con movimiento reducido: ${JSON.stringify(runningAnimations)}`);
     await reduced.close();
   } finally {
     await browser.close();
@@ -173,7 +183,7 @@ async function checkNoOverflow(page, label) {
   }
 
   check(errors.length === 0, `Errores del navegador: ${errors.join(' | ')}`);
-  console.log('PASS raffle: solo datos reales, respuesta inmediata, ~18s, scroll interno, responsive y reduced motion.');
+  console.log('PASS raffle: solo datos reales, respuesta inmediata, ~20s, scroll interno, responsive y reduced motion.');
 })().catch((error) => {
   console.error(error.stack || error.message);
   process.exitCode = 1;

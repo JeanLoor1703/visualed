@@ -11,18 +11,23 @@ const admin = createClient(supabaseUrl, serviceRoleKey, {
   auth: { autoRefreshToken: false, persistSession: false }
 });
 
-const allowedOrigins = new Set([
-  "https://crm.visualed-ec.com",
-  "http://localhost:3000",
-  "http://127.0.0.1:3000",
-  "http://127.0.0.1:4174"
-]);
+const productionOrigin = "https://crm.visualed-ec.com";
+
+function isAllowedOrigin(origin: string): boolean {
+  if (origin === productionOrigin || origin === "null") return true;
+  try {
+    const url = new URL(origin);
+    return url.protocol === "http:" && ["localhost", "127.0.0.1"].includes(url.hostname);
+  } catch {
+    return false;
+  }
+}
 
 function responseHeaders(request: Request): HeadersInit {
   const origin = request.headers.get("Origin") || "";
   return {
-    "Access-Control-Allow-Origin": allowedOrigins.has(origin) ? origin : "https://crm.visualed-ec.com",
-    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Origin": isAllowedOrigin(origin) ? origin : productionOrigin,
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-retry-count, traceparent, tracestate, baggage",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Content-Type": "application/json",
     "Vary": "Origin"
@@ -78,7 +83,7 @@ Deno.serve(async (request: Request) => {
   });
 
   if (error || !data?.winner) {
-    console.error("execute-real-raffle failed", error?.code || "unknown");
+    console.error("execute-real-raffle failed", error?.code || "unknown", error?.message || "winner missing");
     return json(request, { error: "No pudimos preparar el sorteo." }, 400);
   }
 
