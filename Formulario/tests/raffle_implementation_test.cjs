@@ -41,7 +41,7 @@ async function installSupabaseStub(page) {
     { id: 'demo-1', participation_code: null, full_name: 'Julissa Castro', business_name: 'VisuaLed', whatsapp: '0990000101', business_activity: 'Diseño', plan_interest: 'contactar', source: 'otro', coupon_percent: 10, status: 'nuevo', is_demo: true, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:00:00Z' },
     { id: 'demo-2', participation_code: null, full_name: 'Kayal', business_name: 'Creacom', whatsapp: '0990000102', business_activity: 'Diseño', plan_interest: 'informacion', source: 'redes_sociales', coupon_percent: 15, status: 'nuevo', is_demo: true, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:01:00Z' },
     { id: 'demo-3', participation_code: null, full_name: 'Ivis', business_name: 'All in Construcción', whatsapp: '0990000103', business_activity: 'Construcción', plan_interest: 'solo_sorteo', source: 'recomendacion', coupon_percent: 20, status: 'nuevo', is_demo: true, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-01T10:02:00Z' },
-    { id: 'real-1', participation_code: 'VL-001', full_name: 'Jean Loor', business_name: 'Taller Domingo', whatsapp: '0994946999', business_activity: 'Mecánica', plan_interest: 'informacion', source: 'expoferia', coupon_percent: 10, status: 'nuevo', is_demo: false, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-02T04:45:37Z' }
+    { id: 'real-1', participation_code: 'VL-001', full_name: 'Jean Loor', business_name: null, whatsapp: '0994946999', business_activity: 'Mecánica', plan_interest: null, source: null, coupon_percent: null, status: 'nuevo', is_demo: false, consent: true, campaign: 'sorteo_un_mes_publicidad', created_at: '2026-09-02T04:45:37Z' }
   ];
   const stub = `
     (() => {
@@ -65,7 +65,7 @@ async function installSupabaseStub(page) {
           from: query,
           channel: () => ({ on() { return this; }, subscribe() { return this; } }),
           functions: {
-            invoke: async () => ({ data: { winner: { participant_id: 'real-1', full_name: 'Jean Loor', business_name: 'Taller Domingo', coupon_percent: 10, ticket_code: 'VL-001' } }, error: null })
+            invoke: async () => ({ data: { winner: { participant_id: 'real-1', full_name: 'Jean Loor', business_name: 'Sin negocio registrado', coupon_percent: null, ticket_code: 'VL-001' } }, error: null })
           }
         })
       };

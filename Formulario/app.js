@@ -35,8 +35,8 @@
     },
     businessName: {
       errorId: "businessNameError",
-      validate: (field) => field.value.trim().length >= 2,
-      message: "Escribe el nombre de tu negocio o emprendimiento."
+      validate: (field) => !field.value.trim() || field.value.trim().length >= 2,
+      message: "Escribe al menos 2 caracteres o deja este campo vacío."
     },
     whatsapp: {
       errorId: "whatsappError",
@@ -135,7 +135,7 @@
   function isStepComplete(step) {
     switch (step) {
       case "1": return fieldRules.fullName.validate(form.elements.full_name);
-      case "2": return fieldRules.businessName.validate(form.elements.business_name);
+      case "2": return Boolean(form.elements.business_name.value.trim()) && fieldRules.businessName.validate(form.elements.business_name);
       case "3": return fieldRules.whatsapp.validate(form.elements.whatsapp);
       case "4": return fieldRules.businessActivity.validate(form.elements.business_activity);
       case "5": return Boolean(form.querySelector('input[name="plan_interest"]:checked'));
@@ -221,11 +221,9 @@
     const textFieldsValid = Object.keys(fieldRules)
       .map((id) => validateTextField(document.querySelector(`#${id}`), true))
       .every(Boolean);
-    const planValid = validateRadioGroup("plan_interest", "planInterestError", true);
-    const couponValid = validateRadioGroup("coupon", "couponError", true);
     const consentValid = validateConsent(true);
 
-    return textFieldsValid && planValid && couponValid && consentValid;
+    return textFieldsValid && consentValid;
   }
 
   function firstInvalidControl() {
@@ -236,12 +234,12 @@
     const data = collectDraft();
     return {
       full_name: String(data.full_name || "").trim(),
-      business_name: String(data.business_name || "").trim(),
+      business_name: String(data.business_name || "").trim() || null,
       whatsapp: normalizePhone(String(data.whatsapp || "")),
       business_activity: String(data.business_activity || "").trim(),
-      plan_interest: data.plan_interest,
+      plan_interest: data.plan_interest || null,
       source: data.source || null,
-      coupon_percent: Number(data.coupon),
+      coupon_percent: data.coupon ? Number(data.coupon) : null,
       consent: Boolean(data.consent),
       campaign: "sorteo_un_mes_publicidad"
     };
@@ -287,9 +285,9 @@
     successSummary.replaceChildren();
     appendSummaryItem("Código de participación", participationCode, "summary-item--code");
     appendSummaryItem("Participante", payload.full_name);
-    appendSummaryItem("Negocio", payload.business_name);
+    if (payload.business_name) appendSummaryItem("Negocio", payload.business_name);
     appendSummaryItem("WhatsApp", payload.whatsapp);
-    appendSummaryItem("Cupón", `${payload.coupon_percent}% de descuento`);
+    if (payload.coupon_percent) appendSummaryItem("Cupón", `${payload.coupon_percent}% de descuento`);
 
     successMessage.textContent = "Tus datos fueron registrados correctamente. VisuaLed se pondrá en contacto contigo si resultas ganador.";
 
@@ -327,8 +325,6 @@
   });
 
   form.addEventListener("change", (event) => {
-    if (event.target.name === "plan_interest") validateRadioGroup("plan_interest", "planInterestError", false);
-    if (event.target.name === "coupon") validateRadioGroup("coupon", "couponError", false);
     if (event.target.name === "consent") validateConsent(false);
     updateProgress();
     saveDraft();

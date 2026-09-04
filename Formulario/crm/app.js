@@ -88,9 +88,11 @@
   }
 
   function interestLabel(interest) {
-    if (interest.startsWith('Sí')) return 'Contacto directo';
-    if (interest.startsWith('Quizás')) return 'Quiere información';
-    return 'Solo participa';
+    const value = String(interest || '');
+    if (value.startsWith('Sí')) return 'Contacto directo';
+    if (value.startsWith('Quizás')) return 'Quiere información';
+    if (value.startsWith('Por ahora')) return 'Solo participa';
+    return 'No especificado';
   }
 
   function statusClass(status) {
@@ -127,12 +129,12 @@
       id: row.id,
       participationCode: row.participation_code,
       name: row.full_name,
-      business: row.business_name,
+      business: row.business_name || 'Sin negocio registrado',
       phone: formatPhone(row.whatsapp),
       activity: row.business_activity,
-      interest: interestLabels[row.plan_interest] || row.plan_interest,
+      interest: interestLabels[row.plan_interest] || 'No especificado',
       source: sourceLabels[row.source] || 'No especificado',
-      coupon: `${row.coupon_percent}%`,
+      coupon: row.coupon_percent == null ? 'Sin cupón' : `${row.coupon_percent}%`,
       status: statusLabels[row.status] || 'Nuevo',
       time: new Intl.DateTimeFormat('es-EC', { hour: '2-digit', minute: '2-digit' }).format(createdAt),
       createdAt: row.created_at,
@@ -151,8 +153,9 @@
 
   function updateDashboardSummary() {
     const total = demoParticipants.length;
-    const interested = demoParticipants.filter((person) => !person.interest.startsWith('Por ahora')).length;
+    const interested = demoParticipants.filter((person) => person.interest !== 'No especificado' && !person.interest.startsWith('Por ahora')).length;
     const pending = demoParticipants.filter((person) => ['Nuevo', 'Por contactar'].includes(person.status)).length;
+    const couponsDelivered = demoParticipants.filter((person) => person.coupon !== 'Sin cupón').length;
     const weekAgo = Date.now() - (7 * 24 * 60 * 60 * 1000);
     const thisWeek = demoParticipants.filter((person) => !person.createdAt || new Date(person.createdAt).getTime() >= weekAgo).length;
     const percentage = (value) => total ? `${((value / total) * 100).toFixed(1)}% del total` : 'Sin registros';
@@ -160,16 +163,16 @@
     setMetric('#metric-total-count', total);
     setMetric('#metric-interest-count', interested);
     setMetric('#metric-pending-count', pending);
-    setMetric('#metric-coupon-count', total);
+    setMetric('#metric-coupon-count', couponsDelivered);
     const textValues = {
       '#nav-record-count': total,
       '#metric-week-label': `${thisWeek} ${thisWeek === 1 ? 'registro' : 'registros'} esta semana`,
       '#metric-interest-label': percentage(interested),
       '#metric-pending-label': percentage(pending),
-      '#metric-coupon-label': `${total} ${total === 1 ? 'cupón entregado' : 'cupones entregados'}`,
+      '#metric-coupon-label': `${couponsDelivered} ${couponsDelivered === 1 ? 'cupón entregado' : 'cupones entregados'}`,
       '#participant-total-label': `${total} ${total === 1 ? 'registro' : 'registros'}`,
       '#pending-total-label': `${pending} ${pending === 1 ? 'pendiente' : 'pendientes'}`,
-      '#coupon-total-label': `${total} ${total === 1 ? 'entregado' : 'entregados'}`
+      '#coupon-total-label': `${couponsDelivered} ${couponsDelivered === 1 ? 'entregado' : 'entregados'}`
     };
     Object.entries(textValues).forEach(([selector, value]) => {
       const target = document.querySelector(selector);
@@ -343,7 +346,7 @@
       '#record-detail-activity': person.activity,
       '#record-detail-interest': person.interest,
       '#record-detail-source': person.source,
-      '#record-detail-coupon': `${person.coupon} de descuento`
+      '#record-detail-coupon': person.coupon === 'Sin cupón' ? person.coupon : `${person.coupon} de descuento`
     };
     Object.entries(fields).forEach(([selector, value]) => {
       const target = document.querySelector(selector);
@@ -698,7 +701,7 @@
     const source = demoParticipants
       .filter((person) => !person.isDemo && person.consent && person.campaign === 'sorteo_un_mes_publicidad')
       .filter((person) => coupon === 'all' || person.coupon === coupon)
-      .filter((person) => person.name && person.business && person.activity && person.coupon)
+      .filter((person) => person.name && person.activity && person.participationCode)
       .sort((first, second) => {
         const firstDate = first.createdAt ? new Date(first.createdAt).getTime() : Number.MAX_SAFE_INTEGER;
         const secondDate = second.createdAt ? new Date(second.createdAt).getTime() : Number.MAX_SAFE_INTEGER;
@@ -707,7 +710,9 @@
 
     return source
       .filter((person) => {
-        const businessKey = normalizeRaffleBusiness(person.business);
+        const businessKey = person.business === 'Sin negocio registrado'
+          ? `participant:${person.id}`
+          : normalizeRaffleBusiness(person.business);
         if (!businessKey || seenBusinesses.has(businessKey)) return false;
         seenBusinesses.add(businessKey);
         return true;
@@ -854,7 +859,7 @@
       id: data.winner.participant_id,
       name: data.winner.full_name,
       business: data.winner.business_name,
-      coupon: `${data.winner.coupon_percent}%`,
+      coupon: data.winner.coupon_percent == null ? 'Sin cupón' : `${data.winner.coupon_percent}%`,
       raffleCode: data.winner.ticket_code
     };
   }
