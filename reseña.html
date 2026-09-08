@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="0; url=https://g.page/r/CTlX2Tjs_tNlEBM/review">
+  <link rel="canonical" href="https://visualed-ec.com/reseña">
+  <title>VisuaLed | Déjanos tu Reseña en Google</title>
+  <meta name="description" content="Comparte tu opinión y calificación sobre las pantallas publicitarias LED de VisuaLed en Google. Tu experiencia nos impulsa.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon Oficial -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <!-- Tipografía Oficial Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --azul-corp: #003878;
+      --celeste-led: #00AEEF;
+      --blanco: #FFFFFF;
+      --gris-suave: #F2F5F8;
+      --grafito: #101820;
+      --dorado-estrella: #FFB800;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 50% 30%, #172433 0%, #101820 100%);
+      color: var(--blanco);
+      font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .review-card {
+      background: rgba(16, 24, 32, 0.9);
+      border: 1px solid rgba(0, 174, 239, 0.28);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 2.5rem 2rem;
+      border-radius: 20px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), 0 0 25px rgba(0, 174, 239, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .review-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--azul-corp), var(--celeste-led));
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 170px;
+      margin-bottom: 0.25rem;
+    }
+
+    .logo-container img {
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .google-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #E2E8F0;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .stars {
+      display: flex;
+      gap: 5px;
+      color: var(--dorado-estrella);
+      font-size: 1.6rem;
+      animation: pulseStars 2s infinite ease-in-out;
+      user-select: none;
+    }
+
+    @keyframes pulseStars {
+      0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 2px rgba(255, 184, 0, 0.4));
+      }
+      50% {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 8px rgba(255, 184, 0, 0.85));
+      }
+    }
+
+    h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--blanco);
+    }
+
+    p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #CBD5E1;
+      font-weight: 400;
+    }
+
+    .spinner-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 0.25rem;
+    }
+
+    .spinner {
+      width: 26px;
+      height: 26px;
+      border: 3px solid rgba(255, 255, 255, 0.15);
+      border-top-color: var(--celeste-led);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .spinner-text {
+      font-size: 0.85rem;
+      color: var(--celeste-led);
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .manual-btn {
+      margin-top: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--azul-corp), #0056b3);
+      color: var(--blanco);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 0.85rem 1.6rem;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 174, 239, 0.5);
+      box-shadow: 0 4px 15px rgba(0, 56, 120, 0.4);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .manual-btn:hover {
+      background: linear-gradient(135deg, #004c9e, var(--celeste-led));
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 174, 239, 0.4);
+      color: #FFFFFF;
+    }
+
+    .brand-footer {
+      font-size: 0.75rem;
+      color: #64748B;
+      margin-top: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="review-card">
+    <div class="logo-container">
+      <img src="/imagenes/visualed_logo.png" alt="VisuaLed Logo" onerror="this.onerror=null; this.src='imagenes/visualed_logo.png';">
+    </div>
+
+    <div class="google-badge">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+      </svg>
+      <span>Google Reseñas Oficial</span>
+    </div>
+
+    <div class="stars" aria-label="5 estrellas">
+      ★★★★★
+    </div>
+
+    <h1>¡Tu opinión nos hace brillar!</h1>
+    
+    <p>Te estamos conectando con nuestro perfil oficial en Google para que califiques tu experiencia publicitaria con <strong>VisuaLed</strong>.</p>
+
+    <div class="spinner-box">
+      <div class="spinner"></div>
+      <span class="spinner-text">Redirigiendo a Google...</span>
+    </div>
+
+    <a href="https://g.page/r/CTlX2Tjs_tNlEBM/review" class="manual-btn" id="redirectBtn">
+      Abrir Google Reseñas Ahora
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14"></path>
+        <path d="m12 5 7 7-7 7"></path>
+      </svg>
+    </a>
+
+    <div class="brand-footer">
+      Pantallas Publicitarias LED • VisuaLed Ecuador
+    </div>
+  </div>
+
+  <script>
+    const REVIEW_URL = "https://g.page/r/CTlX2Tjs_tNlEBM/review";
+
+    // Redirección inmediata sin dejar rastro en el historial para no atrapar al usuario
+    try {
+      window.location.replace(REVIEW_URL);
+    } catch (e) {
+      window.location.href = REVIEW_URL;
+    }
+
+    // Respaldo de seguridad en caso de demora
+    setTimeout(function() {
+      window.location.href = REVIEW_URL;
+    }, 1500);
+  </script>
+</body>
+</html>

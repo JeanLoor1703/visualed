@@ -1,4 +1,14 @@
-﻿# ============================================================
+# ============================================================
+# REDIRECCIONES VISUALED (Google Reviews & Enlaces Cortos)
+# ============================================================
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Redireccion a Google Reseñas (/resena, /reseña, /Reseña, /reviews, etc.)
+  RewriteRule ^rese[ñn]as?/?$ https://g.page/r/CTlX2Tjs_tNlEBM/review [R=301,L,NC]
+  RewriteRule ^reviews?/?$ https://g.page/r/CTlX2Tjs_tNlEBM/review [R=301,L,NC]
+</IfModule>
+
+# ============================================================
 # PARCHE 3: Cache-Control para assets estaticos
 # Objetivo: Elevar cache de imagenes de 10 min a 30 dias
 # ============================================================
