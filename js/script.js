@@ -3,6 +3,7 @@
 function autoPlay(sliderId) {
   var container = document.getElementById(sliderId);
   if (!container) return;
+  if (container.dataset.static === 'true') return;
   var imgs = container.querySelectorAll('.slider-img');
   if (imgs.length <= 1) return;
   var current = 0;

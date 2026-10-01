@@ -1008,6 +1008,7 @@
   </style>
   <!-- Estilos: minificado para menor tiempo de bloqueo -->
   <link rel="stylesheet" href="styles/style.min.css">
+  <link rel="stylesheet" href="styles/home-redesign.css">
   <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="shortcut icon" href="favicon.ico" />
@@ -1069,7 +1070,7 @@
 
         <!-- Left copy -->
         <div class="hero-left hero-left-section">
-          <span class="hero-tag badge-superior fade-up"><span class="dot"></span> • Tu marca en el punto más
+          <span class="hero-tag badge-superior fade-up"><span class="dot"></span> Tu marca en el punto más
             estratégico</span>
 
           <h1 class="hero-title hero-titulo fade-up d1">
@@ -1086,8 +1087,13 @@
             <span>EL EMPALME</span>
           </div>
 
+          <p class="hero-screen-desc fade-up d2">
+            Eleva tu marca, sube de nivel tu Emprendimiento, tu negocio a lo grande con la pantalla de VisuaLed.
+          </p>
+
+          <div class="ve-hero-benefits fade-up d2">
           <!-- Feature con Icono de Pantalla LED -->
-          <div class="hero-feature-screen fade-up d2">
+          <div class="hero-feature-screen">
             <div class="feature-screen-icon-wrap">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1108,13 +1114,10 @@
               <div class="hero-sub-title">
                 PUBLICIDAD QUE <span>SÍ SE VE.</span>
               </div>
-              <p class="hero-screen-desc">
-                Eleva tu marca, sube de nivel tu Emprendimiento, tu negocio a lo grande con la pantalla de VisuaLed.
-              </p>
             </div>
           </div>
 
-          <div class="info-bloques fade-up d3">
+          <div class="info-bloques">
             <div class="info-item">
               <div class="info-icono-wrapper icon-visibilidad">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -1143,9 +1146,10 @@
               </div>
             </div>
           </div>
+          </div>
 
           <div class="hero-ctas fade-up d4">
-            <a href="https://wa.me/593989489429" class="btn-primary btn-principal">📈 Multiplica tus clientes</a>
+            <a href="https://wa.me/593989489429" class="btn-primary btn-principal"><svg class="ve-cta-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M21.8 2.2 2.7 10.5a1 1 0 0 0 .1 1.9l7 2.2 2.2 7a1 1 0 0 0 1.9.1l8.3-19.1a1 1 0 0 0-1.4-1.4ZM11 13l7.3-7.3L13 18l-1.5-4.5L7 12l12-5.3L11 13Z"/></svg> Multiplica tus clientes</a>
             <a href="#servicios" class="btn-outline btn-secundario">Ver servicios →</a>
           </div>
         </div>
@@ -1154,7 +1158,7 @@
         <div class="hero-right-wrap fade-up d2">
           <!-- Floating card top-left -->
           <div class="fc fc1">
-            <div class="fc-tag">📊 Impacto mensual</div>
+            <div class="fc-tag"><svg class="ve-bars-icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="13" width="4" height="8" rx="1"/><rect x="10" y="8" width="4" height="13" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg> Impacto mensual</div>
             <div class="fc-val"><em>+<span id="impacto-mensual-counter">0</span>K</em> impresiones</div>
             <div class="fc-bars">
               <div class="fc-bar-item" style="height:14px;background:rgba(0,150,199,.15)"></div>
@@ -1172,7 +1176,7 @@
             <!-- =====================================================
                PANTALLA 1 — Vallas (rectángulo vertical, ocupa ambas filas)
                ===================================================== -->
-            <div class="m-card m-main" id="slider-vallas">
+            <div class="m-card m-main" id="slider-vallas" data-static="true">
 
               <!-- [IMAGEN 1] Vallas — slot 1 (LCP: fetchpriority high) -->
               <img class="slider-img active" src="imagenes/visuall.jpg" srcset="imagenes/visuall.jpg 560w,
@@ -1197,7 +1201,7 @@
             <!-- =====================================================
                PANTALLA 2 — Retail (cuadrado superior derecho)
                ===================================================== -->
-            <div class="m-card m-sm1" id="slider-retail">
+            <div class="m-card m-sm1" id="slider-retail" data-static="true">
 
               <!-- [IMAGEN 1] Retail — slot 1 (fetchpriority high como imagen visible inicial) -->
               <img class="slider-img active" src="imagenes/pantallavidualed-Elempalme.jpg" srcset="imagenes/pantallavidualed-Elempalme.jpg 560w,
@@ -1221,7 +1225,7 @@
             <!-- =====================================================
                PANTALLA 3 — Bebidas (cuadrado inferior derecho)
                ===================================================== -->
-            <div class="m-card m-sm2" id="slider-bebidas">
+            <div class="m-card m-sm2" id="slider-bebidas" data-static="true">
 
               <!-- [IMAGEN 1] Bebidas — slot 1 (fetchpriority high: LCP en móvil) -->
               <img class="slider-img active" src="imagenes/pantallavisualedpublicidad.jpg" srcset="imagenes/pantallavisualedpublicidad.jpg 560w,
@@ -1386,7 +1390,7 @@
               </svg>
               <span>Ubicación Estratégica</span>
             </div>
-            <h2 class="sec-title fade-up d1">El Corazón Logístico<br>de 3 Provincias</h2>
+            <h2 class="sec-title fade-up d1">El Corazón Logístico<br><span>de 3 Provincias</span></h2>
             <p class="fade-up d2">
               El redondel de El Empalme es el nexo vial más importante del litoral ecuatoriano. Es el punto de
               convergencia entre las vías que conectan <strong>Guayaquil, Quevedo, Manabí y la Guayas </strong>,
@@ -1399,18 +1403,22 @@
             </p>
             <div class="stats-quad">
               <div class="stat-tile fade-up d2">
+                <svg class="ve-stat-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></svg>
                 <div class="st-num">+<span id="loc-vistas-counter">0</span><em>K</em></div>
                 <div class="st-lbl">Vistas diarias garantizadas</div>
               </div>
               <div class="stat-tile fade-up d3">
+                <svg class="ve-stat-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
                 <div class="st-num"><span id="loc-visibilidad-counter">0</span><em>/7</em></div>
                 <div class="st-lbl">Visibilidad continua</div>
               </div>
               <div class="stat-tile fade-up d3">
+                <svg class="ve-stat-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="m8 11 8-5M8 13l8 5"/></svg>
                 <div class="st-num"><em><span id="loc-provincias-counter">0</span></em></div>
                 <div class="st-lbl">Provincias conectadas</div>
               </div>
               <div class="stat-tile fade-up d4">
+                <svg class="ve-stat-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20v-4h3v4M10 20v-8h3v8M16 20V8h3v12M3 21h18"/></svg>
                 <div class="st-num">#<em><span id="loc-trafico-counter">0</span></em></div>
                 <div class="st-lbl">Mayor tráfico del cantón</div>
               </div>
@@ -1420,7 +1428,7 @@
           <!-- Video de Ubicación Estratégica -->
           <div class="loc-video-card fade-up d2">
             <div class="loc-video-wrapper">
-              <video class="loc-video" src="videos/video-calidad-visualed.mp4" autoplay loop muted playsinline preload="metadata" title="Pantalla LED VisuaLed en el Redondel de El Empalme"></video>
+              <video class="loc-video" src="videos/video-calidad-visualed.mp4" poster="imagenes/visualed-redondel.webp" autoplay loop muted playsinline preload="metadata" title="Pantalla LED VisuaLed en el Redondel de El Empalme"></video>
               <div class="loc-video-overlay">
                 <div class="loc-video-badge">
                   <span class="live-dot"></span>
@@ -1447,7 +1455,7 @@
         <!-- Encabezado de la Sección Unificado -->
         <div class="text-center mb-16 max-w-4xl mx-auto">
           <h2 class="text-3xl md:text-4xl font-extrabold text-[#03071e] mb-4">
-            Elige el espacio ideal para tu negocio
+            Elige el espacio ideal <span>para tu negocio</span>
           </h2>
           <p class="text-base md:text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
             Anunciar tu marca en el punto de mayor tráfico te cuesta menos de $5 al día. Eso es menos de lo que gastas
@@ -1641,7 +1649,7 @@
             ⚡ NUESTROS SERVICIOS
           </span>
           <h2 class="text-3xl md:text-4xl font-extrabold text-[#03071e] leading-tight">
-            Todo lo que necesitas para dominar el mercado
+            Todo lo que necesitas <span>para dominar el mercado</span>
           </h2>
         </div>
 
@@ -1743,7 +1751,7 @@
     <!-- TESTIMONIALS SECTION -->
     <section id="testimonios" class="sec testimonios-modern">
       <div class="sec-inner">
-        <h2 class="sec-title text-center fade-up d1 testim-hdr">Negocios que ya están creciendo con nosotros</h2>
+        <h2 class="sec-title text-center fade-up d1 testim-hdr">Negocios que ya están <span>creciendo con nosotros</span></h2>
 
         <div class="testim-grid">
           <!-- Card 1 -->
@@ -1884,10 +1892,17 @@
     <!-- CONTACT (Celeste Warm CTA) -->
     <section id="contacto">
       <div class="ct-inner">
-
-        <h2 class="ct-title fade-up d1">¿Listo para que todo el cantón hable de ti?</h2>
+        <div class="ve-contact-copy">
+        <div class="ve-contact-tag"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20Zm4.4-5.9c-.2-.1-1.2-.6-1.4-.7-.2-.1-.3-.1-.5.1l-.6.7c-.1.1-.2.2-.4.1a6.5 6.5 0 0 1-2-1.2 7.4 7.4 0 0 1-1.4-1.8c-.1-.2 0-.3.1-.4l.4-.4.3-.4c.1-.1 0-.3 0-.4l-.7-1.6c-.2-.4-.3-.4-.5-.4H9c-.2 0-.4.1-.6.3a2.5 2.5 0 0 0-.8 1.8c0 1 .8 2 1 2.2a9.4 9.4 0 0 0 3.6 3.3 3.3 0 0 0 1.8.4c.5-.1 1.4-.6 1.6-1.1.2-.5.2-.9.1-1-.1-.1-.2-.2-.4-.3Z"/></svg> TU MARCA EN EL LUGAR CORRECTO</div>
+        <h2 class="ct-title fade-up d1">¿Listo para que todo <span>el cantón hable de ti?</span></h2>
         <p class="ct-sub fade-up d2">Únete a las marcas líderes que ya dominan la mente del consumidor en El Empalme.
           Actúa antes de que lo haga tu competencia.</p>
+
+        <div class="ve-contact-benefits fade-up d2" aria-label="Beneficios de anunciarte con VisualEd">
+          <div class="ve-contact-benefit"><span class="ve-contact-benefit-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 20v-5h3v5M10.5 20V10h3v10M17 20V4h3v16"/></svg></span><span><strong>Más visibilidad</strong><small>para tu negocio.</small></span></div>
+          <div class="ve-contact-benefit"><span class="ve-contact-benefit-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7" r="3"/><circle cx="5" cy="9" r="2.4"/><circle cx="19" cy="9" r="2.4"/><path d="M6 19v-2a6 6 0 0 1 12 0v2H6ZM1 18v-2a4 4 0 0 1 4-4h1a8 8 0 0 0-2 5v1H1Zm22 0h-3v-1a8 8 0 0 0-2-5h1a4 4 0 0 1 4 4v2Z"/></svg></span><span><strong>Más clientes</strong><small>cada mes.</small></span></div>
+          <div class="ve-contact-benefit"><span class="ve-contact-benefit-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 18 7-7 4 4 7-8"/><path d="M16 7h5v5"/></svg></span><span><strong>Resultados reales</strong><small>en tu marca.</small></span></div>
+        </div>
 
         <!-- CTA WhatsApp Grande -->
         <a href="https://wa.me/593989489429?text=Quiero%20mi%20marca%20en%20la%20pantalla!"
@@ -1899,6 +1914,16 @@
           </svg>
           Quiero mi marca aquí
         </a>
+        <p class="ve-contact-note"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M17 9h-1V7a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2ZM10 7a2 2 0 0 1 4 0v2h-4V7Zm3 9.7V19h-2v-2.3a2 2 0 1 1 2 0Z"/></svg> Te asesoramos sin compromiso. Respuesta inmediata.</p>
+        </div>
+        <div class="ve-contact-visual fade-up d2">
+          <div class="ve-contact-shape ve-contact-shape-one" aria-hidden="true"></div>
+          <div class="ve-contact-shape ve-contact-shape-two" aria-hidden="true"></div>
+          <img src="imagenes/pantalla-led-seecion.jpg" alt="Pantalla LED VisualEd en El Empalme" width="1448" height="1086" loading="lazy">
+          <div class="ve-contact-stat ve-contact-stat-views"><span class="ve-contact-stat-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></span><span><strong>+15K</strong><small>Vistas diarias<br>garantizadas</small></span></div>
+          <div class="ve-contact-stat ve-contact-stat-hours"><span class="ve-contact-stat-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span><strong>24/7</strong><small>Tu marca<br>siempre activa</small></span></div>
+          <div class="ve-contact-stat ve-contact-stat-place"><span class="ve-contact-stat-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span><strong>Ubicación<br>estratégica</strong><small>El Empalme</small></span></div>
+        </div>
       </div>
     </section>
 
@@ -1906,12 +1931,14 @@
     <section id="faqs" class="sec">
       <div class="sec-inner">
         <h2 class="sec-title fade-up d1" style="text-align: center; margin-bottom: 2rem;">Preguntas Frecuentes</h2>
+        <div class="ve-faq-layout">
         <div class="faq-container fade-up d2"
           style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
           <details
             style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
             <summary
               style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
+              <svg class="ve-faq-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
               ¿Cómo anunciar mi marca a nivel nacional con VisuaLed?
               <span style="font-size: 1.4rem;">+</span>
             </summary>
@@ -1923,6 +1950,7 @@
             style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
             <summary
               style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
+              <svg class="ve-faq-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
               ¿Por qué elegir publicidad exterior digital en el Cantón?
               <span style="font-size: 1.4rem;">+</span>
             </summary>
@@ -1935,6 +1963,7 @@
             style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
             <summary
               style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
+              <svg class="ve-faq-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13v-2a8 8 0 0 1 16 0v2M4 13h3v6H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 1-2Zm16 0h-3v6h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-1-2Z"/></svg>
               ¿Qué soporte ofrece la mejor agencia de publicidad digital en Ecuador?
               <span style="font-size: 1.4rem;">+</span>
             </summary>
@@ -1945,6 +1974,7 @@
             style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
             <summary
               style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
+              <svg class="ve-faq-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
               ¿Cuál es la frecuencia de los anuncios en pantalla LED?
               <span style="font-size: 1.4rem;">+</span>
             </summary>
@@ -1956,6 +1986,7 @@
             style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
             <summary
               style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
+              <svg class="ve-faq-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20v-4h3v4M10 20v-8h3v8M16 20V8h3v12M3 21h18"/></svg>
               ¿Tienen cobertura para empresas de todo el país?
               <span style="font-size: 1.4rem;">+</span>
             </summary>
@@ -1966,12 +1997,17 @@
             style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px; border: 1px solid rgba(0,180,216,0.2);">
             <summary
               style="font-weight: 600; font-size: 1.1rem; cursor: pointer; color: var(--cyan-mid); display: flex; justify-content: space-between; align-items: center; user-select: none;">
+              <svg class="ve-faq-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4h4l9 5V5l-9 5H4Zm13-2a4 4 0 0 1 0 8"/></svg>
               ¿Cómo ayuda el marketing visual al crecimiento de mi negocio?
               <span style="font-size: 1.4rem;">+</span>
             </summary>
             <p style="margin-top: 1rem; color: var(--slate); line-height: 1.5;">El marketing visual a través de pantallas LED
               incrementa drásticamente la retención, confianza y estatus corporativo en los consumidores.</p>
           </details>
+        </div>
+        <div class="ve-faq-visual fade-up d2">
+          <img src="imagenes/pantallavisualedpublicidad.webp" alt="Pantalla LED publicitaria VisualEd" width="2752" height="1536" loading="lazy">
+        </div>
         </div>
       </div>
     </section>
